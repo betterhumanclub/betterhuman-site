@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,40 +7,184 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
-* {margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
-body {
-background: radial-gradient(circle at 20% 40%, #3d3470 0%, #0A0A0D 60%);
-color:#F7F7FA;
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter',sans-serif;}
+
+html{
+scroll-behavior:smooth;
 }
-.container {display:flex;flex-wrap:wrap;min-height:100vh;}
-.section {flex:1;padding:60px;display:flex;flex-direction:column;justify-content:center;}
-h1 {font-size:32px;margin-bottom:20px;line-height:1.2;}
-p {font-size:16px;color:#C9C7F2;margin-bottom:20px;}
-ul {margin-bottom:25px;}
-li {list-style:none;margin-bottom:10px;}
-input, select, textarea {
-width:100%;
-padding:12px;
-margin-bottom:15px;
-border-radius:8px;
-border:none;
-background:#1c1c24;
+
+body{
+background:#0A0A10;
 color:white;
+overflow-x:hidden;
 }
-button {
-padding:14px 20px;
-border-radius:12px;
+
+/* Animated glow */
+body::before{
+content:"";
+position:fixed;
+width:120%;
+height:120%;
+top:-10%;
+left:-10%;
+background:
+radial-gradient(circle at 30% 40%, rgba(142,122,255,.55), transparent 40%),
+radial-gradient(circle at 70% 70%, rgba(142,122,255,.35), transparent 45%);
+animation:pulseGlow 8s ease-in-out infinite alternate;
+z-index:-1;
+}
+
+@keyframes pulseGlow{
+0%{transform:scale(1);}
+100%{transform:scale(1.08);}
+}
+
+.container{
+display:flex;
+min-height:100vh;
+}
+
+.panel{
+width:50%;
+padding:100px 90px;
+position:relative;
+animation:fadeIn 1.4s ease forwards;
+opacity:0;
+}
+
+.panel:nth-child(1){animation-delay:.2s;}
+.panel:nth-child(2){animation-delay:.5s;}
+
+@keyframes fadeIn{
+to{opacity:1;}
+}
+
+.left{
+border-right:1px solid rgba(255,255,255,.06);
+}
+
+.right{
+background:rgba(255,255,255,.04);
+backdrop-filter:blur(18px);
+}
+
+h1{
+font-size:46px;
+line-height:1.2;
+margin-bottom:25px;
+}
+
+p{
+color:#c9c7f2;
+font-size:18px;
+margin-bottom:25px;
+}
+
+/* Button */
+button{
+padding:20px 40px;
+border-radius:16px;
 border:none;
-font-weight:600;
-cursor:pointer;
 background:linear-gradient(145deg,#A49CF0,#6E63D6);
 color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+box-shadow:0 15px 40px rgba(112,99,214,.55);
+transition:.25s ease;
+position:relative;
+overflow:hidden;
 }
-footer {
-text-align:center;
-padding:20px;
+
+button:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 50px rgba(112,99,214,.7);
+}
+
+button::after{
+content:"";
+position:absolute;
+width:60%;
+height:100%;
+top:0;
+left:-60%;
+background:linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+transform:skewX(-20deg);
+animation:shine 4s infinite;
+}
+
+@keyframes shine{
+0%{left:-60%;}
+100%{left:120%;}
+}
+
+/* Floating product */
+.products{
+position:absolute;
+bottom:0;
+right:60px;
+animation:float 6s ease-in-out infinite;
+}
+
+.products img{
+width:300px;
+filter:drop-shadow(0 50px 70px rgba(0,0,0,.7));
+}
+
+.watch{
+position:absolute;
+bottom:30px;
+left:-150px;
+width:190px;
+}
+
+@keyframes float{
+0%,100%{transform:translateY(0px);}
+50%{transform:translateY(-20px);}
+}
+
+form{
+margin-top:25px;
+}
+
+input, select, textarea{
+width:100%;
+padding:14px;
+margin-bottom:15px;
+border-radius:10px;
+border:none;
+background:#1b1b25;
+color:white;
+}
+
+ul{
+margin:20px 0 30px 0;
+}
+
+li{
+margin-bottom:12px;
+list-style:none;
+font-size:17px;
+}
+
+.highlight{
+font-size:32px;
+color:#c2b7ff;
+margin:20px 0;
+}
+
+.footer{
+position:absolute;
+bottom:40px;
 font-size:13px;
-opacity:0.6;
+color:#8f8bd8;
+}
+
+@media(max-width:1000px){
+.container{flex-direction:column;}
+.panel{width:100%; padding:70px 40px;}
+.products{position:relative; right:auto; margin-top:40px;}
+.watch{position:relative; left:0; bottom:0;}
 }
 </style>
 </head>
@@ -49,55 +193,97 @@ opacity:0.6;
 
 <div class="container">
 
-<div class="section">
-<h1>Clinical Intelligence.<br>Physician-Led Oversight.</h1>
-<p>Personalized biomarker testing, AI-optimized supplementation, and continuous performance monitoring.</p>
+<div class="panel left">
+
+<h1>
+Clinical Intelligence.<br>
+Physician-Led Oversight from Harvard & Stanford-Trained Doctors.
+</h1>
+
+<p>
+Personalized biomarker testing, AI-optimized supplementation,
+and continuous performance monitoring — all for less than $2 per day.
+</p>
 
 <form action="https://formsubmit.co/info@betterhumanclub.com" method="POST">
-<input type="hidden" name="_subject" value="New Consumer Inquiry">
+<input type="hidden" name="_subject" value="Consumer Inquiry - Better Human">
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_next" value="https://betterhumanclub.com/thankyou.html">
-<input type="hidden" name="_autoresponse" value="Thank you for contacting Better Human. Our team will reach out shortly.">
+<input type="hidden" name="_next" value="https://betterhumanclub.com/">
+
 <input type="text" name="Name" placeholder="Full Name" required>
 <input type="email" name="Email" placeholder="Email Address" required>
-<textarea name="Message" rows="4" placeholder="How can we help?" required></textarea>
-<button type="submit">Get Started</button>
+<textarea name="Message" rows="4" placeholder="How can we help you?" required></textarea>
+
+<button type="submit">
+Ask Us How We Help You Live Better, Longer
+</button>
 </form>
+
+<div class="products">
+<img src="device.png">
+<img src="watch.png" class="watch">
 </div>
 
-<div class="section" style="background:rgba(255,255,255,0.03);">
-<h1>Enterprise Health Infrastructure</h1>
-<p>Reduce healthcare costs. Increase performance.</p>
+<div class="footer">
+Clinical oversight. Data privacy protected. Prevention-first healthcare infrastructure.
+</div>
+
+</div>
+
+<div class="panel right">
+
+<h1>
+We Help You Save Millions in Healthcare Costs.
+</h1>
+
+<p>
+Serving enterprises from 50 to 1,000,000+ employees.
+</p>
+
+<p>
+Saving companies tens to hundreds of millions annually through preventive intelligence.
+</p>
+
+<ul>
+<li>✔ Reduce insurance claims</li>
+<li>✔ Reduce absenteeism</li>
+<li>✔ Increase energy & productivity</li>
+<li>✔ Real-time executive dashboards</li>
+</ul>
+
+<div class="highlight">
+50 – 1 Million+ Employees
+</div>
 
 <form action="https://formsubmit.co/info@betterhumanclub.com" method="POST">
-<input type="hidden" name="_subject" value="Enterprise Strategy Request">
+<input type="hidden" name="_subject" value="Enterprise Strategy Request - Better Human">
 <input type="hidden" name="_captcha" value="false">
-<input type="hidden" name="_next" value="https://betterhumanclub.com/thankyou.html">
-<input type="hidden" name="_autoresponse" value="Thank you for your enterprise inquiry. Our strategy team will contact you shortly.">
+<input type="hidden" name="_next" value="https://betterhumanclub.com/">
+
 <input type="text" name="Company Name" placeholder="Company Name" required>
-<input type="email" name="Email" placeholder="Business Email" required>
+<input type="email" name="Business Email" placeholder="Business Email" required>
+
 <select name="Employee Count" required>
 <option value="">Employee Count</option>
 <option>50 – 100</option>
 <option>100 – 1,000</option>
-<option>1,000+</option>
+<option>1,000 – 10,000</option>
+<option>10,000 – 100,000</option>
+<option>100,000 – 1,000,000+</option>
 </select>
-<textarea name="Message" rows="4" placeholder="Tell us about your goals..." required></textarea>
-<button type="submit">Request Strategy Call</button>
+
+<button type="submit">
+Book Enterprise Strategy Call
+</button>
 </form>
 
-<br>
-<a href="https://calendly.com/yourlink" target="_blank">
-<button>Schedule Directly</button>
-</a>
-
+<div class="footer">
+Clinical oversight. Data privacy protected. Prevention-first healthcare infrastructure.
 </div>
 
 </div>
 
-<footer>
-Prevention-first healthcare infrastructure.
-</footer>
+</div>
 
 </body>
 </html>
