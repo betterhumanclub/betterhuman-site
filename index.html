@@ -5,17 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Better Human</title>
 
-<!-- UPDATED FONT: MANROPE -->
+<!-- MANROPE ONLY -->
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
-/* ------------------ BASE ------------------ */
+/* FORCE MANROPE EVERYWHERE */
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Manrope';
+}
 
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
+html{
+  scroll-behavior:smooth;
+}
+
 body{
-  font-family:'Manrope',sans-serif; /* UPDATED */
   background:radial-gradient(circle at 30% 20%,#2b237c,#090b1e 70%);
   color:white;
   overflow-x:hidden;
@@ -35,7 +42,7 @@ body.light .glass{
   box-shadow:none;
 }
 
-/* ------------------ LAYOUT ------------------ */
+/* LAYOUT */
 
 section{
   padding:70px 10%;
@@ -85,7 +92,14 @@ ul{
   transition:0.35s ease;
 }
 
-/* BUTTON */
+/* BUTTONS + FORM ELEMENTS */
+
+button,
+input,
+select,
+textarea{
+  font-family:'Manrope';
+}
 
 .btn{
   background:linear-gradient(90deg,#8f84ff,#6a5cff);
@@ -162,7 +176,7 @@ footer{
   padding:45px;
 }
 
-/* FADE-IN ANIMATION */
+/* FADE-IN */
 
 .fade{
   opacity:0;
@@ -175,29 +189,69 @@ footer{
   transform:translateY(0);
 }
 
-/* ------------------ THEME TOGGLE ------------------ */
+/* THEME TOGGLE */
 
 .theme-switch{
   position:fixed;
   top:22px;
   right:22px;
-  width:64px;
+  width:72px;
   height:36px;
   border-radius:999px;
   border:none;
   cursor:pointer;
   z-index:100;
+  padding:4px;
   display:flex;
   align-items:center;
-  padding:4px;
   background:rgba(255,255,255,.10);
   border:1px solid rgba(255,255,255,.18);
   backdrop-filter:blur(12px);
+  transition:0.25s ease;
 }
 
 body.light .theme-switch{
   background:rgba(0,0,0,.06);
   border:1px solid rgba(0,0,0,.10);
+}
+
+.track-icons{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+  pointer-events:none;
+}
+
+.track-icons svg{
+  width:16px;
+  height:16px;
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.track-icons .sun-track{
+  stroke:rgba(255,255,255,.55);
+  opacity:1;
+}
+
+.track-icons .moon-track{
+  stroke:rgba(255,255,255,.55);
+  opacity:0.25;
+}
+
+body.light .track-icons .moon-track{
+  stroke:rgba(0,0,0,.5);
+  opacity:1;
+}
+
+body.light .track-icons .sun-track{
+  stroke:rgba(0,0,0,.5);
+  opacity:0.25;
 }
 
 .theme-switch .thumb{
@@ -209,26 +263,29 @@ body.light .theme-switch{
   align-items:center;
   justify-content:center;
   background:linear-gradient(135deg,#8f84ff,#6a5cff);
+  box-shadow:0 10px 20px rgba(120,107,255,.35);
   transition:transform .28s ease;
 }
 
 body.light .theme-switch .thumb{
-  transform:translateX(28px);
+  transform:translateX(36px);
 }
 
-.theme-switch svg{
+.theme-switch .thumb svg{
+  position:absolute;
+  top:50%;
+  left:50%;
   width:18px;
   height:18px;
+  transform:translate(-50%,-50%);
   stroke:white;
   fill:none;
   stroke-width:2;
-  stroke-linecap:round;
-  stroke-linejoin:round;
 }
 
-.sun{display:none;}
-body.light .sun{display:block;}
-body.light .moon{display:none;}
+.theme-switch .thumb .sun{opacity:0;}
+body.light .theme-switch .thumb .sun{opacity:1;}
+body.light .theme-switch .thumb .moon{opacity:0;}
 
 /* RESPONSIVE */
 
@@ -236,10 +293,7 @@ body.light .moon{display:none;}
   section{padding:60px 6%;}
   .hero{flex-direction:column;}
   .hero-left,.hero-right{width:100%;}
-  .devices,.app-grid{
-    flex-direction:column;
-    align-items:center;
-  }
+  .devices,.app-grid{flex-direction:column;align-items:center;}
   .devices img{width:280px;}
   .app-grid img{height:420px;}
   h1{font-size:40px;}
@@ -252,13 +306,26 @@ body.light .moon{display:none;}
 <body>
 
 <button class="theme-switch" id="themeSwitch" type="button">
+  <div class="track-icons">
+    <svg class="moon-track" viewBox="0 0 24 24">
+      <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
+    </svg>
+    <svg class="sun-track" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path>
+      <path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="M4.93 19.07l1.41-1.41"></path>
+      <path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
+  </div>
   <div class="thumb">
-    <!-- Moon -->
     <svg class="moon" viewBox="0 0 24 24">
       <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
     </svg>
-
-    <!-- Sun -->
     <svg class="sun" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="4"></circle>
       <path d="M12 2v2"></path>
@@ -273,7 +340,6 @@ body.light .moon{display:none;}
   </div>
 </button>
 
-<!-- HERO -->
 <section class="hero fade">
   <div class="hero-left">
     <h1>
@@ -290,19 +356,14 @@ body.light .moon{display:none;}
     </button>
 
     <div class="devices">
-      <img src="device.png" alt="Better Human Device">
-      <img src="watch.png" alt="Recovery Wearable">
+      <img src="device.png">
+      <img src="watch.png">
     </div>
   </div>
 
   <div class="hero-right glass">
-    <h2>
-      We Help You Save Millions in Healthcare Costs.
-    </h2>
-
-    <p>
-      Serving enterprises from 50 to 1,000,000+ employees.
-    </p>
+    <h2>We Help You Save Millions in Healthcare Costs.</h2>
+    <p>Serving enterprises from 50 to 1,000,000+ employees.</p>
 
     <ul>
       <li>✓ Reduce insurance claims</li>
@@ -311,33 +372,28 @@ body.light .moon{display:none;}
       <li>✓ Real-time executive dashboards</li>
     </ul>
 
-    <button class="btn">
-      Book Enterprise Strategy Call
-    </button>
+    <button class="btn">Book Enterprise Strategy Call</button>
 
     <div class="dashboard">
-      <img src="dashboard.png" width="100%" alt="Executive Dashboard">
+      <img src="dashboard.png" width="100%">
     </div>
   </div>
 </section>
 
-<!-- APP SECTION -->
 <section class="fade">
   <h2 class="center">Integrated Performance Intelligence</h2>
   <div class="app-grid">
-    <img src="recovery.png" alt="Recovery Screen">
-    <img src="macro.png" alt="Macro Tracking Screen">
-    <img src="workout.png" alt="Live Workout Screen">
+    <img src="recovery.png">
+    <img src="macro.png">
+    <img src="workout.png">
   </div>
 </section>
 
-<!-- SUPPLEMENTS -->
 <section class="fade">
   <h2 class="center">Precision Supplementation</h2>
   <p class="center">Formulated by Harvard-Trained Physicians.</p>
-
   <div class="supplements">
-    <img src="supplements.png" alt="Magnesium, Zinc, and Vitamin D supplements">
+    <img src="supplements.png">
   </div>
 </section>
 
