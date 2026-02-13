@@ -22,6 +22,12 @@
 
   --accent-primary:#8f84ff;
   --accent-secondary:#786bff;
+
+  /* NEW: subtle “placeholder gray” used in light mode (readable but not black) */
+  --placeholder-light:#636a78;
+
+  /* NEW: deselected icon gray for light mode toggle */
+  --toggle-icon-deselected:#606776;
 }
 
 *{box-sizing:border-box;}
@@ -135,14 +141,26 @@ input::placeholder{
   color:rgba(255,255,255,0.55);
 }
 
-/* LIGHT MODE INPUTS */
+/* LIGHT MODE INPUTS
+   - Make typed text clearly readable but not pure black
+   - Make placeholder darker than before (readable, still “default”) */
 body.light input,
 body.light select{
   background:#f9f9fc;
-  color:#111;
+  color:#2f3440;                 /* readable, not pure black */
   border:1px solid #e0e0e0;
 }
+body.light input::placeholder{
+  color:var(--placeholder-light); /* readable “default text” look */
+}
+body.light input:focus,
+body.light select:focus{
+  outline:none;
+  border-color:var(--accent-primary);
+  box-shadow:0 0 0 3px rgba(143,132,255,0.18);
+}
 
+/* Buttons */
 button.primary{
   width:100%;
   padding:16px;
@@ -224,6 +242,39 @@ body.light .theme-switch .thumb{
 body.light .theme-switch .thumb .sun{opacity:1;}
 body.light .theme-switch .thumb .moon{opacity:0;}
 
+/* NEW: make the “deselected” track icons visible in light mode (moon/sun on the track) */
+.theme-switch .track-icons{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+  pointer-events:none;
+  opacity:.9;
+}
+.theme-switch .track-icons svg{
+  width:16px;
+  height:16px;
+  stroke:rgba(255,255,255,0.65);
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+/* Light mode: deselected icons become darker (like placeholder text) */
+body.light .theme-switch .track-icons svg{
+  stroke:var(--toggle-icon-deselected);
+}
+
+/* Slightly reduce opacity of the icon on the “active” side to look deselected (subtle) */
+body.light .theme-switch .track-icons .sun-track{
+  opacity:.55; /* sun is active in light mode; make it look less prominent */
+}
+body.light .theme-switch .track-icons .moon-track{
+  opacity:.9;  /* moon is inactive/deselected but should still be visible */
+}
+
 @media(max-width:1000px){
   .hero{flex-direction:column;}
   .panel{width:100%;}
@@ -234,7 +285,26 @@ body.light .theme-switch .thumb .moon{opacity:0;}
 <body>
 <div class="hero-bg"></div>
 
-<button class="theme-switch" id="themeSwitch" type="button">
+<button class="theme-switch" id="themeSwitch" type="button" aria-label="Toggle theme">
+  <div class="track-icons" aria-hidden="true">
+    <!-- moon (left) -->
+    <svg class="moon-track" viewBox="0 0 24 24">
+      <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
+    </svg>
+    <!-- sun (right) -->
+    <svg class="sun-track" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path>
+      <path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="M4.93 19.07l1.41-1.41"></path>
+      <path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
+  </div>
+
   <div class="thumb">
     <svg class="moon" viewBox="0 0 24 24">
       <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
@@ -269,9 +339,9 @@ body.light .theme-switch .thumb .moon{opacity:0;}
       <button class="primary" type="submit">Start Your Journey</button>
     </form>
 
-      <div class="panel-media">
-        <img src="watch.png" alt="">
-      </div>
+    <div class="panel-media">
+      <img src="watch.png" alt="">
+    </div>
   </div>
 
   <div class="panel">
@@ -295,16 +365,17 @@ body.light .theme-switch .thumb .moon{opacity:0;}
       <button class="primary" type="submit">Book Strategy Call</button>
     </form>
 
-      <div class="panel-media">
-        <img src="device.png" alt="">
-      </div>
+    <div class="panel-media">
+      <img src="device.png" alt="">
+    </div>
   </div>
 
 </section>
 
 <script>
-const themeSwitch=document.getElementById('themeSwitch');
-themeSwitch.addEventListener('click',()=>{
+const themeSwitch = document.getElementById('themeSwitch');
+
+themeSwitch.addEventListener('click', () => {
   document.body.classList.toggle('light');
 });
 </script>
