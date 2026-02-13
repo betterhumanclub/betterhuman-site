@@ -1,345 +1,289 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Better Human | The Future of Preventive Health</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-/* -----------------------------------------------------------
-   CORE VARIABLES & THEME ENGINE
------------------------------------------------------------ */
-:root {
-  /* DARK MODE (Default - Purple Atmospheric) */
-  --bg-dark: #0c0c15;
-  --glass-dark: rgba(20, 20, 35, 0.4);
-  --border-dark: rgba(255, 255, 255, 0.08);
-  --text-dark: #ffffff;
-  --sub-dark: #c9c7f2;
+:root{
+  --bg-dark:#0c0c15;
+  --glass-dark:rgba(20,20,35,.4);
+  --border-dark:rgba(255,255,255,.08);
+  --text-dark:#ffffff;
+  --sub-dark:#c9c7f2;
 
-  /* LIGHT MODE (VC Modern) */
-  --bg-light: #f5f4f8;
-  --glass-light: rgba(255, 255, 255, 0.85);
-  --border-light: rgba(0, 0, 0, 0.06);
-  --text-light: #111111;
-  --sub-light: #555555;
+  --bg-light:#f5f4f8;
+  --glass-light:rgba(255,255,255,.85);
+  --border-light:rgba(0,0,0,.06);
+  --text-light:#111111;
+  --sub-light:#555555;
 
-  /* ACCENTS */
-  --accent-primary: #8f84ff;
-  --accent-secondary: #786bff;
-  --success: #00dbb5;
+  --accent-primary:#8f84ff;
+  --accent-secondary:#786bff;
+  --success:#00dbb5;
 }
 
-body {
-  margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  transition: background 0.4s ease, color 0.4s ease;
-  background: var(--bg-dark);
-  color: var(--text-dark);
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased;
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  transition:background .35s ease,color .35s ease;
+  background:var(--bg-dark);
+  color:var(--text-dark);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+body.light{
+  background:var(--bg-light);
+  color:var(--text-light);
 }
 
-body.light {
-  background: var(--bg-light);
-  color: var(--text-light);
-}
-
-/* -----------------------------------------------------------
-   ATMOSPHERIC BACKGROUNDS
------------------------------------------------------------ */
-.hero-bg {
-  position: fixed;
-  inset: 0;
+/* Animated Background */
+.hero-bg{
+  position:fixed;
+  inset:0;
   background:
-    radial-gradient(circle at 20% 30%, rgba(143,132,255,0.25), transparent 40%),
-    radial-gradient(circle at 80% 80%, rgba(120,107,255,0.15), transparent 45%);
-  filter: blur(80px);
-  animation: pulse 10s ease-in-out infinite alternate;
-  z-index: -1;
-  pointer-events: none;
+    radial-gradient(circle at 20% 30%, rgba(143,132,255,.25), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(120,107,255,.15), transparent 45%);
+  filter:blur(80px);
+  animation:pulse 10s ease-in-out infinite alternate;
+  z-index:-1;
+  pointer-events:none;
 }
-
-body.light .hero-bg {
+body.light .hero-bg{
   background:
-    radial-gradient(circle at 20% 30%, rgba(143,132,255,0.15), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(200,200,200,0.2), transparent 50%);
+    radial-gradient(circle at 20% 30%, rgba(143,132,255,.15), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(200,200,200,.2), transparent 50%);
+}
+@keyframes pulse{
+  0%{transform:scale(1);opacity:.8;}
+  100%{transform:scale(1.05);opacity:1;}
 }
 
-@keyframes pulse {
-  0% { transform: scale(1); opacity: 0.8; }
-  100% { transform: scale(1.05); opacity: 1; }
+/* Hero */
+.hero{
+  max-width:1300px;
+  margin:100px auto;
+  padding:70px 60px;
+  border-radius:32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  position:relative;
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  background:var(--glass-dark);
+  border:1px solid var(--border-dark);
+  box-shadow:0 40px 100px rgba(0,0,0,.25);
+}
+body.light .hero{
+  background:var(--glass-light);
+  border:1px solid var(--border-light);
+  box-shadow:0 30px 60px rgba(0,0,0,.08);
 }
 
-/* -----------------------------------------------------------
-   GLASS HERO CONTAINER
------------------------------------------------------------ */
-.hero {
-  max-width: 1300px;
-  margin: 100px auto;
-  padding: 70px 60px;
-  border-radius: 32px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  position: relative;
-  
-  /* Glassmorphism */
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  background: var(--glass-dark);
-  border: 1px solid var(--border-dark);
-  box-shadow: 0 40px 100px rgba(0,0,0,0.25);
+.panel{width:42%;display:flex;flex-direction:column;z-index:2;}
+h1{font-size:38px;font-weight:700;line-height:1.15;margin:0 0 20px;letter-spacing:-.02em;}
+p{font-size:17px;line-height:1.6;color:var(--sub-dark);margin:0 0 25px;}
+body.light p{color:var(--sub-light);}
+
+.tag{
+  display:inline-block;
+  padding:6px 12px;
+  border-radius:20px;
+  background:rgba(143,132,255,.15);
+  color:#a095ff;
+  font-size:12px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.05em;
+  margin-bottom:15px;
+  width:fit-content;
+}
+body.light .tag{
+  background:rgba(143,132,255,.1);
+  color:#6b5eff;
 }
 
-body.light .hero {
-  background: var(--glass-light);
-  border: 1px solid var(--border-light);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+/* Forms */
+form{
+  background:rgba(0,0,0,.2);
+  padding:25px;
+  border-radius:20px;
+  border:1px solid var(--border-dark);
+}
+body.light form{
+  background:#fff;
+  border:1px solid var(--border-light);
+  box-shadow:0 10px 30px rgba(0,0,0,.03);
 }
 
-/* -----------------------------------------------------------
-   LAYOUT PANELS
------------------------------------------------------------ */
-.panel {
-  width: 42%;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
+input,select{
+  width:100%;
+  padding:14px 16px;
+  margin-bottom:12px;
+  border-radius:12px;
+  border:1px solid transparent;
+  background:rgba(30,30,43,.6);
+  color:white;
+  font-family:inherit;
+  font-size:15px;
+  transition:.2s ease;
+}
+input:focus,select:focus{
+  outline:none;
+  border-color:var(--accent-primary);
+  background:rgba(30,30,43,.9);
+}
+body.light input,body.light select{
+  background:#f9f9fc;
+  color:#111;
+  border:1px solid #e0e0e0;
+}
+body.light input:focus,body.light select:focus{
+  background:#fff;
+  border-color:var(--accent-primary);
 }
 
-h1 {
-  font-size: 38px;
-  font-weight: 700;
-  line-height: 1.15;
-  margin: 0 0 20px 0;
-  letter-spacing: -0.02em;
+/* Buttons */
+button{
+  width:100%;
+  padding:16px;
+  border-radius:12px;
+  border:none;
+  font-size:16px;
+  font-weight:600;
+  background:linear-gradient(135deg,var(--accent-primary),var(--accent-secondary));
+  color:white;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(120,107,255,.3);
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+button:hover{
+  transform:translateY(-2px);
+  box-shadow:0 15px 35px rgba(120,107,255,.5);
 }
 
-p {
-  font-size: 17px;
-  line-height: 1.6;
-  color: var(--sub-dark);
-  margin: 0 0 25px 0;
+/* Device */
+.device-container{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:flex-end;
+  pointer-events:none;
+  z-index:10;
+  height:100%;
+  justify-content:center;
+}
+.device-container img.phone{
+  height:115%;
+  max-height:800px;
+  width:auto;
+  filter:drop-shadow(0 30px 60px rgba(0,0,0,.6));
+  animation:floatPhone 8s ease-in-out infinite;
+  position:relative;
+  bottom:-60px;
+}
+.device-container img.watch{
+  width:200px;
+  position:absolute;
+  left:-110px;
+  bottom:60px;
+  filter:drop-shadow(0 20px 40px rgba(0,0,0,.5));
+  animation:floatWatch 9s ease-in-out infinite reverse;
+}
+@keyframes floatPhone{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+@keyframes floatWatch{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* ICON TOGGLE (with glow + rotation animation) */
+.theme-toggle{
+  position:fixed;
+  top:30px;
+  right:30px;
+  width:48px;
+  height:48px;
+  border-radius:50%;
+  border:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:100;
+
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.15);
+  color:white;
+
+  transition:transform .25s ease, background .25s ease, box-shadow .25s ease;
+  box-shadow:0 10px 25px rgba(120,107,255,.18);
+}
+.theme-toggle:hover{
+  transform:scale(1.08);
+  background:rgba(255,255,255,.16);
+  box-shadow:0 14px 40px rgba(120,107,255,.28);
+}
+body.light .theme-toggle{
+  background:rgba(0,0,0,.06);
+  border:1px solid rgba(0,0,0,.1);
+  color:#111;
+  box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+body.light .theme-toggle:hover{
+  background:rgba(0,0,0,.1);
+  box-shadow:0 14px 34px rgba(0,0,0,.10);
+}
+.theme-toggle svg{
+  transition:transform .35s ease, opacity .2s ease;
+  transform-origin:center;
+}
+.theme-toggle.spin svg{
+  transform:rotate(180deg) scale(1.05);
 }
 
-body.light p { color: var(--sub-light); }
-
-.tag {
-  display: inline-block;
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: rgba(143,132,255,0.15);
-  color: #a095ff;
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 15px;
-  width: fit-content;
-}
-body.light .tag {
-  background: rgba(143,132,255,0.1);
-  color: #6b5eff;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 25px 0;
-}
-ul li {
-  margin-bottom: 12px;
-  font-size: 15px;
-  color: var(--sub-dark);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-body.light ul li { color: var(--sub-light); }
-ul li svg { fill: var(--success); width: 18px; }
-
-/* -----------------------------------------------------------
-   FORMS
------------------------------------------------------------ */
-form {
-  background: rgba(0,0,0,0.2);
-  padding: 25px;
-  border-radius: 20px;
-  border: 1px solid var(--border-dark);
-}
-body.light form {
-  background: #ffffff;
-  border: 1px solid var(--border-light);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-}
-
-input, textarea, select {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 14px 16px;
-  margin-bottom: 12px;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  background: rgba(30, 30, 43, 0.6);
-  color: white;
-  font-family: inherit;
-  font-size: 15px;
-  transition: 0.2s;
-}
-
-input:focus, textarea:focus, select:focus {
-  outline: none;
-  border-color: var(--accent-primary);
-  background: rgba(30, 30, 43, 0.9);
-}
-
-body.light input,
-body.light textarea,
-body.light select {
-  background: #f9f9fc;
-  color: #111;
-  border: 1px solid #e0e0e0;
-}
-body.light input:focus {
-  background: #fff;
-  border-color: var(--accent-primary);
-}
-
-button {
-  width: 100%;
-  padding: 16px;
-  border-radius: 12px;
-  border: none;
-  font-size: 16px;
-  font-weight: 600;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(120,107,255,0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin-top: 5px;
-}
-
-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 35px rgba(120,107,255,0.5);
-}
-
-/* -----------------------------------------------------------
-   CENTER DEVICE (OVERLAPPING)
------------------------------------------------------------ */
-.device-container {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: flex-end;
-  pointer-events: none;
-  z-index: 10;
-  height: 100%; /* Ensures it stays within hero flow */
-  justify-content: center;
-}
-
-/* The Phone */
-.device-container img.phone {
-  height: 115%; /* Makes it break out of the top/bottom slightly */
-  width: auto;
-  max-height: 800px;
-  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
-  animation: floatPhone 8s ease-in-out infinite;
-  position: relative;
-  bottom: -60px;
-}
-
-/* The Watch */
-.device-container img.watch {
-  width: 200px;
-  position: absolute;
-  left: -110px;
-  bottom: 60px;
-  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
-  animation: floatWatch 9s ease-in-out infinite reverse;
-}
-
-@keyframes floatPhone {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
-}
-@keyframes floatWatch {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-/* -----------------------------------------------------------
-   THEME TOGGLE
------------------------------------------------------------ */
-.theme-toggle {
-  position: fixed;
-  top: 30px;
-  right: 30px;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-  padding: 10px 18px;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  z-index: 100;
-  transition: 0.3s;
-}
-.theme-toggle:hover { background: rgba(255,255,255,0.2); }
-
-body.light .theme-toggle {
-  background: rgba(0,0,0,0.05);
-  border: 1px solid rgba(0,0,0,0.1);
-  color: #111;
-}
-body.light .theme-toggle:hover { background: rgba(0,0,0,0.1); }
-
-/* -----------------------------------------------------------
-   RESPONSIVE
------------------------------------------------------------ */
-@media (max-width: 1100px) {
-  .hero {
-    flex-direction: column;
-    padding: 40px 30px;
-    margin: 80px 20px;
-    gap: 60px;
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce){
+  .hero-bg, .device-container img.phone, .device-container img.watch{
+    animation:none !important;
   }
-  .panel { width: 100%; order: 1; }
-  
-  /* On mobile, move devices to the middle visually */
-  .device-container {
-    position: relative;
-    height: 400px;
-    order: 2;
-    transform: none;
-    left: auto;
-    bottom: auto;
-    margin: 40px 0;
+  .theme-toggle svg{
+    transition:none !important;
   }
-  .device-container img.phone {
-    height: 100%;
-    bottom: 0;
+}
+
+/* Responsive */
+@media(max-width:1100px){
+  .hero{flex-direction:column;padding:40px 30px;margin:80px 20px;gap:60px;}
+  .panel{width:100%;order:1;}
+  .device-container{
+    position:relative;
+    height:400px;
+    order:2;
+    transform:none;
+    left:auto;
+    bottom:auto;
+    margin:40px 0;
   }
-  .device-container img.watch {
-    width: 140px;
-    left: 20px;
-    bottom: 20px;
-  }
+  .device-container img.phone{height:100%;bottom:0;}
+  .device-container img.watch{width:140px;left:20px;bottom:20px;}
 }
 </style>
 </head>
 
 <body>
-
 <div class="hero-bg"></div>
-<button class="theme-toggle" onclick="toggleTheme()" id="toggleBtn">Switch to Light Mode</button>
+
+<button class="theme-toggle" id="toggleBtn" aria-label="Toggle Theme" onclick="toggleTheme()">
+  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+    <path id="iconPath" fill="currentColor"
+      d="M21 12.79A9 9 0 0111.21 3 7 7 0 1019 20.79 9 9 0 0121 12.79z"/>
+  </svg>
+</button>
 
 <section class="hero">
 
@@ -347,11 +291,11 @@ body.light .theme-toggle:hover { background: rgba(0,0,0,0.1); }
     <div class="tag">For Individuals</div>
     <h1>Clinical Intelligence.<br>Physician-Led Oversight.</h1>
     <p>Personalized biomarker testing, AI-optimized supplementation, and continuous optimization. Get the same care as top-tier athletes for under $2/day.</p>
-    
+
     <form action="https://formsubmit.co/info@betterhumanclub.com" method="POST">
       <input type="hidden" name="_subject" value="New Member Inquiry">
       <input type="hidden" name="_captcha" value="false">
-      
+      <input type="hidden" name="_next" value="https://betterhumanclub.com/">
       <input type="text" name="name" placeholder="Full Name" required>
       <input type="email" name="email" placeholder="Email Address" required>
       <button type="submit">Start Your Journey</button>
@@ -367,20 +311,14 @@ body.light .theme-toggle:hover { background: rgba(0,0,0,0.1); }
     <div class="tag">For Enterprise</div>
     <h1>Preventive Intelligence.<br>Reduce Health Costs.</h1>
     <p>Serving companies from 50 to 1M+ employees. We help you reduce absenteeism and insurance claims through proactive health data.</p>
-    
-    <ul>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Reduce insurance premiums</li>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Executive health dashboards</li>
-      <li><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> HIPAA Compliant & Secure</li>
-    </ul>
 
     <form action="https://formsubmit.co/info@betterhumanclub.com" method="POST">
       <input type="hidden" name="_subject" value="Enterprise Inquiry">
       <input type="hidden" name="_captcha" value="false">
-      
+      <input type="hidden" name="_next" value="https://betterhumanclub.com/">
       <input type="text" name="company" placeholder="Company Name" required>
       <input type="email" name="work_email" placeholder="Work Email" required>
-      <select name="employees">
+      <select name="employees" required>
         <option value="" disabled selected>Employee Count</option>
         <option>50 - 100</option>
         <option>100 - 500</option>
@@ -395,26 +333,61 @@ body.light .theme-toggle:hover { background: rgba(0,0,0,0.1); }
 </section>
 
 <script>
-  function toggleTheme() {
-    const body = document.body;
-    const btn = document.getElementById('toggleBtn');
-    body.classList.toggle('light');
-    
-    if (body.classList.contains('light')) {
-      localStorage.setItem('theme', 'light');
-      btn.innerText = 'Switch to Dark Mode';
-    } else {
-      localStorage.setItem('theme', 'dark');
-      btn.innerText = 'Switch to Light Mode';
-    }
+const iconPath = document.getElementById('iconPath');
+const toggleBtn = document.getElementById('toggleBtn');
+
+function setDarkIcon(){
+  // Moon
+  iconPath.setAttribute("d","M21 12.79A9 9 0 0111.21 3 7 7 0 1019 20.79 9 9 0 0121 12.79z");
+}
+function setLightIcon(){
+  // Sun
+  iconPath.setAttribute("d","M12 4.5V2m0 20v-2.5m7.07-7.07H22m-20 0h2.93M17.66 6.34l1.77-1.77M4.57 19.43l1.77-1.77m0-11.32L4.57 4.57m13.09 13.09l1.77 1.77M12 7a5 5 0 100 10 5 5 0 000-10z");
+}
+
+function applyTheme(theme){
+  if(theme === 'light'){
+    document.body.classList.add('light');
+    setLightIcon();
+  }else{
+    document.body.classList.remove('light');
+    setDarkIcon();
+  }
+}
+
+function toggleTheme(){
+  // animate icon
+  toggleBtn.classList.add('spin');
+  window.setTimeout(() => toggleBtn.classList.remove('spin'), 350);
+
+  const isLight = document.body.classList.toggle('light');
+  const newTheme = isLight ? 'light' : 'dark';
+  localStorage.setItem('theme', newTheme);
+  applyTheme(newTheme);
+}
+
+/* System preference auto-detection (only if user hasn't chosen yet) */
+(function initTheme(){
+  const savedTheme = localStorage.getItem('theme');
+  if(savedTheme === 'light' || savedTheme === 'dark'){
+    applyTheme(savedTheme);
+    return;
   }
 
-  // Init Theme
-  const savedTheme = localStorage.getItem('theme');
-  if (savedTheme === 'light') {
-    document.body.classList.add('light');
-    document.getElementById('toggleBtn').innerText = 'Switch to Dark Mode';
+  const prefersLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+  applyTheme(prefersLight ? 'light' : 'dark');
+
+  // Optional: if OS theme changes and user hasn't chosen, follow OS
+  if(window.matchMedia){
+    const mq = window.matchMedia('(prefers-color-scheme: light)');
+    mq.addEventListener?.('change', (e) => {
+      const stillNoChoice = !localStorage.getItem('theme');
+      if(stillNoChoice){
+        applyTheme(e.matches ? 'light' : 'dark');
+      }
+    });
   }
+})();
 </script>
 
 </body>
