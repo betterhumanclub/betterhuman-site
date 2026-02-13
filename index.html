@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Better Human</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- UPDATED FONT: MANROPE -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
@@ -14,7 +15,7 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
 body{
-  font-family:'Inter',sans-serif;
+  font-family:'Manrope',sans-serif; /* UPDATED */
   background:radial-gradient(circle at 30% 20%,#2b237c,#090b1e 70%);
   color:white;
   overflow-x:hidden;
@@ -37,7 +38,7 @@ body.light .glass{
 /* ------------------ LAYOUT ------------------ */
 
 section{
-  padding:70px 10%; /* reduced whitespace */
+  padding:70px 10%;
 }
 
 .hero{
@@ -119,18 +120,18 @@ ul{
   margin-top:25px;
 }
 
-/* APP GRID FIXED */
+/* APP GRID */
 
 .app-grid{
   display:flex;
   justify-content:center;
-  align-items:flex-end; /* align bottoms */
+  align-items:flex-end;
   gap:50px;
   margin-top:45px;
 }
 
 .app-grid img{
-  height:520px;  /* force equal height */
+  height:520px;
   width:auto;
   object-fit:contain;
   display:block;
@@ -199,27 +200,6 @@ body.light .theme-switch{
   border:1px solid rgba(0,0,0,.10);
 }
 
-.theme-switch .track-icons{
-  position:absolute;
-  inset:0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 10px;
-  pointer-events:none;
-}
-
-.theme-switch .track-icons svg{
-  width:16px;height:16px;
-  stroke:rgba(255,255,255,.65);
-  fill:none;
-  stroke-width:2;
-}
-
-body.light .theme-switch .track-icons svg{
-  stroke:#606776;
-}
-
 .theme-switch .thumb{
   width:28px;
   height:28px;
@@ -236,20 +216,19 @@ body.light .theme-switch .thumb{
   transform:translateX(28px);
 }
 
-.theme-switch .thumb svg{
-  position:absolute;
-  top:50%;
-  left:50%;
-  width:18px;height:18px;
-  transform:translate(-50%,-50%);
+.theme-switch svg{
+  width:18px;
+  height:18px;
   stroke:white;
   fill:none;
   stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
-.theme-switch .thumb .sun{opacity:0;}
-body.light .theme-switch .thumb .sun{opacity:1;}
-body.light .theme-switch .thumb .moon{opacity:0;}
+.sun{display:none;}
+body.light .sun{display:block;}
+body.light .moon{display:none;}
 
 /* RESPONSIVE */
 
@@ -273,13 +252,24 @@ body.light .theme-switch .thumb .moon{opacity:0;}
 <body>
 
 <button class="theme-switch" id="themeSwitch" type="button">
-  <div class="track-icons">
-    <svg viewBox="0 0 24 24"><path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path></svg>
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle></svg>
-  </div>
   <div class="thumb">
-    <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path></svg>
-    <svg class="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle></svg>
+    <!-- Moon -->
+    <svg class="moon" viewBox="0 0 24 24">
+      <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
+    </svg>
+
+    <!-- Sun -->
+    <svg class="sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path>
+      <path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="M4.93 19.07l1.41-1.41"></path>
+      <path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
   </div>
 </button>
 
@@ -360,13 +350,11 @@ body.light .theme-switch .thumb .moon{opacity:0;}
 </footer>
 
 <script>
-/* THEME TOGGLE */
 const themeSwitch=document.getElementById('themeSwitch');
 themeSwitch.addEventListener('click',()=>{
   document.body.classList.toggle('light');
 });
 
-/* FADE IN ON SCROLL */
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
