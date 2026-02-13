@@ -9,7 +9,8 @@
 
 <style>
 
-/* FORCE MANROPE EVERYWHERE */
+/* ================= BASE ================= */
+
 *{
   margin:0;
   padding:0;
@@ -31,13 +32,15 @@ body.light{
   background:#ffffff;
   color:#111;
 }
+
 body.light .glass{
   background:rgba(0,0,0,0.05);
   border:1px solid rgba(0,0,0,0.1);
   box-shadow:none;
 }
 
-/* LAYOUT */
+/* ================= LAYOUT ================= */
+
 section{padding:70px 10%;}
 
 .hero{
@@ -86,7 +89,8 @@ ul{
   transition:0.35s ease;
 }
 
-/* BUTTON */
+/* ================= BUTTON ================= */
+
 .btn{
   background:linear-gradient(90deg,#8f84ff,#6a5cff);
   padding:16px 32px;
@@ -97,49 +101,59 @@ ul{
   transition:0.25s ease;
   color:white;
 }
+
 .btn:hover{
   box-shadow:0 0 35px rgba(143,132,255,.6);
   transform:translateY(-3px);
 }
 
-/* DEVICE */
+/* ================= DEVICE ================= */
+
 .devices{
   display:flex;
   gap:30px;
   margin-top:30px;
   align-items:flex-end;
 }
+
 .devices img{
   width:240px;
 }
 
 .dashboard{margin-top:25px;}
 
-/* ===== APP GRID — PERFECT ALIGNMENT ===== */
+/* ================= APP GRID ================= */
 
 .app-grid{
   display:flex;
   justify-content:center;
-  align-items:flex-end;   /* Align bottoms */
-  gap:60px;               /* Even spacing */
+  align-items:flex-end;
+  gap:60px;
   margin-top:50px;
 }
 
 .app-grid img{
-  height:540px;           /* EXACT SAME HEIGHT */
+  height:520px;
   width:auto;
   object-fit:contain;
   display:block;
 }
 
-/* SUPPLEMENTS */
+/* Make recovery slightly smaller so all appear equal */
+.app-grid img:first-child{
+  height:500px;
+}
+
+/* ================= SUPPLEMENTS ================= */
+
 .supplements{
   display:flex;
   justify-content:center;
   margin-top:45px;
 }
+
 .supplements img{
-  width:min(850px, 100%);
+  width:min(850px,100%);
   height:auto;
   display:block;
 }
@@ -147,6 +161,7 @@ ul{
 .center{text-align:center;}
 
 footer{padding:70px 10%;}
+
 .footer-inner{text-align:center;padding:45px;}
 
 .footer-email{
@@ -156,41 +171,139 @@ footer{padding:70px 10%;}
   padding-bottom:2px;
   transition:0.2s ease;
 }
+
 .footer-email:hover{
   border-bottom-color:rgba(255,255,255,0.6);
 }
+
 body.light .footer-email{
   border-bottom-color:rgba(0,0,0,0.25);
 }
+
 body.light .footer-email:hover{
   border-bottom-color:rgba(0,0,0,0.6);
 }
 
-/* FADE */
+/* ================= FADE ================= */
+
 .fade{
   opacity:0;
   transform:translateY(40px);
   transition:all .8s ease;
 }
+
 .fade.show{
   opacity:1;
   transform:translateY(0);
 }
 
-/* RESPONSIVE */
+/* ================= THEME TOGGLE ================= */
+
+.theme-switch{
+  position:fixed;
+  top:22px;
+  right:22px;
+  width:72px;
+  height:36px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  z-index:100;
+  padding:4px;
+  display:flex;
+  align-items:center;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(12px);
+  transition:0.25s ease;
+}
+
+body.light .theme-switch{
+  background:rgba(0,0,0,.06);
+  border:1px solid rgba(0,0,0,.10);
+}
+
+.track-icons{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 10px;
+  pointer-events:none;
+}
+
+.track-icons svg{
+  width:16px;
+  height:16px;
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.track-icons .sun-track{
+  stroke:rgba(255,255,255,.55);
+  opacity:1;
+}
+
+.track-icons .moon-track{
+  stroke:rgba(255,255,255,.55);
+  opacity:0.25;
+}
+
+body.light .track-icons .moon-track{
+  stroke:rgba(0,0,0,.5);
+  opacity:1;
+}
+
+body.light .track-icons .sun-track{
+  stroke:rgba(0,0,0,.5);
+  opacity:0.25;
+}
+
+.theme-switch .thumb{
+  width:28px;
+  height:28px;
+  border-radius:50%;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#8f84ff,#6a5cff);
+  box-shadow:0 10px 20px rgba(120,107,255,.35);
+  transition:transform .28s ease;
+}
+
+body.light .theme-switch .thumb{
+  transform:translateX(36px);
+}
+
+.theme-switch .thumb svg{
+  position:absolute;
+  top:50%;
+  left:50%;
+  width:18px;
+  height:18px;
+  transform:translate(-50%,-50%);
+  stroke:white;
+  fill:none;
+  stroke-width:2;
+}
+
+.theme-switch .thumb .sun{opacity:0;}
+body.light .theme-switch .thumb .sun{opacity:1;}
+body.light .theme-switch .thumb .moon{opacity:0;}
+
+/* ================= RESPONSIVE ================= */
+
 @media(max-width:1000px){
   section{padding:60px 6%;}
   .hero{flex-direction:column;}
   .hero-left,.hero-right{width:100%;}
-  .devices{flex-direction:column;align-items:center;}
-  .app-grid{
-    flex-direction:column;
-    align-items:center;
-    gap:40px;
-  }
-  .app-grid img{
-    height:420px; /* scaled down evenly */
-  }
+  .devices,.app-grid{flex-direction:column;align-items:center;}
+  .app-grid img{height:420px;}
+  .app-grid img:first-child{height:400px;}
   h1{font-size:40px;}
   h2{font-size:30px;}
 }
@@ -200,7 +313,42 @@ body.light .footer-email:hover{
 
 <body>
 
-<!-- HERO -->
+<button class="theme-switch" id="themeSwitch" type="button">
+  <div class="track-icons">
+    <svg class="moon-track" viewBox="0 0 24 24">
+      <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
+    </svg>
+    <svg class="sun-track" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path>
+      <path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="M4.93 19.07l1.41-1.41"></path>
+      <path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
+  </div>
+
+  <div class="thumb">
+    <svg class="moon" viewBox="0 0 24 24">
+      <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
+    </svg>
+    <svg class="sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path>
+      <path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path>
+      <path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path>
+      <path d="M20 12h2"></path>
+      <path d="M4.93 19.07l1.41-1.41"></path>
+      <path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
+  </div>
+</button>
+
 <section class="hero fade">
 
   <div class="hero-left glass">
@@ -213,13 +361,11 @@ body.light .footer-email:hover{
       Personalized biomarker testing, AI-optimized supplementation, and continuous performance monitoring — all for less than $2 per day.
     </p>
 
-    <button class="btn">
-      Ask Us How We Help You Live Better, Longer
-    </button>
+    <button class="btn">Ask Us How We Help You Live Better, Longer</button>
 
     <div class="devices">
-      <img src="device.png" alt="">
-      <img src="watch.png" alt="">
+      <img src="device.png">
+      <img src="watch.png">
     </div>
   </div>
 
@@ -243,22 +389,20 @@ body.light .footer-email:hover{
 
 </section>
 
-<!-- APP SECTION -->
 <section class="fade">
   <h2 class="center">Integrated Performance Intelligence</h2>
   <div class="app-grid">
-    <img src="recovery.png" alt="">
-    <img src="macro.png" alt="">
-    <img src="workout.png" alt="">
+    <img src="recovery.png">
+    <img src="macro.png">
+    <img src="workout.png">
   </div>
 </section>
 
-<!-- SUPPLEMENTS -->
 <section class="fade">
   <h2 class="center">Precision Supplementation</h2>
   <p class="center">Formulated by Harvard-Trained Physicians.</p>
   <div class="supplements">
-    <img src="supplements.png" alt="">
+    <img src="supplements.png">
   </div>
 </section>
 
@@ -275,6 +419,11 @@ body.light .footer-email:hover{
 </footer>
 
 <script>
+const themeSwitch=document.getElementById('themeSwitch');
+themeSwitch.addEventListener('click',()=>{
+  document.body.classList.toggle('light');
+});
+
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
