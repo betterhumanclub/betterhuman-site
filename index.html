@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-
 /* FORCE MANROPE EVERYWHERE */
 *{
   margin:0;
@@ -18,9 +17,7 @@
   font-family:'Manrope';
 }
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth;}
 
 body{
   background:radial-gradient(circle at 30% 20%,#2b237c,#090b1e 70%);
@@ -30,12 +27,10 @@ body{
 }
 
 /* LIGHT MODE */
-
 body.light{
   background:#ffffff;
   color:#111;
 }
-
 body.light .glass{
   background:rgba(0,0,0,0.05);
   border:1px solid rgba(0,0,0,0.1);
@@ -43,10 +38,7 @@ body.light .glass{
 }
 
 /* LAYOUT */
-
-section{
-  padding:70px 10%;
-}
+section{padding:70px 10%;}
 
 .hero{
   display:flex;
@@ -93,13 +85,7 @@ ul{
 }
 
 /* BUTTONS + FORM ELEMENTS */
-
-button,
-input,
-select,
-textarea{
-  font-family:'Manrope';
-}
+button,input,select,textarea{font-family:'Manrope';}
 
 .btn{
   background:linear-gradient(90deg,#8f84ff,#6a5cff);
@@ -111,31 +97,22 @@ textarea{
   transition:0.25s ease;
   color:white;
 }
-
 .btn:hover{
   box-shadow:0 0 35px rgba(143,132,255,.6);
   transform:translateY(-3px);
 }
 
 /* DEVICE & VISUALS */
-
 .devices{
   display:flex;
   gap:30px;
   margin-top:30px;
   align-items:flex-end;
 }
+.devices img{width:240px;}
+.dashboard{margin-top:25px;}
 
-.devices img{
-  width:240px;
-}
-
-.dashboard{
-  margin-top:25px;
-}
-
-/* APP GRID */
-
+/* APP GRID (force same sizing for all 3 images) */
 .app-grid{
   display:flex;
   justify-content:center;
@@ -143,22 +120,19 @@ textarea{
   gap:50px;
   margin-top:45px;
 }
-
 .app-grid img{
-  height:520px;
-  width:auto;
-  object-fit:contain;
+  width:300px;          /* same width for each */
+  height:520px;         /* same height for each */
+  object-fit:contain;   /* keeps image proportions inside the same box */
   display:block;
 }
 
 /* SUPPLEMENTS */
-
 .supplements{
   display:flex;
   justify-content:center;
   margin-top:45px;
 }
-
 .supplements img{
   width:min(850px, 100%);
   height:auto;
@@ -167,30 +141,41 @@ textarea{
 
 .center{text-align:center;}
 
-footer{
-  padding:70px 10%;
-}
+footer{padding:70px 10%;}
+.footer-inner{text-align:center;padding:45px;}
 
-.footer-inner{
-  text-align:center;
-  padding:45px;
+/* Make footer email link match style */
+.footer-email{
+  color:inherit;
+  text-decoration:none;
+  opacity:0.9;
+  border-bottom:1px solid rgba(255,255,255,0.25);
+  padding-bottom:2px;
+  transition:0.2s ease;
+}
+.footer-email:hover{
+  opacity:1;
+  border-bottom-color:rgba(255,255,255,0.55);
+}
+body.light .footer-email{
+  border-bottom-color:rgba(0,0,0,0.25);
+}
+body.light .footer-email:hover{
+  border-bottom-color:rgba(0,0,0,0.5);
 }
 
 /* FADE-IN */
-
 .fade{
   opacity:0;
   transform:translateY(40px);
   transition:all .8s ease;
 }
-
 .fade.show{
   opacity:1;
   transform:translateY(0);
 }
 
-/* THEME TOGGLE */
-
+/* THEME TOGGLE (active icon in thumb + greyed icon on track) */
 .theme-switch{
   position:fixed;
   top:22px;
@@ -204,15 +189,20 @@ footer{
   padding:4px;
   display:flex;
   align-items:center;
+
   background:rgba(255,255,255,.10);
   border:1px solid rgba(255,255,255,.18);
   backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
   transition:0.25s ease;
 }
-
 body.light .theme-switch{
   background:rgba(0,0,0,.06);
   border:1px solid rgba(0,0,0,.10);
+}
+.theme-switch:focus-visible{
+  outline:2px solid rgba(143,132,255,.9);
+  outline-offset:3px;
 }
 
 .track-icons{
@@ -224,7 +214,6 @@ body.light .theme-switch{
   padding:0 10px;
   pointer-events:none;
 }
-
 .track-icons svg{
   width:16px;
   height:16px;
@@ -232,28 +221,30 @@ body.light .theme-switch{
   stroke-width:2;
   stroke-linecap:round;
   stroke-linejoin:round;
+  transition:opacity .2s ease, stroke .2s ease;
 }
 
+/* DARK mode: grey sun visible, moon greyed because active */
 .track-icons .sun-track{
   stroke:rgba(255,255,255,.55);
   opacity:1;
 }
-
 .track-icons .moon-track{
   stroke:rgba(255,255,255,.55);
   opacity:0.25;
 }
 
+/* LIGHT mode: grey moon visible, sun greyed because active */
 body.light .track-icons .moon-track{
-  stroke:rgba(0,0,0,.5);
+  stroke:rgba(0,0,0,.50);
   opacity:1;
 }
-
 body.light .track-icons .sun-track{
-  stroke:rgba(0,0,0,.5);
+  stroke:rgba(0,0,0,.50);
   opacity:0.25;
 }
 
+/* Thumb */
 .theme-switch .thumb{
   width:28px;
   height:28px;
@@ -265,8 +256,8 @@ body.light .track-icons .sun-track{
   background:linear-gradient(135deg,#8f84ff,#6a5cff);
   box-shadow:0 10px 20px rgba(120,107,255,.35);
   transition:transform .28s ease;
+  will-change:transform;
 }
-
 body.light .theme-switch .thumb{
   transform:translateX(36px);
 }
@@ -281,35 +272,39 @@ body.light .theme-switch .thumb{
   stroke:white;
   fill:none;
   stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  transition:opacity .18s ease, transform .28s ease;
 }
-
-.theme-switch .thumb .sun{opacity:0;}
-body.light .theme-switch .thumb .sun{opacity:1;}
-body.light .theme-switch .thumb .moon{opacity:0;}
+.theme-switch .thumb .sun{opacity:0; transform:translate(-50%,-50%) rotate(-90deg) scale(.7);}
+.theme-switch .thumb .moon{opacity:1; transform:translate(-50%,-50%) rotate(0) scale(1);}
+body.light .theme-switch .thumb .sun{opacity:1; transform:translate(-50%,-50%) rotate(0) scale(1);}
+body.light .theme-switch .thumb .moon{opacity:0; transform:translate(-50%,-50%) rotate(90deg) scale(.7);}
 
 /* RESPONSIVE */
-
 @media(max-width:1000px){
   section{padding:60px 6%;}
   .hero{flex-direction:column;}
   .hero-left,.hero-right{width:100%;}
   .devices,.app-grid{flex-direction:column;align-items:center;}
   .devices img{width:280px;}
-  .app-grid img{height:420px;}
+  .app-grid img{width:min(320px,92%); height:420px;}
   h1{font-size:40px;}
   h2{font-size:30px;}
 }
-
 </style>
 </head>
 
 <body>
 
-<button class="theme-switch" id="themeSwitch" type="button">
-  <div class="track-icons">
+<button class="theme-switch" id="themeSwitch" type="button" role="switch" aria-checked="false" aria-label="Toggle light/dark mode">
+  <div class="track-icons" aria-hidden="true">
+    <!-- Moon (left) -->
     <svg class="moon-track" viewBox="0 0 24 24">
       <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
     </svg>
+
+    <!-- Sun (right) -->
     <svg class="sun-track" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="4"></circle>
       <path d="M12 2v2"></path>
@@ -322,10 +317,14 @@ body.light .theme-switch .thumb .moon{opacity:0;}
       <path d="M17.66 6.34l1.41-1.41"></path>
     </svg>
   </div>
-  <div class="thumb">
+
+  <div class="thumb" aria-hidden="true">
+    <!-- Active Moon -->
     <svg class="moon" viewBox="0 0 24 24">
       <path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path>
     </svg>
+
+    <!-- Active Sun -->
     <svg class="sun" viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="4"></circle>
       <path d="M12 2v2"></path>
@@ -340,8 +339,11 @@ body.light .theme-switch .thumb .moon{opacity:0;}
   </div>
 </button>
 
+<!-- HERO -->
 <section class="hero fade">
-  <div class="hero-left">
+
+  <!-- LEFT SECTION NOW HAS THE SAME GLASS BOX -->
+  <div class="hero-left glass">
     <h1>
       Clinical Intelligence.<br>
       Physician-Led Oversight from Harvard & Stanford-Trained Doctors.
@@ -356,14 +358,20 @@ body.light .theme-switch .thumb .moon{opacity:0;}
     </button>
 
     <div class="devices">
-      <img src="device.png">
-      <img src="watch.png">
+      <img src="device.png" alt="Better Human Device">
+      <img src="watch.png" alt="Recovery Wearable">
     </div>
   </div>
 
+  <!-- RIGHT SECTION (ALREADY GLASS) -->
   <div class="hero-right glass">
-    <h2>We Help You Save Millions in Healthcare Costs.</h2>
-    <p>Serving enterprises from 50 to 1,000,000+ employees.</p>
+    <h2>
+      We Help You Save Millions in Healthcare Costs.
+    </h2>
+
+    <p>
+      Serving enterprises from 50 to 1,000,000+ employees.
+    </p>
 
     <ul>
       <li>✓ Reduce insurance claims</li>
@@ -372,28 +380,33 @@ body.light .theme-switch .thumb .moon{opacity:0;}
       <li>✓ Real-time executive dashboards</li>
     </ul>
 
-    <button class="btn">Book Enterprise Strategy Call</button>
+    <button class="btn">
+      Book Enterprise Strategy Call
+    </button>
 
     <div class="dashboard">
-      <img src="dashboard.png" width="100%">
+      <img src="dashboard.png" width="100%" alt="Executive Dashboard">
     </div>
   </div>
+
 </section>
 
+<!-- APP SECTION -->
 <section class="fade">
   <h2 class="center">Integrated Performance Intelligence</h2>
   <div class="app-grid">
-    <img src="recovery.png">
-    <img src="macro.png">
-    <img src="workout.png">
+    <img src="recovery.png" alt="Recovery Screen">
+    <img src="macro.png" alt="Macro Tracking Screen">
+    <img src="workout.png" alt="Live Workout Screen">
   </div>
 </section>
 
+<!-- SUPPLEMENTS -->
 <section class="fade">
   <h2 class="center">Precision Supplementation</h2>
   <p class="center">Formulated by Harvard-Trained Physicians.</p>
   <div class="supplements">
-    <img src="supplements.png">
+    <img src="supplements.png" alt="Magnesium, Zinc, and Vitamin D supplements">
   </div>
 </section>
 
@@ -401,16 +414,21 @@ body.light .theme-switch .thumb .moon{opacity:0;}
   <div class="glass footer-inner">
     <h3>Better Human</h3>
     <p>Prevention-first healthcare infrastructure.</p>
-    <p>info@betterhumanclub.com</p>
+    <p>
+      <a class="footer-email" href="mailto:info@betterhumanclub.com">info@betterhumanclub.com</a>
+    </p>
   </div>
 </footer>
 
 <script>
-const themeSwitch=document.getElementById('themeSwitch');
-themeSwitch.addEventListener('click',()=>{
+/* THEME TOGGLE */
+const themeSwitch = document.getElementById('themeSwitch');
+themeSwitch.addEventListener('click', ()=>{
   document.body.classList.toggle('light');
+  themeSwitch.setAttribute('aria-checked', document.body.classList.contains('light') ? 'true' : 'false');
 });
 
+/* FADE IN ON SCROLL */
 const observer=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     if(entry.isIntersecting){
