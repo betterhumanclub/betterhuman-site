@@ -158,31 +158,31 @@ body.light .btn-secondary:hover{background:rgba(0,0,0,0.05);}
 .form-hint{font-size:12px;opacity:0.75;line-height:1.4;}
 .form-error{margin-top:10px;font-size:13px;color:#ffd1d1;display:none;}
 body.light .form-error{color:#b00020;}
+
+.success-box{
+  display:none;
+  margin-top:14px;
+  padding:14px;
+  border-radius:14px;
+  border:1px solid rgba(143,132,255,0.35);
+  background:rgba(143,132,255,0.12);
+  font-size:13px;
+  line-height:1.5;
+}
+body.light .success-box{
+  border:1px solid rgba(0,0,0,0.12);
+  background:rgba(0,0,0,0.04);
+}
+
 body.modal-open{overflow:hidden;}
 
-/* Thank-you view inside modal */
+/* Modal views */
 .modal-view{display:none;}
 .modal-view.active{display:block;}
-.thankyou-wrap{
-  padding:8px 2px 6px;
-}
-.thankyou-title{
-  font-size:22px;
-  font-weight:800;
-  margin-top:4px;
-}
-.thankyou-text{
-  margin-top:10px;
-  opacity:0.9;
-  font-size:15px;
-  line-height:1.55;
-}
-.thankyou-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-  margin-top:18px;
-}
+.thankyou-wrap{padding:8px 2px 6px;}
+.thankyou-title{font-size:22px;font-weight:800;margin-top:4px;}
+.thankyou-text{margin-top:10px;opacity:0.9;font-size:15px;line-height:1.55;}
+.thankyou-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;}
 
 @media(max-width:1000px){
   section{padding:60px 6%;}
@@ -278,9 +278,6 @@ body.modal-open{overflow:hidden;}
   </div>
 </footer>
 
-<!-- Hidden iframe so form submits without navigating away -->
-<iframe name="submitFrame" id="submitFrame" style="display:none;"></iframe>
-
 <!-- POPUP MODAL -->
 <div class="modal-overlay" id="leadModal" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
@@ -295,23 +292,7 @@ body.modal-open{overflow:hidden;}
         <button class="modal-close" id="leadModalClose" type="button" aria-label="Close">×</button>
       </div>
 
-      <form
-        id="leadForm"
-        target="submitFrame"
-        method="POST"
-        action="https://formsubmit.co/info@betterhumanclub.com"
-        novalidate
-      >
-        <!-- FormSubmit options -->
-        <input type="hidden" name="_subject" value="New lead from Better Human lander">
-        <input type="hidden" name="_template" value="table">
-        <input type="hidden" name="_captcha" value="true">
-
-        <!-- Helpful context fields -->
-        <input type="hidden" id="leadCta" name="cta" value="">
-        <input type="hidden" id="leadPage" name="page" value="">
-        <input type="hidden" id="leadTime" name="submitted_at" value="">
-
+      <form id="leadForm" novalidate>
         <div class="form-grid">
           <div class="field">
             <label for="leadName">Name</label>
@@ -344,6 +325,10 @@ body.modal-open{overflow:hidden;}
 
         <div class="form-error" id="leadError">
           Please enter a name, a valid email, a phone number, and check the consent box.
+        </div>
+
+        <div class="success-box" id="leadPending">
+          Sending…
         </div>
 
         <div class="form-actions">
@@ -400,8 +385,10 @@ document.querySelectorAll(".fade").forEach(el => observer.observe(el));
 const leadModal = document.getElementById('leadModal');
 const leadModalClose = document.getElementById('leadModalClose');
 const leadCancel = document.getElementById('leadCancel');
+
 const leadForm = document.getElementById('leadForm');
 const leadError = document.getElementById('leadError');
+const leadPending = document.getElementById('leadPending');
 
 const leadName = document.getElementById('leadName');
 const leadEmail = document.getElementById('leadEmail');
@@ -411,17 +398,12 @@ const smsConsent = document.getElementById('smsConsent');
 const ctaConsumer = document.getElementById('ctaConsumer');
 const ctaEnterprise = document.getElementById('ctaEnterprise');
 
-const leadCta = document.getElementById('leadCta');
-const leadPage = document.getElementById('leadPage');
-const leadTime = document.getElementById('leadTime');
-
 const viewForm = document.getElementById('viewForm');
 const viewThankYou = document.getElementById('viewThankYou');
 const thankYouCloseX = document.getElementById('thankYouCloseX');
 const thankYouCloseBtn = document.getElementById('thankYouCloseBtn');
 
 let leadSource = "Unknown CTA";
-let iframeHasLoadedOnce = false;
 
 function setView(which){
   if(which === "thankyou"){
@@ -441,17 +423,10 @@ function openLeadModal(source){
       ? "Share your info and we’ll schedule time with your team."
       : "Share your info and we’ll reach out with next steps.";
 
-  // Start on the form view every time
   setView("form");
-
-  // Reset UI state & form
   leadError.style.display = 'none';
+  leadPending.style.display = 'none';
   leadForm.reset();
-
-  // Fill hidden context fields
-  leadCta.value = leadSource;
-  leadPage.value = window.location.href;
-  leadTime.value = new Date().toISOString();
 
   leadModal.classList.add('open');
   leadModal.setAttribute('aria-hidden','false');
@@ -484,34 +459,80 @@ function isValidEmail(email){
 }
 function clean(s){ return String(s || "").trim(); }
 
-/* Validate before submit */
-leadForm.addEventListener('submit', (e) => {
+/*
+  FormSubmit AJAX endpoint (per their docs) :contentReference[oaicite:4]{index=4}
+  - We also disable captcha to prevent silent failures for embedded flows :contentReference[oaicite:5]{index=5}
+*/
+async function submitToFormSubmit(payload){
+  const url = "https://formsubmit.co/ajax/info@betterhumanclub.com";
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json"
+    },
+    body: payload
+  });
+
+  // FormSubmit typically returns JSON for /ajax/
+  let data = null;
+  try { data = await res.json(); } catch (_) {}
+
+  if(!res.ok){
+    const msg = (data && (data.message || data.error)) ? (data.message || data.error) : "Submission failed.";
+    throw new Error(msg);
+  }
+
+  return data;
+}
+
+leadForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
   const name = clean(leadName.value);
   const email = clean(leadEmail.value);
   const phone = clean(leadPhone.value);
 
   const ok = name.length >= 2 && isValidEmail(email) && phone.length >= 7 && smsConsent.checked;
   if(!ok){
-    e.preventDefault();
     leadError.style.display = 'block';
+    leadPending.style.display = 'none';
     return;
   }
-  leadError.style.display = 'none';
-});
 
-/*
-  After the form POST completes, FormSubmit will load a response into the iframe.
-  We use that load event to switch to a "Thank you" view.
-*/
-document.getElementById('submitFrame').addEventListener('load', () => {
-  if(!iframeHasLoadedOnce){
-    iframeHasLoadedOnce = true; // ignore initial empty load
-    return;
+  leadError.style.display = 'none';
+  leadPending.textContent = "Sending…";
+  leadPending.style.display = 'block';
+
+  // Build FormData (ensures fields arrive with names)
+  const fd = new FormData();
+  fd.append("name", name);
+  fd.append("email", email);
+  fd.append("phone", phone);
+  fd.append("sms_consent", "true");
+
+  // FormSubmit options (from docs) :contentReference[oaicite:6]{index=6}
+  fd.append("_subject", `New lead from Better Human lander (${leadSource})`);
+  fd.append("_template", "table");
+  fd.append("_captcha", "false"); // disable reCAPTCHA to avoid embed/captcha dead-ends :contentReference[oaicite:7]{index=7}
+  fd.append("cta", leadSource);
+  fd.append("page", window.location.href);
+  fd.append("submitted_at", new Date().toISOString());
+
+  try{
+    await submitToFormSubmit(fd);
+
+    // Success → show thank you
+    leadPending.style.display = "none";
+    setView("thankyou");
+    setTimeout(() => thankYouCloseBtn.focus(), 0);
+  } catch(err){
+    // Failure → show message
+    leadPending.style.display = "none";
+    leadError.textContent = "Sorry — we couldn’t submit your inquiry right now. Please try again, or email info@betterhumanclub.com.";
+    leadError.style.display = "block";
+    console.error(err);
   }
-  // Show thank-you message (standard inquiry confirmation)
-  setView("thankyou");
-  // Move focus for accessibility
-  setTimeout(() => thankYouCloseBtn.focus(), 0);
 });
 </script>
 
