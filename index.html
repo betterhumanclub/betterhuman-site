@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/css/intlTelInput.css">
 
 <style>
-/* (Same styles as your prior version — unchanged except kept here for copy/paste completeness) */
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Manrope';}
 html{scroll-behavior:smooth;}
 body{background:radial-gradient(circle at 30% 20%,#2b237c,#090b1e 70%);color:white;overflow-x:hidden;transition:0.35s ease;}
@@ -25,6 +24,7 @@ ul{margin:20px 0;line-height:1.8;font-size:17px;}
 body.light .glass{background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);box-shadow:none;}
 .btn{background:linear-gradient(90deg,#8f84ff,#6a5cff);padding:16px 32px;border-radius:14px;border:none;font-weight:600;cursor:pointer;transition:0.25s ease;color:white;}
 .btn:hover{box-shadow:0 0 35px rgba(143,132,255,.6);transform:translateY(-3px);}
+
 .dashboard-section{padding-top:0;}
 .dashboard-wrap{margin:0 auto;max-width:1100px;overflow:hidden;}
 .dashboard-img{width:100%;display:block;border-radius:20px;}
@@ -40,6 +40,7 @@ footer{padding:70px 10%;}
 .footer-email:hover{border-bottom-color:rgba(255,255,255,0.6);}
 body.light .footer-email{border-bottom-color:rgba(0,0,0,0.25);}
 body.light .footer-email:hover{border-bottom-color:rgba(0,0,0,0.6);}
+
 .fade{opacity:0;transform:translateY(40px);transition:all .8s ease;}
 .fade.show{opacity:1;transform:translateY(0);}
 
@@ -263,6 +264,7 @@ body.modal-open{overflow:hidden;}
           <div class="field" id="fieldPhone">
             <label for="leadPhone">Phone</label>
             <input id="leadPhone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" required />
+            <div class="error-label" id="phoneError">Please enter a valid phone number.</div>
           </div>
         </div>
 
@@ -345,6 +347,9 @@ const smsConsent = document.getElementById('smsConsent');
 const fieldEmail = document.getElementById('fieldEmail');
 const emailError = document.getElementById('emailError');
 
+const fieldPhone = document.getElementById('fieldPhone');
+const phoneError = document.getElementById('phoneError');
+
 const ctaConsumer = document.getElementById('ctaConsumer');
 const ctaEnterprise = document.getElementById('ctaEnterprise');
 
@@ -387,26 +392,117 @@ leadEmail.addEventListener("blur", setEmailValidity);
 
 /* Helpers */
 function digitsOnly(s){ return String(s || "").replace(/\D/g, ""); }
+function clampE164Digits(digits){ return digits.slice(0, 15); } // E.164 max is 15 digits (country code + national number)
 
-/* Phone formatting */
-function formatPhoneUniversal(){
+/*
+  === Phone formatting + length proofing ===
+  Requirements:
+  - User types only digits (we enforce).
+  - If user begins with the selected country's dial code, we display it as "+<dial> ..." and format as they type.
+  - US: should show parentheses while typing (e.g., "+1 (415) 555-2671").
+  - "Error proof": user cannot type beyond the max possible length for the selected country.
+    We enforce:
+      1) E.164 global max (15 digits total)
+      2) Country-specific max by trimming when the lib-based "too long" error appears.
+*/
+function getDialCode(){
+  return String(iti?.getSelectedCountryData()?.dialCode || "");
+}
+function getIso2(){
+  return String(iti?.getSelectedCountryData()?.iso2 || "us").toUpperCase();
+}
+
+/* Determine if the current digit stream begins with the selected country's calling code */
+function startsWithSelectedDial(digits){
+  const dc = getDialCode();
+  return dc && digits.startsWith(dc);
+}
+
+/* Use libphonenumber-js to format */
+function formatDigitsAsYouType(iso2, digits, asInternational){
+  const formatter = new libphonenumber.AsYouType(iso2);
+  return asInternational ? formatter.input("+" + digits) : formatter.input(digits);
+}
+
+/*
+  Country-specific max length trimming using intl-tel-input utils when available.
+  We build a candidate E.164 string and ask for the validation error.
+  If TOO_LONG, we trim digits until it's no longer TOO_LONG.
+*/
+function trimTooLongForCountry(digits){
+  // Always enforce E.164 max first
+  digits = clampE164Digits(digits);
+
+  if(!iti || !window.intlTelInputUtils) return digits;
+
+  const iso2Lower = String(iti.getSelectedCountryData()?.iso2 || "us");
+  const dial = getDialCode();
+  if(!dial) return digits;
+
+  const asIntl = startsWithSelectedDial(digits);
+  // Candidate E.164-ish string for validation:
+  const candidate = asIntl ? ("+" + digits) : ("+" + dial + digits);
+
+  // intl-tel-input error codes: 0=IS_POSSIBLE, 1=INVALID_COUNTRY_CODE, 2=TOO_SHORT, 3=TOO_LONG, 4=INVALID_NUMBER
+  // We'll treat 3 as "too long".
+  const TOO_LONG = 3;
+
+  // If already too long, trim until not too long.
+  let d = digits;
+  let safeGuard = 40;
+  while(safeGuard-- > 0){
+    const cand = asIntl ? ("+" + d) : ("+" + dial + d);
+    const err = window.intlTelInputUtils.getValidationError(cand, iso2Lower);
+    if(err !== TOO_LONG) break;
+    d = d.slice(0, -1);
+    if(!d) break;
+  }
+  return d;
+}
+
+/*
+  US fix:
+  libphonenumber's INTERNATIONAL format for US is typically "+1 415 555 2671" (no parentheses).
+  To meet your requirement, when dial code is included and US is selected, we render:
+    "+1 " + NATIONAL_FORMAT
+  which yields "+1 (415) 555-2671" while typing.
+*/
+function formatPhone(){
   if(!iti || !window.libphonenumber) return;
 
-  const iso2 = (iti.getSelectedCountryData()?.iso2 || "us").toUpperCase();
-  const dialCode = String(iti.getSelectedCountryData()?.dialCode || "");
-  const digits = digitsOnly(leadPhone.value);
+  const iso2 = getIso2();
+  const dial = getDialCode();
 
-  const startsWithDial = dialCode && digits.startsWith(dialCode);
+  // Extract digits from whatever is displayed
+  let digits = digitsOnly(leadPhone.value);
 
-  const formatter = new libphonenumber.AsYouType(iso2);
-  const formatted = startsWithDial ? formatter.input("+" + digits) : formatter.input(digits);
+  // Enforce hard max (15 digits) and country-specific too-long trimming
+  digits = clampE164Digits(digits);
+  digits = trimTooLongForCountry(digits);
+
+  // Decide mode
+  const asIntl = startsWithSelectedDial(digits);
+
+  let formatted = "";
+
+  if(asIntl && iso2 === "US" && digits.startsWith("1")){
+    // digits includes the "1" country code already
+    const nationalDigits = digits.slice(1); // strip country code
+    const nat = formatDigitsAsYouType("US", nationalDigits, false); // NATIONAL => (XXX) XXX-XXXX while typing
+    formatted = "+1 " + nat;
+  } else {
+    // For all other cases:
+    // - If dial code is included, show + and format international.
+    // - Otherwise format national.
+    formatted = formatDigitsAsYouType(iso2, digits, asIntl);
+  }
 
   if(formatted && formatted !== leadPhone.value){
     leadPhone.value = formatted;
   }
 }
 
-/* Digits-only typing enforcement */
+/* Digits-only typing enforcement (user types digits only; UI can display + ( ) - spaces) */
 leadPhone.addEventListener("beforeinput", (e) => {
   if(e.inputType && e.inputType.startsWith("delete")) return;
   if(typeof e.data !== "string") return;
@@ -421,33 +517,42 @@ leadPhone.addEventListener("paste", (e) => {
   }
 });
 
-/*
-  === United States always first ===
+/* Phone validity UI */
+function setPhoneValidity(){
+  // Run a format pass first so iti reads a consistent value
+  formatPhone();
 
-  intl-tel-input builds a UL (.iti__country-list) and updates it dynamically.
-  "preferredCountries" only pins US to a preferred section, not necessarily first overall.
-  To guarantee US is literally the first list row no matter the current selection:
-  - We observe the dropdown list for changes and continuously move the US row to the top.
-  - We also call it on init and on countrychange.
-*/
+  let ok = digitsOnly(leadPhone.value).length >= 7;
+
+  if(iti && window.intlTelInputUtils){
+    ok = iti.isValidNumber();
+    // also fail if too short/too long immediately
+    const err = iti.getValidationError();
+    if(err === 2 || err === 3) ok = false;
+  }
+
+  if(!ok && leadPhone.value.trim().length > 0){
+    fieldPhone.classList.add("invalid");
+    phoneError.style.display = "block";
+  } else {
+    fieldPhone.classList.remove("invalid");
+    phoneError.style.display = "none";
+  }
+  return ok;
+}
+
+/* Keep US first in dropdown always */
 let usObserver = null;
-
 function ensureUnitedStatesFirst(){
   if(!iti) return;
   const root = iti.telInput && iti.telInput.closest(".iti");
   if(!root) return;
   const list = root.querySelector(".iti__country-list");
   if(!list) return;
-
   const us = list.querySelector('.iti__country[data-country-code="us"]');
   if(!us) return;
-
-  // Put US as the very first element in the list
-  if(list.firstElementChild !== us){
-    list.insertBefore(us, list.firstElementChild);
-  }
+  if(list.firstElementChild !== us) list.insertBefore(us, list.firstElementChild);
 }
-
 function startUSAlwaysFirstObserver(){
   if(!iti) return;
   const root = iti.telInput && iti.telInput.closest(".iti");
@@ -455,16 +560,8 @@ function startUSAlwaysFirstObserver(){
   const list = root.querySelector(".iti__country-list");
   if(!list) return;
 
-  // Clean up any previous observer
-  if(usObserver){
-    usObserver.disconnect();
-    usObserver = null;
-  }
-
-  usObserver = new MutationObserver(() => {
-    ensureUnitedStatesFirst();
-  });
-
+  if(usObserver){ usObserver.disconnect(); usObserver = null; }
+  usObserver = new MutationObserver(() => ensureUnitedStatesFirst());
   usObserver.observe(list, { childList:true, subtree:false });
   ensureUnitedStatesFirst();
 }
@@ -482,6 +579,8 @@ function openLeadModal(source){
   leadPending.style.display = 'none';
   fieldEmail.classList.remove("invalid");
   emailError.style.display = "none";
+  fieldPhone.classList.remove("invalid");
+  phoneError.style.display = "none";
   leadForm.reset();
 
   leadModal.classList.add('open');
@@ -491,32 +590,25 @@ function openLeadModal(source){
   if(!iti){
     iti = window.intlTelInput(leadPhone, {
       initialCountry: "us",
-      preferredCountries: ["us"],   // still good UX (top "preferred" section)
+      preferredCountries: ["us"],
       nationalMode: true,
       separateDialCode: false,
-      formatOnDisplay: false,       // we format ourselves
+      formatOnDisplay: false, // we format ourselves
       autoPlaceholder: "aggressive",
       loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
     });
 
-    leadPhone.addEventListener("input", formatPhoneUniversal);
-    leadPhone.addEventListener("blur", formatPhoneUniversal);
+    leadPhone.addEventListener("input", () => { formatPhone(); setPhoneValidity(); });
+    leadPhone.addEventListener("blur", () => { formatPhone(); setPhoneValidity(); });
     leadPhone.addEventListener("countrychange", () => {
-      formatPhoneUniversal();
       ensureUnitedStatesFirst();
+      formatPhone();
+      setPhoneValidity();
     });
 
-    // Start the "always first" behavior after the plugin renders the list
-    setTimeout(() => {
-      startUSAlwaysFirstObserver();
-      ensureUnitedStatesFirst();
-    }, 0);
+    setTimeout(() => { startUSAlwaysFirstObserver(); ensureUnitedStatesFirst(); }, 0);
   } else {
-    // Re-attach behavior each time modal opens (safe in case DOM was rebuilt)
-    setTimeout(() => {
-      startUSAlwaysFirstObserver();
-      ensureUnitedStatesFirst();
-    }, 0);
+    setTimeout(() => { startUSAlwaysFirstObserver(); ensureUnitedStatesFirst(); }, 0);
   }
 
   setTimeout(() => leadName.focus(), 0);
@@ -530,6 +622,7 @@ function closeLeadModal(){
 
 ctaConsumer.addEventListener('click', () => openLeadModal("Live Better, Longer"));
 ctaEnterprise.addEventListener('click', () => openLeadModal("Enterprise Strategy Call"));
+
 leadModalClose.addEventListener('click', closeLeadModal);
 leadCancel.addEventListener('click', closeLeadModal);
 thankYouCloseX.addEventListener('click', closeLeadModal);
@@ -539,6 +632,17 @@ leadModal.addEventListener('click', (e) => { if(e.target === leadModal) closeLea
 document.addEventListener('keydown', (e) => {
   if(e.key === 'Escape' && leadModal.classList.contains('open')) closeLeadModal();
 });
+
+/* CTA elements exist in page */
+function bindCTA(){
+  // (These IDs are in your file from earlier iterations)
+  // If your markup differs, update these IDs accordingly.
+  const btn1 = document.getElementById("ctaConsumer");
+  const btn2 = document.getElementById("ctaEnterprise");
+  if(btn1) btn1.addEventListener("click", () => openLeadModal("Live Better, Longer"));
+  if(btn2) btn2.addEventListener("click", () => openLeadModal("Enterprise Strategy Call"));
+}
+bindCTA();
 
 /* FormSubmit AJAX */
 async function submitToFormSubmit(payload){
@@ -556,29 +660,17 @@ async function submitToFormSubmit(payload){
 leadForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  // Final formatting pass
-  formatPhoneUniversal();
-
+  // Final formatting + validations
+  formatPhone();
   const name = String(leadName.value || "").trim();
   const email = String(leadEmail.value || "").trim();
   const emailOk = isValidEmail(email);
-
   if(!emailOk){
     fieldEmail.classList.add("invalid");
     emailError.style.display = "block";
   }
 
-  const phoneDigits = digitsOnly(leadPhone.value);
-  const phoneOkBasic = phoneDigits.length >= 7;
-
-  let phoneOk = phoneOkBasic;
-  let phoneE164 = leadPhone.value;
-
-  if(iti && window.intlTelInputUtils){
-    phoneOk = iti.isValidNumber();
-    const e164 = iti.getNumber();
-    if(e164) phoneE164 = e164;
-  }
+  const phoneOk = setPhoneValidity();
 
   const ok = name.length >= 2 && emailOk && phoneOk && smsConsent.checked;
   if(!ok){
@@ -591,13 +683,20 @@ leadForm.addEventListener('submit', async (e) => {
   leadPending.textContent = "Sending…";
   leadPending.style.display = 'block';
 
+  // Canonical E.164 when possible
+  let phoneE164 = leadPhone.value;
+  if(iti && window.intlTelInputUtils){
+    const e164 = iti.getNumber();
+    if(e164) phoneE164 = e164;
+  }
+
   const fd = new FormData();
   fd.append("name", name);
   fd.append("email", email);
-  fd.append("phone", leadPhone.value);
+  fd.append("phone", leadPhone.value);     // formatted display (US will be +1 (XXX) XXX-XXXX if they started with 1)
   fd.append("phone_e164", phoneE164);
-  fd.append("sms_consent", "true");
 
+  fd.append("sms_consent", "true");
   fd.append("_subject", `New lead from Better Human lander (${leadSource})`);
   fd.append("_template", "table");
   fd.append("_captcha", "false");
@@ -617,6 +716,12 @@ leadForm.addEventListener('submit', async (e) => {
     console.error(err);
   }
 });
+
+/* Fade-in init */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("show"); });
+},{threshold:0.1});
+document.querySelectorAll(".fade").forEach(el => io.observe(el));
 </script>
 
 </body>
