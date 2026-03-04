@@ -7,7 +7,7 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Intl Tel Input (phone formatting + country picker) -->
+<!-- Intl Tel Input (country picker) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/css/intlTelInput.css">
 
 <style>
@@ -131,7 +131,7 @@ body.light .field input{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,
 .iti{width:100%;}
 .iti__tel-input{
   width:100% !important;
-  padding:14px 14px 14px 54px !important; /* room for flag */
+  padding:14px 14px 14px 54px !important;
   border-radius:14px !important;
   border:1px solid rgba(255,255,255,0.16) !important;
   background:rgba(255,255,255,0.06) !important;
@@ -148,8 +148,6 @@ body.light .iti__tel-input{
   background:rgba(0,0,0,0.04) !important;
   border:1px solid rgba(0,0,0,0.12) !important;
 }
-
-/* Dropdown background + BLACK text */
 .iti__country-list{
   background:#ffffff !important;
   color:#111 !important;
@@ -159,22 +157,15 @@ body.light .iti__tel-input{
   overflow:hidden;
   max-height:280px;
 }
-.iti__country,
-.iti__country-name,
-.iti__dial-code{
-  color:#111 !important;
-}
-.iti__country:hover,
-.iti__country.iti__highlight{
-  background:rgba(0,0,0,0.06) !important;
-}
+.iti__country,.iti__country-name,.iti__dial-code{color:#111 !important;}
+.iti__country:hover,.iti__country.iti__highlight{background:rgba(0,0,0,0.06) !important;}
 .iti__search{padding:10px 10px 8px 10px !important;background:#ffffff !important;}
 .iti__search-input{
   color:#111 !important;
   background:#ffffff !important;
   border:1px solid rgba(0,0,0,0.14) !important;
   border-radius:12px !important;
-  padding:12px 14px 12px 42px !important; /* avoid magnifier overlap */
+  padding:12px 14px 12px 42px !important;
   font-size:14px !important;
   outline:none !important;
 }
@@ -187,28 +178,17 @@ body.light .iti__tel-input{
   opacity:0.65 !important;
 }
 
-.sms-consent{
-  margin-top:12px;
-  font-size:12px;
-  line-height:1.45;
-  opacity:0.85;
-}
+.sms-consent{margin-top:12px;font-size:12px;line-height:1.45;opacity:0.85;}
 .checkbox-row{
   display:flex;gap:10px;align-items:flex-start;margin-top:10px;
   padding:12px;border-radius:14px;
   border:1px solid rgba(255,255,255,0.14);
   background:rgba(255,255,255,0.04);
 }
-body.light .checkbox-row{
-  border:1px solid rgba(0,0,0,0.12);
-  background:rgba(0,0,0,0.03);
-}
+body.light .checkbox-row{border:1px solid rgba(0,0,0,0.12);background:rgba(0,0,0,0.03);}
 .checkbox-row input{margin-top:3px;}
 
-.form-actions{
-  display:flex;gap:12px;align-items:center;justify-content:space-between;
-  margin-top:16px;flex-wrap:wrap;
-}
+.form-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:16px;flex-wrap:wrap;}
 .btn-secondary{
   background:transparent;border:1px solid rgba(255,255,255,0.18);
   color:inherit;padding:14px 18px;border-radius:14px;cursor:pointer;
@@ -222,19 +202,13 @@ body.light .btn-secondary:hover{background:rgba(0,0,0,0.05);}
 .form-error{margin-top:10px;font-size:13px;color:#ffd1d1;display:none;}
 body.light .form-error{color:#b00020;}
 .success-box{
-  display:none;
-  margin-top:14px;
-  padding:14px;
-  border-radius:14px;
+  display:none;margin-top:14px;padding:14px;border-radius:14px;
   border:1px solid rgba(143,132,255,0.35);
   background:rgba(143,132,255,0.12);
-  font-size:13px;
-  line-height:1.5;
+  font-size:13px;line-height:1.5;
 }
-body.light .success-box{
-  border:1px solid rgba(0,0,0,0.12);
-  background:rgba(0,0,0,0.04);
-}
+body.light .success-box{border:1px solid rgba(0,0,0,0.12);background:rgba(0,0,0,0.04);}
+
 body.modal-open{overflow:hidden;}
 .modal-view{display:none;}
 .modal-view.active{display:block;}
@@ -417,8 +391,11 @@ body.modal-open{overflow:hidden;}
   </div>
 </div>
 
-<!-- Intl Tel Input JS -->
+<!-- Intl Tel Input JS (country picker + validation) -->
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/intlTelInput.min.js"></script>
+
+<!-- libphonenumber-js (as-you-type formatting for ALL countries) -->
+<script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.11.4/bundle/libphonenumber-js.min.js"></script>
 
 <script>
 /* Theme toggle */
@@ -467,6 +444,62 @@ function setView(which){
   }
 }
 
+function moveUnitedStatesToTop(){
+  // Force "United States" to be the FIRST clickable option in the dropdown list
+  // (not just the preferred section).
+  const root = iti && iti.telInput && iti.telInput.closest(".iti");
+  if(!root) return;
+
+  const list = root.querySelector(".iti__country-list");
+  if(!list) return;
+
+  const us = list.querySelector('.iti__country[data-country-code="us"]');
+  if(!us) return;
+
+  // Insert US as the first country row (after any search block which is not inside this UL in most builds)
+  // If the list starts with a preferred divider, this still places US at the top.
+  list.insertBefore(us, list.firstElementChild);
+}
+
+function formatPhoneAsYouType(){
+  // Use libphonenumber-js AsYouType formatting for the selected country.
+  // US requirement: after 3 digits -> "(XXX) " in the input.
+  if(!window.libphonenumber || !iti) return;
+
+  const iso2 = (iti.getSelectedCountryData()?.iso2 || "us").toUpperCase();
+
+  // Preserve leading + if the user explicitly types it
+  const raw = String(leadPhone.value || "");
+  const hasPlus = raw.trim().startsWith("+");
+
+  // Keep only digits if not international + format
+  const digitsOnly = raw.replace(/[^\d]/g, "");
+
+  // If user is typing a "+" number, let AsYouType handle it as international
+  const formatter = new libphonenumber.AsYouType(hasPlus ? undefined : iso2);
+
+  let formatted = formatter.input(hasPlus ? ("+" + digitsOnly) : digitsOnly);
+
+  // Special: US exactly 3 digits => "(XXX) " (with trailing space)
+  if(iso2 === "US" && !hasPlus) {
+    const d = digitsOnly.slice(0, 10);
+    if(d.length === 3) {
+      formatted = `(${d}) `;
+    }
+  }
+
+  // Avoid endless loops / cursor chaos: always keep caret at end (common on these landers)
+  if(formatted && formatted !== leadPhone.value){
+    leadPhone.value = formatted;
+  }
+}
+
+function reformatOnCountryChange(){
+  // When country changes, reformat existing digits to new country's pattern
+  formatPhoneAsYouType();
+}
+
+/* Open/close modal */
 function openLeadModal(source){
   leadSource = source || "Unknown CTA";
   document.getElementById('leadModalSubtitle').textContent =
@@ -483,74 +516,34 @@ function openLeadModal(source){
   leadModal.setAttribute('aria-hidden','false');
   document.body.classList.add('modal-open');
 
-  // Initialize intl-tel-input once.
+  // Initialize intl-tel-input once (country picker + E.164 on submit)
   if(!iti){
     iti = window.intlTelInput(leadPhone, {
       initialCountry: "us",
-      // This makes US numbers display in national format when US is selected:
-      // e.g. (415) 555-2671
+      preferredCountries: ["us"], // ensures US is in the preferred block
       nationalMode: true,
-      formatOnDisplay: true,
+      separateDialCode: false,
+      formatOnDisplay: false, // we are formatting as-you-type ourselves
       autoPlaceholder: "aggressive",
-
-      // Make "United States" first (preferred section at top)
-      preferredCountries: ["us"],
-
-      // Utils needed for formatting + validation
       loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
     });
 
-    // Format as user types for US numbers: (XXX) XXX-XXXX
-    // We do a light-touch approach while typing, then enforce on blur.
-    const maybeFormatUS = () => {
-      if(!window.intlTelInputUtils || !iti) return;
-      const country = iti.getSelectedCountryData()?.iso2;
-      if(country !== "us") return;
+    // As-you-type formatting (ALL countries)
+    leadPhone.addEventListener("input", formatPhoneAsYouType);
 
-      const digits = (leadPhone.value || "").replace(/\D/g, "");
-      // Only attempt once we have enough digits to be meaningful; avoid fighting the user early.
-      if(digits.length < 7) return;
+    // Also format on blur to clean it up
+    leadPhone.addEventListener("blur", formatPhoneAsYouType);
 
-      const formatted = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
-      if(formatted && formatted !== leadPhone.value){
-        leadPhone.value = formatted;
-      }
-    };
+    // When country changes, reformat
+    leadPhone.addEventListener("countrychange", reformatOnCountryChange);
 
-    // On input: try to keep US formatting pleasant
-    leadPhone.addEventListener("input", () => {
-      // If user is typing an international number with +, do not interfere.
-      if((leadPhone.value || "").trim().startsWith("+")) return;
-      maybeFormatUS();
-    });
-
-    // On blur: enforce a clean final format for US numbers
-    leadPhone.addEventListener("blur", () => {
-      if(!window.intlTelInputUtils || !iti) return;
-      const country = iti.getSelectedCountryData()?.iso2;
-      if(country === "us"){
-        const formatted = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
-        if(formatted) leadPhone.value = formatted; // (XXX) XXX-XXXX
-      } else {
-        // For international: set to international readable format when possible
-        const formattedIntl = iti.getNumber(window.intlTelInputUtils.numberFormat.INTERNATIONAL);
-        if(formattedIntl) leadPhone.value = formattedIntl;
-      }
-    });
-
-    // If the user changes country, re-format appropriately
-    leadPhone.addEventListener("countrychange", () => {
-      // Trigger blur-format logic without forcing focus changes
-      if(!window.intlTelInputUtils || !iti) return;
-      const country = iti.getSelectedCountryData()?.iso2;
-      if(country === "us"){
-        const formatted = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
-        if(formatted) leadPhone.value = formatted;
-      } else {
-        const formattedIntl = iti.getNumber(window.intlTelInputUtils.numberFormat.INTERNATIONAL);
-        if(formattedIntl) leadPhone.value = formattedIntl;
-      }
-    });
+    // After init, force US to the top of the dropdown list
+    // (wait a tick so the dropdown DOM exists)
+    setTimeout(moveUnitedStatesToTop, 0);
+  } else {
+    // Reset to US each time the modal opens
+    iti.setCountry("us");
+    setTimeout(moveUnitedStatesToTop, 0);
   }
 
   setTimeout(() => leadName.focus(), 0);
@@ -604,33 +597,18 @@ leadForm.addEventListener('submit', async (e) => {
   const name = clean(leadName.value);
   const email = clean(leadEmail.value);
 
-  // Ensure final formatting before send (US => (XXX) XXX-XXXX)
-  let phoneDisplay = clean(leadPhone.value);
+  // Ensure final formatting is applied before send
+  formatPhoneAsYouType();
+
+  const phoneDisplay = clean(leadPhone.value);
+
+  // Validate phone: prefer intl-tel-input utils if loaded, otherwise basic
+  let phoneValid = phoneDisplay.replace(/[^\d]/g, "").length >= 7;
   let phoneE164 = phoneDisplay;
-  let phoneValid = phoneDisplay.length >= 7;
 
   if(iti && window.intlTelInputUtils){
     phoneValid = iti.isValidNumber();
-
-    const country = iti.getSelectedCountryData()?.iso2;
-    if(country === "us"){
-      // Friendly/readable US display format
-      const usNational = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
-      if(usNational) {
-        phoneDisplay = usNational;       // (XXX) XXX-XXXX
-        leadPhone.value = usNational;    // keep UI consistent
-      }
-    } else {
-      // International readable format for display
-      const intl = iti.getNumber(window.intlTelInputUtils.numberFormat.INTERNATIONAL);
-      if(intl) {
-        phoneDisplay = intl;
-        leadPhone.value = intl;
-      }
-    }
-
-    // Canonical number for storage
-    const e164 = iti.getNumber(); // defaults to E.164 when possible
+    const e164 = iti.getNumber(); // E.164 when possible
     if(e164) phoneE164 = e164;
   }
 
@@ -654,12 +632,11 @@ leadForm.addEventListener('submit', async (e) => {
   fd.append("name", name);
   fd.append("email", email);
 
-  // Email gets the readable version + the canonical version
-  fd.append("phone", phoneDisplay);          // readable (US => (XXX) XXX-XXXX)
-  fd.append("phone_e164", phoneE164);        // canonical (+14155552671)
+  // Email includes a readable phone string + canonical E.164
+  fd.append("phone", phoneDisplay);
+  fd.append("phone_e164", phoneE164);
 
   fd.append("sms_consent", "true");
-
   fd.append("_subject", `New lead from Better Human lander (${leadSource})`);
   fd.append("_template", "table");
   fd.append("_captcha", "false");
