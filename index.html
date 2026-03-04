@@ -107,20 +107,23 @@ ul{
   transform:translateY(-3px);
 }
 
-/* ================= DEVICE ================= */
+/* ================= DASHBOARD (moved below top boxes) ================= */
 
-.devices{
-  display:flex;
-  gap:30px;
-  margin-top:30px;
-  align-items:flex-end;
+.dashboard-section{
+  padding-top:0;            /* removes extra whitespace between hero and dashboard */
 }
 
-.devices img{
-  width:240px;
+.dashboard-wrap{
+  margin:0 auto;
+  max-width:1100px;
+  overflow:hidden;
 }
 
-.dashboard{margin-top:25px;}
+.dashboard-img{
+  width:100%;
+  display:block;
+  border-radius:20px;
+}
 
 /* ================= APP GRID ================= */
 
@@ -301,7 +304,7 @@ body.light .theme-switch .thumb .moon{opacity:0;}
   section{padding:60px 6%;}
   .hero{flex-direction:column;}
   .hero-left,.hero-right{width:100%;}
-  .devices,.app-grid{flex-direction:column;align-items:center;}
+  .app-grid{flex-direction:column;align-items:center;}
   .app-grid img{height:420px;}
   .app-grid img:first-child{height:400px;}
   h1{font-size:40px;}
@@ -349,6 +352,7 @@ body.light .theme-switch .thumb .moon{opacity:0;}
   </div>
 </button>
 
+<!-- TOP TWO BOXES -->
 <section class="hero fade">
 
   <div class="hero-left glass">
@@ -362,11 +366,6 @@ body.light .theme-switch .thumb .moon{opacity:0;}
     </p>
 
     <button class="btn">Ask Us How We Help You Live Better, Longer</button>
-
-    <div class="devices">
-      <img src="device.png">
-      <img src="watch.png">
-    </div>
   </div>
 
   <div class="hero-right glass">
@@ -381,28 +380,33 @@ body.light .theme-switch .thumb .moon{opacity:0;}
     </ul>
 
     <button class="btn">Book Enterprise Strategy Call</button>
-
-    <div class="dashboard">
-      <img src="dashboard.png" width="100%">
-    </div>
   </div>
 
 </section>
 
+<!-- DASHBOARD MOVED BELOW THE TWO BOXES -->
+<section class="dashboard-section fade">
+  <div class="glass dashboard-wrap">
+    <img class="dashboard-img" src="dashboard.png" alt="Executive Dashboard">
+  </div>
+</section>
+
+<!-- APP SECTION -->
 <section class="fade">
   <h2 class="center">Integrated Performance Intelligence</h2>
   <div class="app-grid">
-    <img src="recovery.png">
-    <img src="macro.png">
-    <img src="workout.png">
+    <img src="recovery.png" alt="Recovery Screen">
+    <img src="macro.png" alt="Macro Screen">
+    <img src="workout.png" alt="Workout Screen">
   </div>
 </section>
 
+<!-- SUPPLEMENTS -->
 <section class="fade">
   <h2 class="center">Precision Supplementation</h2>
   <p class="center">Formulated by Harvard-Trained Physicians.</p>
   <div class="supplements">
-    <img src="supplements.png">
+    <img src="supplements.png" alt="Supplements">
   </div>
 </section>
 
