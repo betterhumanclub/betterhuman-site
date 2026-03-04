@@ -40,7 +40,6 @@ footer{padding:70px 10%;}
 .footer-email:hover{border-bottom-color:rgba(255,255,255,0.6);}
 body.light .footer-email{border-bottom-color:rgba(0,0,0,0.25);}
 body.light .footer-email:hover{border-bottom-color:rgba(0,0,0,0.6);}
-
 .fade{opacity:0;transform:translateY(40px);transition:all .8s ease;}
 .fade.show{opacity:1;transform:translateY(0);}
 
@@ -74,7 +73,7 @@ body.light .theme-switch .thumb .moon{opacity:0;}
 /* Modal */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:999;padding:22px;}
 .modal-overlay.open{display:flex;}
-.modal{width:min(560px, 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.14);background:rgba(12,14,40,0.78);box-shadow:0 25px 80px rgba(0,0,0,0.45);padding:26px;}
+.modal{width:min(580px, 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.14);background:rgba(12,14,40,0.78);box-shadow:0 25px 80px rgba(0,0,0,0.45);padding:26px;}
 body.light .modal{background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.12);box-shadow:0 25px 80px rgba(0,0,0,0.18);}
 .modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px;}
 .modal-title{font-size:20px;font-weight:700;line-height:1.2;}
@@ -185,6 +184,7 @@ body.modal-open{overflow:hidden;}
   </div>
 </button>
 
+<!-- TOP TWO BOXES -->
 <section class="hero fade">
   <div class="hero-left glass">
     <h1>Clinical Intelligence.<br>Physician-Led Oversight from Harvard & Stanford-Trained Doctors.</h1>
@@ -236,35 +236,35 @@ body.modal-open{overflow:hidden;}
   </div>
 </footer>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="leadModal" aria-hidden="true">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="leadModalTitle">
-    <div class="modal-view active" id="viewForm">
+<!-- MODAL: CONSUMER -->
+<div class="modal-overlay" id="modalConsumer" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="consumerTitle">
+    <div class="modal-view active" id="viewConsumerForm">
       <div class="modal-header">
         <div>
-          <div class="modal-title" id="leadModalTitle">Tell us where to reach you</div>
-          <div class="modal-subtitle" id="leadModalSubtitle">We’ll follow up shortly.</div>
+          <div class="modal-title" id="consumerTitle">Tell us where to reach you</div>
+          <div class="modal-subtitle">We’ll follow up shortly.</div>
         </div>
-        <button class="modal-close" id="leadModalClose" type="button" aria-label="Close">×</button>
+        <button class="modal-close" id="closeConsumer" type="button" aria-label="Close">×</button>
       </div>
 
-      <form id="leadForm" novalidate>
+      <form id="formConsumer" novalidate>
         <div class="form-grid">
-          <div class="field" id="fieldName">
-            <label for="leadName">Name</label>
-            <input id="leadName" name="name" type="text" autocomplete="name" required />
+          <div class="field" id="c_fieldName">
+            <label for="c_name">Name</label>
+            <input id="c_name" name="name" type="text" autocomplete="name" required />
           </div>
 
-          <div class="field" id="fieldEmail">
-            <label for="leadEmail">Email</label>
-            <input id="leadEmail" name="email" type="email" autocomplete="email" required />
-            <div class="error-label" id="emailError">Please enter a valid email address.</div>
+          <div class="field" id="c_fieldEmail">
+            <label for="c_email">Email</label>
+            <input id="c_email" name="email" type="email" autocomplete="email" required />
+            <div class="error-label" id="c_emailError">Please enter a valid email address.</div>
           </div>
 
-          <div class="field" id="fieldPhone">
-            <label for="leadPhone">Phone</label>
-            <input id="leadPhone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" required />
-            <div class="error-label" id="phoneError">Please enter a valid phone number.</div>
+          <div class="field" id="c_fieldPhone">
+            <label for="c_phone">Phone</label>
+            <input id="c_phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" required />
+            <div class="error-label" id="c_phoneError">Please enter a valid phone number.</div>
           </div>
         </div>
 
@@ -274,42 +274,120 @@ body.modal-open{overflow:hidden;}
         </div>
 
         <div class="checkbox-row">
-          <input id="smsConsent" name="sms_consent" type="checkbox" required />
-          <label for="smsConsent" style="font-size:12px; line-height:1.45; opacity:0.9;">
+          <input id="c_smsConsent" name="sms_consent" type="checkbox" required />
+          <label for="c_smsConsent" style="font-size:12px; line-height:1.45; opacity:0.9;">
             I consent to receive SMS/text messages as described above.
           </label>
         </div>
 
-        <div class="form-error" id="leadError">Please fix the highlighted fields and try again.</div>
-        <div class="success-box" id="leadPending">Sending…</div>
+        <div class="form-error" id="c_formError">Please fix the highlighted fields and try again.</div>
+        <div class="success-box" id="c_pending">Sending…</div>
 
         <div class="form-actions">
           <div class="form-hint">This form sends directly to <strong>info@betterhumanclub.com</strong>.</div>
           <div style="display:flex; gap:10px; align-items:center;">
-            <button class="btn-secondary" id="leadCancel" type="button">Cancel</button>
-            <button class="btn" id="leadSubmit" type="submit">Submit</button>
+            <button class="btn-secondary" id="c_cancel" type="button">Cancel</button>
+            <button class="btn" id="c_submit" type="submit">Submit</button>
           </div>
         </div>
       </form>
     </div>
 
-    <div class="modal-view" id="viewThankYou" aria-live="polite">
+    <div class="modal-view" id="viewConsumerThankYou" aria-live="polite">
       <div class="modal-header">
         <div>
           <div class="modal-title">Thank you for your inquiry</div>
           <div class="modal-subtitle">We’ve received your information.</div>
         </div>
-        <button class="modal-close" id="thankYouCloseX" type="button" aria-label="Close">×</button>
+        <button class="modal-close" id="closeConsumerX" type="button" aria-label="Close">×</button>
       </div>
-
       <div class="thankyou-wrap">
         <div class="thankyou-title">We’ll be in touch shortly.</div>
-        <div class="thankyou-text">
-          A member of our team will follow up soon with next steps.
-          If you need immediate assistance, email <strong>info@betterhumanclub.com</strong>.
-        </div>
+        <div class="thankyou-text">A member of our team will follow up soon. If you need immediate help, email <strong>info@betterhumanclub.com</strong>.</div>
         <div class="thankyou-actions">
-          <button class="btn" id="thankYouCloseBtn" type="button">Close</button>
+          <button class="btn" id="closeConsumerBtn" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ENTERPRISE -->
+<div class="modal-overlay" id="modalEnterprise" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="enterpriseTitle">
+    <div class="modal-view active" id="viewEnterpriseForm">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="enterpriseTitle">Book an Enterprise Strategy Call</div>
+          <div class="modal-subtitle">Share your info and we’ll schedule time with your team.</div>
+        </div>
+        <button class="modal-close" id="closeEnterprise" type="button" aria-label="Close">×</button>
+      </div>
+
+      <form id="formEnterprise" novalidate>
+        <div class="form-grid">
+          <div class="field" id="e_fieldName">
+            <label for="e_name">Name</label>
+            <input id="e_name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="field" id="e_fieldEmail">
+            <label for="e_email">Email</label>
+            <input id="e_email" name="email" type="email" autocomplete="email" required />
+            <div class="error-label" id="e_emailError">Please enter a valid email address.</div>
+          </div>
+
+          <div class="field" id="e_fieldPhone">
+            <label for="e_phone">Phone</label>
+            <input id="e_phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" required />
+            <div class="error-label" id="e_phoneError">Please enter a valid phone number.</div>
+          </div>
+
+          <div class="field" id="e_fieldEmployees">
+            <label for="e_employees">Number of employees</label>
+            <input id="e_employees" name="employees" type="text" inputmode="numeric" autocomplete="off" required />
+            <div class="error-label" id="e_empError">Please enter the number of employees (digits only).</div>
+          </div>
+        </div>
+
+        <div class="sms-consent">
+          By providing your phone number, you agree to receive text messages from Better Human related to your inquiry.
+          Message &amp; data rates may apply. Message frequency varies. Reply STOP to opt out, HELP for help.
+        </div>
+
+        <div class="checkbox-row">
+          <input id="e_smsConsent" name="sms_consent" type="checkbox" required />
+          <label for="e_smsConsent" style="font-size:12px; line-height:1.45; opacity:0.9;">
+            I consent to receive SMS/text messages as described above.
+          </label>
+        </div>
+
+        <div class="form-error" id="e_formError">Please fix the highlighted fields and try again.</div>
+        <div class="success-box" id="e_pending">Sending…</div>
+
+        <div class="form-actions">
+          <div class="form-hint">This form sends directly to <strong>info@betterhumanclub.com</strong>.</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn-secondary" id="e_cancel" type="button">Cancel</button>
+            <button class="btn" id="e_submit" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-view" id="viewEnterpriseThankYou" aria-live="polite">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Thank you for your inquiry</div>
+          <div class="modal-subtitle">We’ve received your information.</div>
+        </div>
+        <button class="modal-close" id="closeEnterpriseX" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="thankyou-wrap">
+        <div class="thankyou-title">We’ll be in touch shortly.</div>
+        <div class="thankyou-text">A member of our team will follow up soon. If you need immediate help, email <strong>info@betterhumanclub.com</strong>.</div>
+        <div class="thankyou-actions">
+          <button class="btn" id="closeEnterpriseBtn" type="button">Close</button>
         </div>
       </div>
     </div>
@@ -321,335 +399,26 @@ body.modal-open{overflow:hidden;}
 
 <script>
 /* Theme toggle */
-document.getElementById('themeSwitch').addEventListener('click', () => {
-  document.body.classList.toggle('light');
-});
+document.getElementById('themeSwitch').addEventListener('click', () => document.body.classList.toggle('light'));
 
 /* Fade-in */
-const observer = new IntersectionObserver(entries => {
+const io = new IntersectionObserver(entries => {
   entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("show"); });
 },{threshold:0.1});
-document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+document.querySelectorAll(".fade").forEach(el => io.observe(el));
 
-/* Elements */
-const leadModal = document.getElementById('leadModal');
-const leadModalClose = document.getElementById('leadModalClose');
-const leadCancel = document.getElementById('leadCancel');
-const leadForm = document.getElementById('leadForm');
-const leadError = document.getElementById('leadError');
-const leadPending = document.getElementById('leadPending');
+/* ===== Shared utilities ===== */
+function digitsOnly(s){ return String(s || "").replace(/\D/g, ""); }
+function clampE164Digits(d){ return d.slice(0, 15); } // E.164 hard max 15 digits total
 
-const leadName = document.getElementById('leadName');
-const leadEmail = document.getElementById('leadEmail');
-const leadPhone = document.getElementById('leadPhone');
-const smsConsent = document.getElementById('smsConsent');
-
-const fieldEmail = document.getElementById('fieldEmail');
-const emailError = document.getElementById('emailError');
-
-const fieldPhone = document.getElementById('fieldPhone');
-const phoneError = document.getElementById('phoneError');
-
-const ctaConsumer = document.getElementById('ctaConsumer');
-const ctaEnterprise = document.getElementById('ctaEnterprise');
-
-const viewForm = document.getElementById('viewForm');
-const viewThankYou = document.getElementById('viewThankYou');
-const thankYouCloseX = document.getElementById('thankYouCloseX');
-const thankYouCloseBtn = document.getElementById('thankYouCloseBtn');
-
-let leadSource = "Unknown CTA";
-let iti = null;
-
-/* Views */
-function setView(which){
-  if(which === "thankyou"){
-    viewForm.classList.remove('active');
-    viewThankYou.classList.add('active');
-  } else {
-    viewThankYou.classList.remove('active');
-    viewForm.classList.add('active');
-  }
-}
-
-/* Email validation */
 function isValidEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
 }
-function setEmailValidity(){
-  const ok = isValidEmail(leadEmail.value);
-  if(!ok && leadEmail.value.trim().length > 0){
-    fieldEmail.classList.add("invalid");
-    emailError.style.display = "block";
-  } else {
-    fieldEmail.classList.remove("invalid");
-    emailError.style.display = "none";
-  }
-  return ok;
-}
-leadEmail.addEventListener("input", setEmailValidity);
-leadEmail.addEventListener("blur", setEmailValidity);
 
-/* Helpers */
-function digitsOnly(s){ return String(s || "").replace(/\D/g, ""); }
-function clampE164Digits(digits){ return digits.slice(0, 15); } // E.164 max is 15 digits (country code + national number)
-
-/*
-  === Phone formatting + length proofing ===
-  Requirements:
-  - User types only digits (we enforce).
-  - If user begins with the selected country's dial code, we display it as "+<dial> ..." and format as they type.
-  - US: should show parentheses while typing (e.g., "+1 (415) 555-2671").
-  - "Error proof": user cannot type beyond the max possible length for the selected country.
-    We enforce:
-      1) E.164 global max (15 digits total)
-      2) Country-specific max by trimming when the lib-based "too long" error appears.
-*/
-function getDialCode(){
-  return String(iti?.getSelectedCountryData()?.dialCode || "");
-}
-function getIso2(){
-  return String(iti?.getSelectedCountryData()?.iso2 || "us").toUpperCase();
-}
-
-/* Determine if the current digit stream begins with the selected country's calling code */
-function startsWithSelectedDial(digits){
-  const dc = getDialCode();
-  return dc && digits.startsWith(dc);
-}
-
-/* Use libphonenumber-js to format */
-function formatDigitsAsYouType(iso2, digits, asInternational){
-  const formatter = new libphonenumber.AsYouType(iso2);
-  return asInternational ? formatter.input("+" + digits) : formatter.input(digits);
-}
-
-/*
-  Country-specific max length trimming using intl-tel-input utils when available.
-  We build a candidate E.164 string and ask for the validation error.
-  If TOO_LONG, we trim digits until it's no longer TOO_LONG.
-*/
-function trimTooLongForCountry(digits){
-  // Always enforce E.164 max first
-  digits = clampE164Digits(digits);
-
-  if(!iti || !window.intlTelInputUtils) return digits;
-
-  const iso2Lower = String(iti.getSelectedCountryData()?.iso2 || "us");
-  const dial = getDialCode();
-  if(!dial) return digits;
-
-  const asIntl = startsWithSelectedDial(digits);
-  // Candidate E.164-ish string for validation:
-  const candidate = asIntl ? ("+" + digits) : ("+" + dial + digits);
-
-  // intl-tel-input error codes: 0=IS_POSSIBLE, 1=INVALID_COUNTRY_CODE, 2=TOO_SHORT, 3=TOO_LONG, 4=INVALID_NUMBER
-  // We'll treat 3 as "too long".
-  const TOO_LONG = 3;
-
-  // If already too long, trim until not too long.
-  let d = digits;
-  let safeGuard = 40;
-  while(safeGuard-- > 0){
-    const cand = asIntl ? ("+" + d) : ("+" + dial + d);
-    const err = window.intlTelInputUtils.getValidationError(cand, iso2Lower);
-    if(err !== TOO_LONG) break;
-    d = d.slice(0, -1);
-    if(!d) break;
-  }
-  return d;
-}
-
-/*
-  US fix:
-  libphonenumber's INTERNATIONAL format for US is typically "+1 415 555 2671" (no parentheses).
-  To meet your requirement, when dial code is included and US is selected, we render:
-    "+1 " + NATIONAL_FORMAT
-  which yields "+1 (415) 555-2671" while typing.
-*/
-function formatPhone(){
-  if(!iti || !window.libphonenumber) return;
-
-  const iso2 = getIso2();
-  const dial = getDialCode();
-
-  // Extract digits from whatever is displayed
-  let digits = digitsOnly(leadPhone.value);
-
-  // Enforce hard max (15 digits) and country-specific too-long trimming
-  digits = clampE164Digits(digits);
-  digits = trimTooLongForCountry(digits);
-
-  // Decide mode
-  const asIntl = startsWithSelectedDial(digits);
-
-  let formatted = "";
-
-  if(asIntl && iso2 === "US" && digits.startsWith("1")){
-    // digits includes the "1" country code already
-    const nationalDigits = digits.slice(1); // strip country code
-    const nat = formatDigitsAsYouType("US", nationalDigits, false); // NATIONAL => (XXX) XXX-XXXX while typing
-    formatted = "+1 " + nat;
-  } else {
-    // For all other cases:
-    // - If dial code is included, show + and format international.
-    // - Otherwise format national.
-    formatted = formatDigitsAsYouType(iso2, digits, asIntl);
-  }
-
-  if(formatted && formatted !== leadPhone.value){
-    leadPhone.value = formatted;
-  }
-}
-
-/* Digits-only typing enforcement (user types digits only; UI can display + ( ) - spaces) */
-leadPhone.addEventListener("beforeinput", (e) => {
-  if(e.inputType && e.inputType.startsWith("delete")) return;
-  if(typeof e.data !== "string") return;
-  if(/[^\d]/.test(e.data)) e.preventDefault();
-});
-leadPhone.addEventListener("paste", (e) => {
-  const txt = (e.clipboardData || window.clipboardData).getData("text") || "";
-  if(/[^\d]/.test(txt)) {
-    e.preventDefault();
-    const justDigits = digitsOnly(txt);
-    document.execCommand("insertText", false, justDigits);
-  }
-});
-
-/* Phone validity UI */
-function setPhoneValidity(){
-  // Run a format pass first so iti reads a consistent value
-  formatPhone();
-
-  let ok = digitsOnly(leadPhone.value).length >= 7;
-
-  if(iti && window.intlTelInputUtils){
-    ok = iti.isValidNumber();
-    // also fail if too short/too long immediately
-    const err = iti.getValidationError();
-    if(err === 2 || err === 3) ok = false;
-  }
-
-  if(!ok && leadPhone.value.trim().length > 0){
-    fieldPhone.classList.add("invalid");
-    phoneError.style.display = "block";
-  } else {
-    fieldPhone.classList.remove("invalid");
-    phoneError.style.display = "none";
-  }
-  return ok;
-}
-
-/* Keep US first in dropdown always */
-let usObserver = null;
-function ensureUnitedStatesFirst(){
-  if(!iti) return;
-  const root = iti.telInput && iti.telInput.closest(".iti");
-  if(!root) return;
-  const list = root.querySelector(".iti__country-list");
-  if(!list) return;
-  const us = list.querySelector('.iti__country[data-country-code="us"]');
-  if(!us) return;
-  if(list.firstElementChild !== us) list.insertBefore(us, list.firstElementChild);
-}
-function startUSAlwaysFirstObserver(){
-  if(!iti) return;
-  const root = iti.telInput && iti.telInput.closest(".iti");
-  if(!root) return;
-  const list = root.querySelector(".iti__country-list");
-  if(!list) return;
-
-  if(usObserver){ usObserver.disconnect(); usObserver = null; }
-  usObserver = new MutationObserver(() => ensureUnitedStatesFirst());
-  usObserver.observe(list, { childList:true, subtree:false });
-  ensureUnitedStatesFirst();
-}
-
-/* Modal open/close */
-function openLeadModal(source){
-  leadSource = source || "Unknown CTA";
-  document.getElementById('leadModalSubtitle').textContent =
-    leadSource === "Enterprise Strategy Call"
-      ? "Share your info and we’ll schedule time with your team."
-      : "Share your info and we’ll reach out with next steps.";
-
-  setView("form");
-  leadError.style.display = 'none';
-  leadPending.style.display = 'none';
-  fieldEmail.classList.remove("invalid");
-  emailError.style.display = "none";
-  fieldPhone.classList.remove("invalid");
-  phoneError.style.display = "none";
-  leadForm.reset();
-
-  leadModal.classList.add('open');
-  leadModal.setAttribute('aria-hidden','false');
-  document.body.classList.add('modal-open');
-
-  if(!iti){
-    iti = window.intlTelInput(leadPhone, {
-      initialCountry: "us",
-      preferredCountries: ["us"],
-      nationalMode: true,
-      separateDialCode: false,
-      formatOnDisplay: false, // we format ourselves
-      autoPlaceholder: "aggressive",
-      loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
-    });
-
-    leadPhone.addEventListener("input", () => { formatPhone(); setPhoneValidity(); });
-    leadPhone.addEventListener("blur", () => { formatPhone(); setPhoneValidity(); });
-    leadPhone.addEventListener("countrychange", () => {
-      ensureUnitedStatesFirst();
-      formatPhone();
-      setPhoneValidity();
-    });
-
-    setTimeout(() => { startUSAlwaysFirstObserver(); ensureUnitedStatesFirst(); }, 0);
-  } else {
-    setTimeout(() => { startUSAlwaysFirstObserver(); ensureUnitedStatesFirst(); }, 0);
-  }
-
-  setTimeout(() => leadName.focus(), 0);
-}
-
-function closeLeadModal(){
-  leadModal.classList.remove('open');
-  leadModal.setAttribute('aria-hidden','true');
-  document.body.classList.remove('modal-open');
-}
-
-ctaConsumer.addEventListener('click', () => openLeadModal("Live Better, Longer"));
-ctaEnterprise.addEventListener('click', () => openLeadModal("Enterprise Strategy Call"));
-
-leadModalClose.addEventListener('click', closeLeadModal);
-leadCancel.addEventListener('click', closeLeadModal);
-thankYouCloseX.addEventListener('click', closeLeadModal);
-thankYouCloseBtn.addEventListener('click', closeLeadModal);
-
-leadModal.addEventListener('click', (e) => { if(e.target === leadModal) closeLeadModal(); });
-document.addEventListener('keydown', (e) => {
-  if(e.key === 'Escape' && leadModal.classList.contains('open')) closeLeadModal();
-});
-
-/* CTA elements exist in page */
-function bindCTA(){
-  // (These IDs are in your file from earlier iterations)
-  // If your markup differs, update these IDs accordingly.
-  const btn1 = document.getElementById("ctaConsumer");
-  const btn2 = document.getElementById("ctaEnterprise");
-  if(btn1) btn1.addEventListener("click", () => openLeadModal("Live Better, Longer"));
-  if(btn2) btn2.addEventListener("click", () => openLeadModal("Enterprise Strategy Call"));
-}
-bindCTA();
-
-/* FormSubmit AJAX */
 async function submitToFormSubmit(payload){
   const url = "https://formsubmit.co/ajax/info@betterhumanclub.com";
   const res = await fetch(url, { method:"POST", headers:{ "Accept":"application/json" }, body:payload });
-  let data = null;
-  try { data = await res.json(); } catch (_) {}
+  let data=null; try{ data = await res.json(); }catch(_){}
   if(!res.ok){
     const msg = (data && (data.message || data.error)) ? (data.message || data.error) : "Submission failed.";
     throw new Error(msg);
@@ -657,71 +426,391 @@ async function submitToFormSubmit(payload){
   return data;
 }
 
-leadForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
+/* ===== US always first in dropdown (per modal/iti instance) ===== */
+function startUSAlwaysFirstObserver(itiInstance){
+  const root = itiInstance?.telInput?.closest(".iti");
+  if(!root) return () => {};
+  const list = root.querySelector(".iti__country-list");
+  if(!list) return () => {};
 
-  // Final formatting + validations
-  formatPhone();
-  const name = String(leadName.value || "").trim();
-  const email = String(leadEmail.value || "").trim();
-  const emailOk = isValidEmail(email);
-  if(!emailOk){
-    fieldEmail.classList.add("invalid");
-    emailError.style.display = "block";
+  const ensure = () => {
+    const us = list.querySelector('.iti__country[data-country-code="us"]');
+    if(!us) return;
+    if(list.firstElementChild !== us) list.insertBefore(us, list.firstElementChild);
+  };
+
+  const obs = new MutationObserver(ensure);
+  obs.observe(list, { childList:true, subtree:false });
+  ensure();
+
+  return () => obs.disconnect();
+}
+
+/* ===== Phone formatting + length proofing (per input + iti instance) ===== */
+function makePhoneFormatter(phoneInput, itiInstance, phoneFieldWrap, phoneErrorEl){
+  // digits-only typing enforcement
+  phoneInput.addEventListener("beforeinput", (e) => {
+    if(e.inputType && e.inputType.startsWith("delete")) return;
+    if(typeof e.data !== "string") return;
+    if(/[^\d]/.test(e.data)) e.preventDefault();
+  });
+  phoneInput.addEventListener("paste", (e) => {
+    const txt = (e.clipboardData || window.clipboardData).getData("text") || "";
+    if(/[^\d]/.test(txt)) {
+      e.preventDefault();
+      const justDigits = digitsOnly(txt);
+      document.execCommand("insertText", false, justDigits);
+    }
+  });
+
+  function getIso2(){ return String(itiInstance.getSelectedCountryData()?.iso2 || "us").toUpperCase(); }
+  function getDial(){ return String(itiInstance.getSelectedCountryData()?.dialCode || ""); }
+  function startsWithDial(d){ const dc=getDial(); return dc && d.startsWith(dc); }
+
+  function trimTooLong(digits){
+    digits = clampE164Digits(digits);
+    if(!window.intlTelInputUtils) return digits;
+
+    const isoLower = String(itiInstance.getSelectedCountryData()?.iso2 || "us");
+    const dial = getDial();
+    if(!dial) return digits;
+
+    const TOO_LONG = 3;
+    const asIntl = startsWithDial(digits);
+
+    let d = digits;
+    let guard = 40;
+    while(guard-- > 0){
+      const cand = asIntl ? ("+" + d) : ("+" + dial + d);
+      const err = window.intlTelInputUtils.getValidationError(cand, isoLower);
+      if(err !== TOO_LONG) break;
+      d = d.slice(0, -1);
+      if(!d) break;
+    }
+    return d;
   }
 
-  const phoneOk = setPhoneValidity();
+  function format(){
+    if(!window.libphonenumber) return;
 
-  const ok = name.length >= 2 && emailOk && phoneOk && smsConsent.checked;
-  if(!ok){
-    leadError.style.display = 'block';
-    leadPending.style.display = 'none';
-    return;
+    const iso2 = getIso2();
+    const digitsRaw = clampE164Digits(digitsOnly(phoneInput.value));
+    const digits = trimTooLong(digitsRaw);
+    const dial = getDial();
+    const asIntl = dial && digits.startsWith(dial);
+
+    let out = "";
+    // US special: show +1 (XXX) XXX-XXXX while typing when they include 1
+    if(asIntl && iso2 === "US" && digits.startsWith("1")){
+      const nationalDigits = digits.slice(1);
+      const natFmt = new libphonenumber.AsYouType("US").input(nationalDigits); // (415) 555-2671 while typing
+      out = "+1 " + natFmt;
+    } else {
+      const fmt = new libphonenumber.AsYouType(iso2);
+      out = asIntl ? fmt.input("+" + digits) : fmt.input(digits);
+    }
+
+    if(out && out !== phoneInput.value) phoneInput.value = out;
   }
 
-  leadError.style.display = 'none';
-  leadPending.textContent = "Sending…";
-  leadPending.style.display = 'block';
+  function validate(showUI=true){
+    format();
 
-  // Canonical E.164 when possible
-  let phoneE164 = leadPhone.value;
-  if(iti && window.intlTelInputUtils){
-    const e164 = iti.getNumber();
-    if(e164) phoneE164 = e164;
+    let ok = digitsOnly(phoneInput.value).length >= 7;
+    if(window.intlTelInputUtils){
+      ok = itiInstance.isValidNumber();
+      const err = itiInstance.getValidationError();
+      if(err === 2 || err === 3) ok = false; // TOO_SHORT / TOO_LONG
+    }
+
+    if(showUI){
+      if(!ok && phoneInput.value.trim().length > 0){
+        phoneFieldWrap.classList.add("invalid");
+        phoneErrorEl.style.display = "block";
+      } else {
+        phoneFieldWrap.classList.remove("invalid");
+        phoneErrorEl.style.display = "none";
+      }
+    }
+    return ok;
   }
 
-  const fd = new FormData();
-  fd.append("name", name);
-  fd.append("email", email);
-  fd.append("phone", leadPhone.value);     // formatted display (US will be +1 (XXX) XXX-XXXX if they started with 1)
-  fd.append("phone_e164", phoneE164);
+  phoneInput.addEventListener("input", () => validate(true));
+  phoneInput.addEventListener("blur", () => validate(true));
+  phoneInput.addEventListener("countrychange", () => validate(true));
 
-  fd.append("sms_consent", "true");
-  fd.append("_subject", `New lead from Better Human lander (${leadSource})`);
-  fd.append("_template", "table");
-  fd.append("_captcha", "false");
-  fd.append("cta", leadSource);
-  fd.append("page", window.location.href);
-  fd.append("submitted_at", new Date().toISOString());
+  return { format, validate };
+}
 
-  try{
-    await submitToFormSubmit(fd);
-    leadPending.style.display = "none";
-    setView("thankyou");
-    setTimeout(() => thankYouCloseBtn.focus(), 0);
-  } catch(err){
-    leadPending.style.display = "none";
-    leadError.textContent = "Sorry — we couldn’t submit your inquiry right now. Please try again, or email info@betterhumanclub.com.";
-    leadError.style.display = "block";
-    console.error(err);
+/* ===== Employees field digits-only (enterprise only) ===== */
+function bindEmployeesDigitsOnly(inputEl, fieldWrap, errorEl){
+  const digitsOnlyKey = (e) => {
+    if(e.inputType && e.inputType.startsWith("delete")) return;
+    if(typeof e.data !== "string") return;
+    if(/[^\d]/.test(e.data)) e.preventDefault();
+  };
+  inputEl.addEventListener("beforeinput", digitsOnlyKey);
+  inputEl.addEventListener("paste", (e) => {
+    const txt = (e.clipboardData || window.clipboardData).getData("text") || "";
+    const just = digitsOnly(txt);
+    e.preventDefault();
+    document.execCommand("insertText", false, just);
+  });
+
+  const validate = (showUI=true) => {
+    const val = digitsOnly(inputEl.value);
+    const ok = val.length > 0;
+    if(showUI){
+      if(!ok){
+        fieldWrap.classList.add("invalid");
+        errorEl.style.display = "block";
+      } else {
+        fieldWrap.classList.remove("invalid");
+        errorEl.style.display = "none";
+      }
+    }
+    return ok;
+  };
+
+  inputEl.addEventListener("input", () => validate(true));
+  inputEl.addEventListener("blur", () => validate(true));
+  return { validate };
+}
+
+/* ===== Modal wiring helper (two separate forms/modals) ===== */
+function wireModal({
+  ctaId,
+  modalEl,
+  closeIds,
+  formEl,
+  thankYouViewId,
+  formViewId,
+  pendingEl,
+  formErrorEl,
+  nameEl,
+  emailEl,
+  emailFieldWrap,
+  emailErrorEl,
+  phoneEl,
+  phoneFieldWrap,
+  phoneErrorEl,
+  smsConsentEl,
+  subjectPrefix,
+  extraPayloadBuilder // optional for enterprise
+}){
+  let itiInstance = null;
+  let stopUSObserver = null;
+  let phoneHelper = null;
+
+  function setView(which){
+    document.getElementById(formViewId).classList.toggle("active", which === "form");
+    document.getElementById(thankYouViewId).classList.toggle("active", which === "thankyou");
   }
+
+  function resetUI(){
+    formErrorEl.style.display = "none";
+    pendingEl.style.display = "none";
+
+    emailFieldWrap.classList.remove("invalid");
+    emailErrorEl.style.display = "none";
+
+    phoneFieldWrap.classList.remove("invalid");
+    phoneErrorEl.style.display = "none";
+  }
+
+  function open(){
+    setView("form");
+    resetUI();
+    formEl.reset();
+
+    modalEl.classList.add("open");
+    modalEl.setAttribute("aria-hidden","false");
+    document.body.classList.add("modal-open");
+
+    if(!itiInstance){
+      itiInstance = window.intlTelInput(phoneEl, {
+        initialCountry: "us",
+        preferredCountries: ["us"],
+        nationalMode: true,
+        separateDialCode: false,
+        formatOnDisplay: false,
+        autoPlaceholder: "aggressive",
+        loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
+      });
+
+      // Always keep US first
+      stopUSObserver = startUSAlwaysFirstObserver(itiInstance);
+
+      // Phone formatting/validation
+      phoneHelper = makePhoneFormatter(phoneEl, itiInstance, phoneFieldWrap, phoneErrorEl);
+    } else {
+      // Re-start observer in case DOM rebuilt
+      if(stopUSObserver) stopUSObserver();
+      stopUSObserver = startUSAlwaysFirstObserver(itiInstance);
+      if(phoneHelper) phoneHelper.format();
+    }
+
+    setTimeout(() => nameEl.focus(), 0);
+  }
+
+  function close(){
+    modalEl.classList.remove("open");
+    modalEl.setAttribute("aria-hidden","true");
+    document.body.classList.remove("modal-open");
+  }
+
+  // Bind CTA and close controls
+  const cta = document.getElementById(ctaId);
+  if(cta) cta.addEventListener("click", open);
+
+  closeIds.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener("click", close);
+  });
+
+  // click outside closes
+  modalEl.addEventListener("click", (e) => { if(e.target === modalEl) close(); });
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape" && modalEl.classList.contains("open")) close(); });
+
+  // Email validity UI
+  function validateEmail(showUI=true){
+    const ok = isValidEmail(emailEl.value);
+    if(showUI){
+      if(!ok && emailEl.value.trim().length > 0){
+        emailFieldWrap.classList.add("invalid");
+        emailErrorEl.style.display = "block";
+      } else {
+        emailFieldWrap.classList.remove("invalid");
+        emailErrorEl.style.display = "none";
+      }
+    }
+    return ok;
+  }
+  emailEl.addEventListener("input", () => validateEmail(true));
+  emailEl.addEventListener("blur", () => validateEmail(true));
+
+  // Submit
+  formEl.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Ensure latest formatting
+    if(phoneHelper) phoneHelper.format();
+
+    const name = String(nameEl.value || "").trim();
+    const email = String(emailEl.value || "").trim();
+
+    const emailOk = validateEmail(true);
+    const phoneOk = phoneHelper ? phoneHelper.validate(true) : true;
+    const smsOk = !!smsConsentEl.checked;
+
+    // Optional extra fields (enterprise)
+    let extrasOk = true;
+    let extras = {};
+    if(typeof extraPayloadBuilder === "function"){
+      const out = extraPayloadBuilder();
+      extrasOk = out.ok;
+      extras = out.payload;
+    }
+
+    const ok = name.length >= 2 && emailOk && phoneOk && smsOk && extrasOk;
+    if(!ok){
+      formErrorEl.style.display = "block";
+      pendingEl.style.display = "none";
+      return;
+    }
+
+    formErrorEl.style.display = "none";
+    pendingEl.textContent = "Sending…";
+    pendingEl.style.display = "block";
+
+    // Canonical E.164 if possible
+    let phoneE164 = phoneEl.value;
+    if(itiInstance && window.intlTelInputUtils){
+      const e164 = itiInstance.getNumber();
+      if(e164) phoneE164 = e164;
+    }
+
+    const fd = new FormData();
+    fd.append("name", name);
+    fd.append("email", email);
+    fd.append("phone", phoneEl.value);
+    fd.append("phone_e164", phoneE164);
+    fd.append("sms_consent", "true");
+
+    Object.entries(extras).forEach(([k,v]) => fd.append(k, v));
+
+    fd.append("_subject", `${subjectPrefix} (${ctaId})`);
+    fd.append("_template", "table");
+    fd.append("_captcha", "false");
+    fd.append("page", window.location.href);
+    fd.append("submitted_at", new Date().toISOString());
+
+    try{
+      await submitToFormSubmit(fd);
+      pendingEl.style.display = "none";
+      setView("thankyou");
+      // focus close button for accessibility (first closeId assumed to be X, we focus the bottom close button if present)
+      const focusBtn = modalEl.querySelector("button.btn");
+      if(focusBtn) setTimeout(() => focusBtn.focus(), 0);
+    } catch(err){
+      pendingEl.style.display = "none";
+      formErrorEl.textContent = "Sorry — we couldn’t submit your inquiry right now. Please try again, or email info@betterhumanclub.com.";
+      formErrorEl.style.display = "block";
+      console.error(err);
+    }
+  });
+}
+
+/* ===== Wire CONSUMER modal ===== */
+wireModal({
+  ctaId: "ctaConsumer",
+  modalEl: document.getElementById("modalConsumer"),
+  closeIds: ["closeConsumer","closeConsumerX","closeConsumerBtn","c_cancel"],
+  formEl: document.getElementById("formConsumer"),
+  thankYouViewId: "viewConsumerThankYou",
+  formViewId: "viewConsumerForm",
+  pendingEl: document.getElementById("c_pending"),
+  formErrorEl: document.getElementById("c_formError"),
+  nameEl: document.getElementById("c_name"),
+  emailEl: document.getElementById("c_email"),
+  emailFieldWrap: document.getElementById("c_fieldEmail"),
+  emailErrorEl: document.getElementById("c_emailError"),
+  phoneEl: document.getElementById("c_phone"),
+  phoneFieldWrap: document.getElementById("c_fieldPhone"),
+  phoneErrorEl: document.getElementById("c_phoneError"),
+  smsConsentEl: document.getElementById("c_smsConsent"),
+  subjectPrefix: "New Consumer Lead"
 });
 
-/* Fade-in init */
-const io = new IntersectionObserver(entries => {
-  entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("show"); });
-},{threshold:0.1});
-document.querySelectorAll(".fade").forEach(el => io.observe(el));
+/* ===== Wire ENTERPRISE modal (adds employees field) ===== */
+const empInput = document.getElementById("e_employees");
+const empField = document.getElementById("e_fieldEmployees");
+const empError = document.getElementById("e_empError");
+const empHelper = bindEmployeesDigitsOnly(empInput, empField, empError);
+
+wireModal({
+  ctaId: "ctaEnterprise",
+  modalEl: document.getElementById("modalEnterprise"),
+  closeIds: ["closeEnterprise","closeEnterpriseX","closeEnterpriseBtn","e_cancel"],
+  formEl: document.getElementById("formEnterprise"),
+  thankYouViewId: "viewEnterpriseThankYou",
+  formViewId: "viewEnterpriseForm",
+  pendingEl: document.getElementById("e_pending"),
+  formErrorEl: document.getElementById("e_formError"),
+  nameEl: document.getElementById("e_name"),
+  emailEl: document.getElementById("e_email"),
+  emailFieldWrap: document.getElementById("e_fieldEmail"),
+  emailErrorEl: document.getElementById("e_emailError"),
+  phoneEl: document.getElementById("e_phone"),
+  phoneFieldWrap: document.getElementById("e_fieldPhone"),
+  phoneErrorEl: document.getElementById("e_phoneError"),
+  smsConsentEl: document.getElementById("e_smsConsent"),
+  subjectPrefix: "New Enterprise Lead",
+  extraPayloadBuilder: () => {
+    const ok = empHelper.validate(true);
+    return { ok, payload: { employees: digitsOnly(empInput.value) } };
+  }
+});
 </script>
 
 </body>
