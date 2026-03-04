@@ -148,7 +148,68 @@ body.light .iti__tel-input{
   background:rgba(0,0,0,0.04) !important;
   border:1px solid rgba(0,0,0,0.12) !important;
 }
-.iti__country-list{max-height:240px;}
+
+/* ===== Country dropdown readability fixes ===== */
+
+/* Dropdown background + all text BLACK so it is readable */
+.iti__country-list{
+  background:#ffffff !important;
+  color:#111 !important;
+  border:1px solid rgba(0,0,0,0.12) !important;
+  border-radius:14px !important;
+  box-shadow:0 18px 45px rgba(0,0,0,0.25) !important;
+  overflow:hidden;
+  max-height:280px;
+}
+
+/* Country rows */
+.iti__country{
+  color:#111 !important;
+}
+.iti__country:hover,
+.iti__country.iti__highlight{
+  background:rgba(0,0,0,0.06) !important;
+}
+
+/* Dial code + name both readable */
+.iti__country-name,
+.iti__dial-code{
+  color:#111 !important;
+}
+
+/* Search input: ensure text + placeholder are black and not covered by icon */
+.iti__search-input{
+  color:#111 !important;
+  background:#ffffff !important;
+  border:1px solid rgba(0,0,0,0.14) !important;
+  border-radius:12px !important;
+  padding:12px 14px 12px 42px !important; /* left padding so text doesn't sit under magnifier */
+  font-size:14px !important;
+  outline:none !important;
+}
+
+/* Placeholder color */
+.iti__search-input::placeholder{
+  color:rgba(0,0,0,0.55) !important;
+}
+
+/* Magnifying glass positioning so it doesn't overlap "Search" */
+.iti__search-icon{
+  left:14px !important;
+  right:auto !important;
+  top:50% !important;
+  transform:translateY(-50%) !important;
+  opacity:0.65 !important;
+}
+
+/* Add a little spacing between search row and list */
+.iti__search{
+  padding:10px 10px 8px 10px !important;
+  background:#ffffff !important;
+}
+
+/* Ensure dropdown flags don't look washed out */
+.iti__flag{filter:none !important;}
 
 .sms-consent{
   margin-top:12px;
@@ -464,15 +525,13 @@ function openLeadModal(source){
   if(!iti){
     iti = window.intlTelInput(leadPhone, {
       initialCountry: "us",
-      nationalMode: true,          // US looks like (415) 555-2671 when US selected
+      nationalMode: true,
       formatOnDisplay: true,
       autoPlaceholder: "aggressive",
-      // Load utils (formatting/validation)
+      // Put US (and optionally CA) at the very top of the dropdown
+      preferredCountries: ["us", "ca"],
       loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
     });
-  } else {
-    // Reset country to US each time (optional). Remove this if you want it to remember last selection.
-    iti.setCountry("us");
   }
 
   setTimeout(() => leadName.focus(), 0);
@@ -526,7 +585,6 @@ leadForm.addEventListener('submit', async (e) => {
   const name = clean(leadName.value);
   const email = clean(leadEmail.value);
 
-  // Phone: validate via intl-tel-input (supports US + international)
   const phoneDisplay = clean(leadPhone.value);
   const phoneValid = iti ? iti.isValidNumber() : (phoneDisplay.length >= 7);
   const phoneE164 = iti ? iti.getNumber() : phoneDisplay;
