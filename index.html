@@ -7,16 +7,13 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Intl Tel Input (country picker) -->
+<!-- Intl Tel Input (country picker UI) -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/css/intlTelInput.css">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Manrope';}
 html{scroll-behavior:smooth;}
-body{
-  background:radial-gradient(circle at 30% 20%,#2b237c,#090b1e 70%);
-  color:white;overflow-x:hidden;transition:0.35s ease;
-}
+body{background:radial-gradient(circle at 30% 20%,#2b237c,#090b1e 70%);color:white;overflow-x:hidden;transition:0.35s ease;}
 body.light{background:#ffffff;color:#111;}
 section{padding:70px 10%;}
 .hero{display:flex;justify-content:space-between;gap:50px;align-items:stretch;}
@@ -25,21 +22,9 @@ h1{font-size:48px;font-weight:700;line-height:1.15;}
 h2{font-size:36px;font-weight:600;}
 p{margin:18px 0;opacity:0.85;font-size:17px;line-height:1.6;}
 ul{margin:20px 0;line-height:1.8;font-size:17px;}
-.glass{
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(20px);
-  border-radius:28px;
-  border:1px solid rgba(255,255,255,0.1);
-  padding:45px;
-  box-shadow:0 0 60px rgba(143,132,255,0.25);
-  transition:0.35s ease;
-}
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);border-radius:28px;border:1px solid rgba(255,255,255,0.1);padding:45px;box-shadow:0 0 60px rgba(143,132,255,0.25);transition:0.35s ease;}
 body.light .glass{background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);box-shadow:none;}
-.btn{
-  background:linear-gradient(90deg,#8f84ff,#6a5cff);
-  padding:16px 32px;border-radius:14px;border:none;
-  font-weight:600;cursor:pointer;transition:0.25s ease;color:white;
-}
+.btn{background:linear-gradient(90deg,#8f84ff,#6a5cff);padding:16px 32px;border-radius:14px;border:none;font-weight:600;cursor:pointer;transition:0.25s ease;color:white;}
 .btn:hover{box-shadow:0 0 35px rgba(143,132,255,.6);transform:translateY(-3px);}
 .dashboard-section{padding-top:0;}
 .dashboard-wrap{margin:0 auto;max-width:1100px;overflow:hidden;}
@@ -87,58 +72,26 @@ body.light .theme-switch .thumb .sun{opacity:1;}
 body.light .theme-switch .thumb .moon{opacity:0;}
 
 /* Modal */
-.modal-overlay{
-  position:fixed;inset:0;background:rgba(0,0,0,0.55);
-  backdrop-filter:blur(8px);
-  display:none;align-items:center;justify-content:center;
-  z-index:999;padding:22px;
-}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:999;padding:22px;}
 .modal-overlay.open{display:flex;}
-.modal{
-  width:min(560px, 100%);border-radius:22px;
-  border:1px solid rgba(255,255,255,0.14);
-  background:rgba(12,14,40,0.78);
-  box-shadow:0 25px 80px rgba(0,0,0,0.45);
-  padding:26px;
-}
-body.light .modal{
-  background:rgba(255,255,255,0.92);
-  border:1px solid rgba(0,0,0,0.12);
-  box-shadow:0 25px 80px rgba(0,0,0,0.18);
-}
+.modal{width:min(560px, 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.14);background:rgba(12,14,40,0.78);box-shadow:0 25px 80px rgba(0,0,0,0.45);padding:26px;}
+body.light .modal{background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.12);box-shadow:0 25px 80px rgba(0,0,0,0.18);}
 .modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px;}
 .modal-title{font-size:20px;font-weight:700;line-height:1.2;}
 .modal-subtitle{margin-top:6px;opacity:0.85;font-size:14px;line-height:1.5;}
-.modal-close{
-  border:none;background:transparent;color:inherit;font-size:22px;
-  cursor:pointer;padding:6px 10px;line-height:1;border-radius:10px;opacity:0.85;transition:0.2s ease;
-}
+.modal-close{border:none;background:transparent;color:inherit;font-size:22px;cursor:pointer;padding:6px 10px;line-height:1;border-radius:10px;opacity:0.85;transition:0.2s ease;}
 .modal-close:hover{background:rgba(255,255,255,0.08);opacity:1;}
 body.light .modal-close:hover{background:rgba(0,0,0,0.06);}
 
 .form-grid{display:grid;gap:12px;margin-top:12px;}
 .field label{display:block;font-size:13px;opacity:0.85;margin-bottom:6px;}
-.field input{
-  width:100%;padding:14px 14px;border-radius:14px;
-  border:1px solid rgba(255,255,255,0.16);
-  background:rgba(255,255,255,0.06);
-  color:inherit;outline:none;transition:0.2s ease;font-size:15px;
-}
+.field input{width:100%;padding:14px 14px;border-radius:14px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);color:inherit;outline:none;transition:0.2s ease;font-size:15px;}
 .field input:focus{border-color:rgba(143,132,255,0.9);box-shadow:0 0 0 4px rgba(143,132,255,0.18);}
 body.light .field input{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.12);}
 
-/* Error UI for fields */
-.field .error-label{
-  display:none;
-  margin-top:6px;
-  font-size:12px;
-  color:#ffb4b4;
-}
+.field .error-label{display:none;margin-top:6px;font-size:12px;color:#ffb4b4;}
 body.light .field .error-label{color:#b00020;}
-.field.invalid input{
-  border-color:rgba(255, 120, 120, 0.95) !important;
-  box-shadow:0 0 0 4px rgba(255, 120, 120, 0.12) !important;
-}
+.field.invalid input{border-color:rgba(255,120,120,0.95) !important;box-shadow:0 0 0 4px rgba(255,120,120,0.12) !important;}
 
 /* intl-tel-input styling + dropdown readability */
 .iti{width:100%;}
@@ -157,10 +110,7 @@ body.light .field .error-label{color:#b00020;}
   border-color:rgba(143,132,255,0.9) !important;
   box-shadow:0 0 0 4px rgba(143,132,255,0.18) !important;
 }
-body.light .iti__tel-input{
-  background:rgba(0,0,0,0.04) !important;
-  border:1px solid rgba(0,0,0,0.12) !important;
-}
+body.light .iti__tel-input{background:rgba(0,0,0,0.04) !important;border:1px solid rgba(0,0,0,0.12) !important;}
 .iti__country-list{
   background:#ffffff !important;
   color:#111 !important;
@@ -174,39 +124,19 @@ body.light .iti__tel-input{
 .iti__country:hover,.iti__country.iti__highlight{background:rgba(0,0,0,0.06) !important;}
 .iti__search{padding:10px 10px 8px 10px !important;background:#ffffff !important;}
 .iti__search-input{
-  color:#111 !important;
-  background:#ffffff !important;
-  border:1px solid rgba(0,0,0,0.14) !important;
-  border-radius:12px !important;
-  padding:12px 14px 12px 42px !important;
-  font-size:14px !important;
-  outline:none !important;
+  color:#111 !important;background:#ffffff !important;border:1px solid rgba(0,0,0,0.14) !important;border-radius:12px !important;
+  padding:12px 14px 12px 42px !important;font-size:14px !important;outline:none !important;
 }
 .iti__search-input::placeholder{color:rgba(0,0,0,0.55) !important;}
-.iti__search-icon{
-  left:14px !important;
-  right:auto !important;
-  top:50% !important;
-  transform:translateY(-50%) !important;
-  opacity:0.65 !important;
-}
+.iti__search-icon{left:14px !important;right:auto !important;top:50% !important;transform:translateY(-50%) !important;opacity:0.65 !important;}
 
 .sms-consent{margin-top:12px;font-size:12px;line-height:1.45;opacity:0.85;}
-.checkbox-row{
-  display:flex;gap:10px;align-items:flex-start;margin-top:10px;
-  padding:12px;border-radius:14px;
-  border:1px solid rgba(255,255,255,0.14);
-  background:rgba(255,255,255,0.04);
-}
+.checkbox-row{display:flex;gap:10px;align-items:flex-start;margin-top:10px;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);}
 body.light .checkbox-row{border:1px solid rgba(0,0,0,0.12);background:rgba(0,0,0,0.03);}
 .checkbox-row input{margin-top:3px;}
 
 .form-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:16px;flex-wrap:wrap;}
-.btn-secondary{
-  background:transparent;border:1px solid rgba(255,255,255,0.18);
-  color:inherit;padding:14px 18px;border-radius:14px;cursor:pointer;
-  transition:0.2s ease;font-weight:600;
-}
+.btn-secondary{background:transparent;border:1px solid rgba(255,255,255,0.18);color:inherit;padding:14px 18px;border-radius:14px;cursor:pointer;transition:0.2s ease;font-weight:600;}
 .btn-secondary:hover{background:rgba(255,255,255,0.08);}
 body.light .btn-secondary{border:1px solid rgba(0,0,0,0.14);}
 body.light .btn-secondary:hover{background:rgba(0,0,0,0.05);}
@@ -214,12 +144,7 @@ body.light .btn-secondary:hover{background:rgba(0,0,0,0.05);}
 .form-hint{font-size:12px;opacity:0.75;line-height:1.4;}
 .form-error{margin-top:10px;font-size:13px;color:#ffd1d1;display:none;}
 body.light .form-error{color:#b00020;}
-.success-box{
-  display:none;margin-top:14px;padding:14px;border-radius:14px;
-  border:1px solid rgba(143,132,255,0.35);
-  background:rgba(143,132,255,0.12);
-  font-size:13px;line-height:1.5;
-}
+.success-box{display:none;margin-top:14px;padding:14px;border-radius:14px;border:1px solid rgba(143,132,255,0.35);background:rgba(143,132,255,0.12);font-size:13px;line-height:1.5;}
 body.light .success-box{border:1px solid rgba(0,0,0,0.12);background:rgba(0,0,0,0.04);}
 
 body.modal-open{overflow:hidden;}
@@ -274,7 +199,6 @@ body.modal-open{overflow:hidden;}
     <p>Personalized biomarker testing, AI-optimized supplementation, and continuous performance monitoring — all for less than $2 per day.</p>
     <button class="btn" id="ctaConsumer" type="button">Ask Us How We Help You Live Better, Longer</button>
   </div>
-
   <div class="hero-right glass">
     <h2>We Help You Save Millions in Healthcare Costs.</h2>
     <p>Serving enterprises from 50 to 1,000,000+ employees.</p>
@@ -364,10 +288,7 @@ body.modal-open{overflow:hidden;}
           </label>
         </div>
 
-        <div class="form-error" id="leadError">
-          Please fix the highlighted fields and try again.
-        </div>
-
+        <div class="form-error" id="leadError">Please fix the highlighted fields and try again.</div>
         <div class="success-box" id="leadPending">Sending…</div>
 
         <div class="form-actions">
@@ -405,7 +326,7 @@ body.modal-open{overflow:hidden;}
   </div>
 </div>
 
-<!-- Intl Tel Input JS (country picker + validation) -->
+<!-- Intl Tel Input JS (country picker + E.164/validation) -->
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/intlTelInput.min.js"></script>
 
 <!-- libphonenumber-js bundle (AsYouType formatting) -->
@@ -468,18 +389,15 @@ function moveUnitedStatesToTop(){
   if(!root) return;
   const list = root.querySelector(".iti__country-list");
   if(!list) return;
-
   const us = list.querySelector('.iti__country[data-country-code="us"]');
   if(!us) return;
-
   list.insertBefore(us, list.firstElementChild);
 }
 
-/* Email validation (simple but effective) */
+/* Email validation */
 function isValidEmail(email){
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
 }
-
 function setEmailValidity(){
   const ok = isValidEmail(leadEmail.value);
   if(!ok && leadEmail.value.trim().length > 0){
@@ -491,44 +409,56 @@ function setEmailValidity(){
   }
   return ok;
 }
+leadEmail.addEventListener("input", setEmailValidity);
+leadEmail.addEventListener("blur", setEmailValidity);
 
-/* Phone: digits only input + live formatting output (we control the formatting) */
+/* Phone helpers */
 function digitsOnly(s){ return String(s || "").replace(/\D/g, ""); }
 
-function formatPhoneDigitsForCountry(digits, iso2){
-  // Uses libphonenumber-js AsYouType to format the digits.
-  if(!window.libphonenumber) return digits;
+/*
+  Requirement:
+  - Only numeric digits can be typed.
+  - When a country is selected, if user starts by typing the correct country calling code
+    (e.g. US selected and first digit(s) are "1"), show "+<code> ..." and format as-you-type
+    for that country.
+  - Example: US selected, user types 1 then continues => "+1 (XXX) XXX-XXXX"
+*/
+function formatWithSelectedCountryCallingCode(){
+  if(!iti || !window.libphonenumber) return;
 
-  const country = (iso2 || "us").toUpperCase();
-  const formatter = new libphonenumber.AsYouType(country);
-  return formatter.input(digits);
-}
+  const iso2 = (iti.getSelectedCountryData()?.iso2 || "us").toUpperCase();
+  const countryData = iti.getSelectedCountryData() || {};
+  const dialCode = String(countryData.dialCode || "");
 
-function formatPhoneAsYouType(){
-  if(!iti) return;
+  const rawDigits = digitsOnly(leadPhone.value);
 
-  const iso2 = iti.getSelectedCountryData()?.iso2 || "us";
-  const digits = digitsOnly(leadPhone.value);
+  // Decide whether we should show the +<dialCode> prefix:
+  // If user begins by typing the selected country's calling code digits, treat it as an international-format input.
+  const hasCorrectPrefix = dialCode && rawDigits.startsWith(dialCode);
 
-  // US requirement: after 3 digits, show "(XXX) "
-  if(iso2 === "us"){
-    const d = digits.slice(0, 10);
-    if(d.length === 3){
-      leadPhone.value = `(${d}) `;
-      return;
-    }
-    // for other lengths, use libphonenumber formatter (will become (XXX) XXX-XXXX)
-    leadPhone.value = formatPhoneDigitsForCountry(d, "US");
-    return;
+  // Compute formatted output
+  let formatted = "";
+
+  if(hasCorrectPrefix){
+    // Use "+<digits>" so AsYouType outputs international format for that country.
+    // Example US: +1 415 555 2671 -> +1 (415) 555-2671
+    const formatter = new libphonenumber.AsYouType(iso2);
+    formatted = formatter.input("+" + rawDigits);
+  } else {
+    // Otherwise treat as national input for that country (no +), but still formatted.
+    const formatter = new libphonenumber.AsYouType(iso2);
+    formatted = formatter.input(rawDigits);
   }
 
-  // International: format in that country's normal national format based on digits
-  leadPhone.value = formatPhoneDigitsForCountry(digits, iso2);
+  // Keep caret simple: end of field
+  if(formatted && formatted !== leadPhone.value){
+    leadPhone.value = formatted;
+  }
 }
 
-/* Hard block non-digits at the input level */
+/* Block non-digits */
 leadPhone.addEventListener("beforeinput", (e) => {
-  if(e.inputType && e.inputType.startsWith("delete")) return; // allow deletes
+  if(e.inputType && e.inputType.startsWith("delete")) return;
   if(typeof e.data !== "string") return;
   if(/[^\d]/.test(e.data)) e.preventDefault();
 });
@@ -536,15 +466,10 @@ leadPhone.addEventListener("paste", (e) => {
   const txt = (e.clipboardData || window.clipboardData).getData("text") || "";
   if(/[^\d]/.test(txt)) {
     e.preventDefault();
-    // paste only digits
     const justDigits = digitsOnly(txt);
     document.execCommand("insertText", false, justDigits);
   }
 });
-
-/* Email real-time check */
-leadEmail.addEventListener("input", setEmailValidity);
-leadEmail.addEventListener("blur", setEmailValidity);
 
 /* Modal open/close */
 function openLeadModal(source){
@@ -568,19 +493,19 @@ function openLeadModal(source){
   if(!iti){
     iti = window.intlTelInput(leadPhone, {
       initialCountry: "us",
-      preferredCountries: ["us"],   // preferred section
+      preferredCountries: ["us"],
       nationalMode: true,
-      formatOnDisplay: false,       // we format ourselves
+      separateDialCode: false,
+      formatOnDisplay: false, // we format ourselves
       autoPlaceholder: "aggressive",
       loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
     });
 
-    // Live formatting (digits-only source)
-    leadPhone.addEventListener("input", formatPhoneAsYouType);
-    leadPhone.addEventListener("blur", formatPhoneAsYouType);
+    leadPhone.addEventListener("input", formatWithSelectedCountryCallingCode);
+    leadPhone.addEventListener("blur", formatWithSelectedCountryCallingCode);
     leadPhone.addEventListener("countrychange", () => {
       moveUnitedStatesToTop();
-      formatPhoneAsYouType();
+      formatWithSelectedCountryCallingCode();
     });
 
     setTimeout(moveUnitedStatesToTop, 0);
@@ -632,13 +557,12 @@ async function submitToFormSubmit(payload){
 leadForm.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  // Apply final formatting before send
-  formatPhoneAsYouType();
+  // Final formatting pass
+  formatWithSelectedCountryCallingCode();
 
   const name = String(leadName.value || "").trim();
   const email = String(leadEmail.value || "").trim();
   const emailOk = isValidEmail(email);
-
   if(!emailOk){
     fieldEmail.classList.add("invalid");
     emailError.style.display = "block";
@@ -650,17 +574,23 @@ leadForm.addEventListener('submit', async (e) => {
   // Prefer intl-tel-input validation when utils are loaded
   let phoneOk = phoneOkBasic;
   let phoneE164 = leadPhone.value;
+
   if(iti && window.intlTelInputUtils){
     phoneOk = iti.isValidNumber();
     const e164 = iti.getNumber();
     if(e164) phoneE164 = e164;
+  } else {
+    // If utils aren't available, try to build a reasonable E.164-ish string
+    const data = iti ? iti.getSelectedCountryData() : null;
+    if(data && data.dialCode && phoneDigits.length > 0){
+      // Only prefix if user started with dial code already
+      if(phoneDigits.startsWith(String(data.dialCode))){
+        phoneE164 = "+" + phoneDigits;
+      }
+    }
   }
 
-  const ok =
-    name.length >= 2 &&
-    emailOk &&
-    phoneOk &&
-    smsConsent.checked;
+  const ok = name.length >= 2 && emailOk && phoneOk && smsConsent.checked;
 
   if(!ok){
     leadError.style.display = 'block';
@@ -676,9 +606,9 @@ leadForm.addEventListener('submit', async (e) => {
   fd.append("name", name);
   fd.append("email", email);
 
-  // Email includes a readable phone string + canonical E.164
-  fd.append("phone", leadPhone.value);    // formatted display (e.g. (415) 555-2671)
-  fd.append("phone_e164", phoneE164);
+  // Send readable + canonical
+  fd.append("phone", leadPhone.value);     // e.g. +1 (415) 555-2671
+  fd.append("phone_e164", phoneE164);      // e.g. +14155552671
 
   fd.append("sms_consent", "true");
   fd.append("_subject", `New lead from Better Human lander (${leadSource})`);
