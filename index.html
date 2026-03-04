@@ -127,7 +127,7 @@ body.light .modal-close:hover{background:rgba(0,0,0,0.06);}
 .field input:focus{border-color:rgba(143,132,255,0.9);box-shadow:0 0 0 4px rgba(143,132,255,0.18);}
 body.light .field input{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.12);}
 
-/* intl-tel-input tweaks so it matches the design */
+/* intl-tel-input styling + dropdown readability */
 .iti{width:100%;}
 .iti__tel-input{
   width:100% !important;
@@ -149,9 +149,7 @@ body.light .iti__tel-input{
   border:1px solid rgba(0,0,0,0.12) !important;
 }
 
-/* ===== Country dropdown readability fixes ===== */
-
-/* Dropdown background + all text BLACK so it is readable */
+/* Dropdown background + BLACK text */
 .iti__country-list{
   background:#ffffff !important;
   color:#111 !important;
@@ -161,39 +159,26 @@ body.light .iti__tel-input{
   overflow:hidden;
   max-height:280px;
 }
-
-/* Country rows */
-.iti__country{
+.iti__country,
+.iti__country-name,
+.iti__dial-code{
   color:#111 !important;
 }
 .iti__country:hover,
 .iti__country.iti__highlight{
   background:rgba(0,0,0,0.06) !important;
 }
-
-/* Dial code + name both readable */
-.iti__country-name,
-.iti__dial-code{
-  color:#111 !important;
-}
-
-/* Search input: ensure text + placeholder are black and not covered by icon */
+.iti__search{padding:10px 10px 8px 10px !important;background:#ffffff !important;}
 .iti__search-input{
   color:#111 !important;
   background:#ffffff !important;
   border:1px solid rgba(0,0,0,0.14) !important;
   border-radius:12px !important;
-  padding:12px 14px 12px 42px !important; /* left padding so text doesn't sit under magnifier */
+  padding:12px 14px 12px 42px !important; /* avoid magnifier overlap */
   font-size:14px !important;
   outline:none !important;
 }
-
-/* Placeholder color */
-.iti__search-input::placeholder{
-  color:rgba(0,0,0,0.55) !important;
-}
-
-/* Magnifying glass positioning so it doesn't overlap "Search" */
+.iti__search-input::placeholder{color:rgba(0,0,0,0.55) !important;}
 .iti__search-icon{
   left:14px !important;
   right:auto !important;
@@ -201,15 +186,6 @@ body.light .iti__tel-input{
   transform:translateY(-50%) !important;
   opacity:0.65 !important;
 }
-
-/* Add a little spacing between search row and list */
-.iti__search{
-  padding:10px 10px 8px 10px !important;
-  background:#ffffff !important;
-}
-
-/* Ensure dropdown flags don't look washed out */
-.iti__flag{filter:none !important;}
 
 .sms-consent{
   margin-top:12px;
@@ -245,7 +221,6 @@ body.light .btn-secondary:hover{background:rgba(0,0,0,0.05);}
 .form-hint{font-size:12px;opacity:0.75;line-height:1.4;}
 .form-error{margin-top:10px;font-size:13px;color:#ffd1d1;display:none;}
 body.light .form-error{color:#b00020;}
-
 .success-box{
   display:none;
   margin-top:14px;
@@ -260,10 +235,7 @@ body.light .success-box{
   border:1px solid rgba(0,0,0,0.12);
   background:rgba(0,0,0,0.04);
 }
-
 body.modal-open{overflow:hidden;}
-
-/* Modal views */
 .modal-view{display:none;}
 .modal-view.active{display:block;}
 .thankyou-wrap{padding:8px 2px 6px;}
@@ -311,13 +283,8 @@ body.modal-open{overflow:hidden;}
 
 <section class="hero fade">
   <div class="hero-left glass">
-    <h1>
-      Clinical Intelligence.<br>
-      Physician-Led Oversight from Harvard & Stanford-Trained Doctors.
-    </h1>
-    <p>
-      Personalized biomarker testing, AI-optimized supplementation, and continuous performance monitoring — all for less than $2 per day.
-    </p>
+    <h1>Clinical Intelligence.<br>Physician-Led Oversight from Harvard & Stanford-Trained Doctors.</h1>
+    <p>Personalized biomarker testing, AI-optimized supplementation, and continuous performance monitoring — all for less than $2 per day.</p>
     <button class="btn" id="ctaConsumer" type="button">Ask Us How We Help You Live Better, Longer</button>
   </div>
 
@@ -397,7 +364,6 @@ body.modal-open{overflow:hidden;}
           </div>
         </div>
 
-        <!-- SMS consent language -->
         <div class="sms-consent">
           By providing your phone number, you agree to receive text messages from Better Human related to your inquiry.
           Message &amp; data rates may apply. Message frequency varies. Reply STOP to opt out, HELP for help.
@@ -417,9 +383,7 @@ body.modal-open{overflow:hidden;}
         <div class="success-box" id="leadPending">Sending…</div>
 
         <div class="form-actions">
-          <div class="form-hint">
-            This form sends directly to <strong>info@betterhumanclub.com</strong>.
-          </div>
+          <div class="form-hint">This form sends directly to <strong>info@betterhumanclub.com</strong>.</div>
           <div style="display:flex; gap:10px; align-items:center;">
             <button class="btn-secondary" id="leadCancel" type="button">Cancel</button>
             <button class="btn" id="leadSubmit" type="submit">Submit</button>
@@ -444,7 +408,6 @@ body.modal-open{overflow:hidden;}
           A member of our team will follow up soon with next steps.
           If you need immediate assistance, email <strong>info@betterhumanclub.com</strong>.
         </div>
-
         <div class="thankyou-actions">
           <button class="btn" id="thankYouCloseBtn" type="button">Close</button>
         </div>
@@ -469,11 +432,10 @@ const observer = new IntersectionObserver(entries => {
 },{threshold:0.1});
 document.querySelectorAll(".fade").forEach(el => observer.observe(el));
 
-/* Modal logic */
+/* Modal + form elements */
 const leadModal = document.getElementById('leadModal');
 const leadModalClose = document.getElementById('leadModalClose');
 const leadCancel = document.getElementById('leadCancel');
-
 const leadForm = document.getElementById('leadForm');
 const leadError = document.getElementById('leadError');
 const leadPending = document.getElementById('leadPending');
@@ -494,6 +456,7 @@ const thankYouCloseBtn = document.getElementById('thankYouCloseBtn');
 let leadSource = "Unknown CTA";
 let iti = null;
 
+/* Switch modal views */
 function setView(which){
   if(which === "thankyou"){
     viewForm.classList.remove('active');
@@ -506,7 +469,6 @@ function setView(which){
 
 function openLeadModal(source){
   leadSource = source || "Unknown CTA";
-
   document.getElementById('leadModalSubtitle').textContent =
     leadSource === "Enterprise Strategy Call"
       ? "Share your info and we’ll schedule time with your team."
@@ -521,16 +483,73 @@ function openLeadModal(source){
   leadModal.setAttribute('aria-hidden','false');
   document.body.classList.add('modal-open');
 
-  // Initialize intl-tel-input once (first open)
+  // Initialize intl-tel-input once.
   if(!iti){
     iti = window.intlTelInput(leadPhone, {
       initialCountry: "us",
+      // This makes US numbers display in national format when US is selected:
+      // e.g. (415) 555-2671
       nationalMode: true,
       formatOnDisplay: true,
       autoPlaceholder: "aggressive",
-      // Put US (and optionally CA) at the very top of the dropdown
-      preferredCountries: ["us", "ca"],
+
+      // Make "United States" first (preferred section at top)
+      preferredCountries: ["us"],
+
+      // Utils needed for formatting + validation
       loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
+    });
+
+    // Format as user types for US numbers: (XXX) XXX-XXXX
+    // We do a light-touch approach while typing, then enforce on blur.
+    const maybeFormatUS = () => {
+      if(!window.intlTelInputUtils || !iti) return;
+      const country = iti.getSelectedCountryData()?.iso2;
+      if(country !== "us") return;
+
+      const digits = (leadPhone.value || "").replace(/\D/g, "");
+      // Only attempt once we have enough digits to be meaningful; avoid fighting the user early.
+      if(digits.length < 7) return;
+
+      const formatted = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
+      if(formatted && formatted !== leadPhone.value){
+        leadPhone.value = formatted;
+      }
+    };
+
+    // On input: try to keep US formatting pleasant
+    leadPhone.addEventListener("input", () => {
+      // If user is typing an international number with +, do not interfere.
+      if((leadPhone.value || "").trim().startsWith("+")) return;
+      maybeFormatUS();
+    });
+
+    // On blur: enforce a clean final format for US numbers
+    leadPhone.addEventListener("blur", () => {
+      if(!window.intlTelInputUtils || !iti) return;
+      const country = iti.getSelectedCountryData()?.iso2;
+      if(country === "us"){
+        const formatted = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
+        if(formatted) leadPhone.value = formatted; // (XXX) XXX-XXXX
+      } else {
+        // For international: set to international readable format when possible
+        const formattedIntl = iti.getNumber(window.intlTelInputUtils.numberFormat.INTERNATIONAL);
+        if(formattedIntl) leadPhone.value = formattedIntl;
+      }
+    });
+
+    // If the user changes country, re-format appropriately
+    leadPhone.addEventListener("countrychange", () => {
+      // Trigger blur-format logic without forcing focus changes
+      if(!window.intlTelInputUtils || !iti) return;
+      const country = iti.getSelectedCountryData()?.iso2;
+      if(country === "us"){
+        const formatted = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
+        if(formatted) leadPhone.value = formatted;
+      } else {
+        const formattedIntl = iti.getNumber(window.intlTelInputUtils.numberFormat.INTERNATIONAL);
+        if(formattedIntl) leadPhone.value = formattedIntl;
+      }
     });
   }
 
@@ -585,9 +604,35 @@ leadForm.addEventListener('submit', async (e) => {
   const name = clean(leadName.value);
   const email = clean(leadEmail.value);
 
-  const phoneDisplay = clean(leadPhone.value);
-  const phoneValid = iti ? iti.isValidNumber() : (phoneDisplay.length >= 7);
-  const phoneE164 = iti ? iti.getNumber() : phoneDisplay;
+  // Ensure final formatting before send (US => (XXX) XXX-XXXX)
+  let phoneDisplay = clean(leadPhone.value);
+  let phoneE164 = phoneDisplay;
+  let phoneValid = phoneDisplay.length >= 7;
+
+  if(iti && window.intlTelInputUtils){
+    phoneValid = iti.isValidNumber();
+
+    const country = iti.getSelectedCountryData()?.iso2;
+    if(country === "us"){
+      // Friendly/readable US display format
+      const usNational = iti.getNumber(window.intlTelInputUtils.numberFormat.NATIONAL);
+      if(usNational) {
+        phoneDisplay = usNational;       // (XXX) XXX-XXXX
+        leadPhone.value = usNational;    // keep UI consistent
+      }
+    } else {
+      // International readable format for display
+      const intl = iti.getNumber(window.intlTelInputUtils.numberFormat.INTERNATIONAL);
+      if(intl) {
+        phoneDisplay = intl;
+        leadPhone.value = intl;
+      }
+    }
+
+    // Canonical number for storage
+    const e164 = iti.getNumber(); // defaults to E.164 when possible
+    if(e164) phoneE164 = e164;
+  }
 
   const ok =
     name.length >= 2 &&
@@ -608,8 +653,11 @@ leadForm.addEventListener('submit', async (e) => {
   const fd = new FormData();
   fd.append("name", name);
   fd.append("email", email);
-  fd.append("phone_display", phoneDisplay);
-  fd.append("phone_e164", phoneE164);
+
+  // Email gets the readable version + the canonical version
+  fd.append("phone", phoneDisplay);          // readable (US => (XXX) XXX-XXXX)
+  fd.append("phone_e164", phoneE164);        // canonical (+14155552671)
+
   fd.append("sms_consent", "true");
 
   fd.append("_subject", `New lead from Better Human lander (${leadSource})`);
