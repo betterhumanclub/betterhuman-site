@@ -1,380 +1,793 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="better human — Know your body before it knows you have a problem. Painless at-home blood testing done before symptoms appear. Results in days with AI + clinician prevention plans.">
-    <title>better hüman | Know Your Body</title>
-    <link rel="icon" href="Favicon 32x32.png" type="image/png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap');
-        
-        :root {
-            --purple: #ADABFF;
-        }
-        
-        .tail-container {
-            font-family: 'Manrope', system-ui, sans-serif;
-        }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(24px);
-        }
-        
-        .hero-bg {
-            background: radial-gradient(circle at 50% 30%, rgba(173, 171, 255, 0.35) 0%, rgba(31, 22, 61, 0.97) 55%, #1F163D 100%);
-        }
-        
-        body {
-            background: #1F163D;
-            background-image: 
-                radial-gradient(circle at 20% 25%, rgba(173, 171, 255, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 80% 75%, rgba(173, 171, 255, 0.18) 0%, transparent 45%),
-                radial-gradient(circle at 35% 85%, rgba(173, 171, 255, 0.12) 0%, transparent 55%),
-                radial-gradient(circle at 65% 15%, rgba(173, 171, 255, 0.12) 0%, transparent 55%);
-            background-size: 220% 220%, 180% 180%, 160% 160%, 200% 200%;
-            background-position: 10% 10%, 90% 90%, 30% 70%, 75% 25%;
-            background-attachment: fixed;
-        }
-        
-        section {
-            background: transparent;
-        }
-        
-        nav {
-            background: rgba(31, 22, 61, 0.92);
-            backdrop-filter: blur(32px);
-            border-bottom: 1px solid rgba(173, 171, 255, 0.12);
-        }
-        
-        .nav-link {
-            position: relative;
-            transition: color 0.2s ease;
-        }
-        
-        .nav-link:after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: #ADABFF;
-            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .nav-link:hover:after {
-            width: 100%;
-        }
-        
-        .cta-button {
-            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
-        }
-        
-        .cta-button:hover {
-            transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 20px 25px -5px rgb(173 171 255 / 0.4),
-                        0 8px 10px -6px rgb(173 171 255 / 0.4);
-        }
-        
-        .timeline-dot {
-            width: 12px;
-            height: 12px;
-            background: #ADABFF;
-            box-shadow: 0 0 0 4px rgba(173, 171, 255, 0.4);
-        }
-        
-        .old-way {
-            position: relative;
-        }
-        
-        .old-way::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(45deg, #ff0000, transparent);
-            opacity: 0.03;
-            pointer-events: none;
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Better Human</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/css/intlTelInput.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Manrope';}
+html{scroll-behavior:smooth;}
+body{background:radial-gradient(circle at 30% 20%,#2b237c,#090b1e 70%);color:white;overflow-x:hidden;transition:0.35s ease;}
+body.light{background:#fff;color:#111;}
+section{padding:70px 10%;}
+.hero{display:flex;justify-content:space-between;gap:50px;align-items:stretch;}
+.hero-left,.hero-right{width:48%;}
+h1{font-size:48px;font-weight:700;line-height:1.15;}
+h2{font-size:36px;font-weight:600;}
+p{margin:18px 0;opacity:0.85;font-size:17px;line-height:1.6;}
+ul{margin:20px 0;line-height:1.8;font-size:17px;}
+.glass{background:rgba(255,255,255,0.06);backdrop-filter:blur(20px);border-radius:28px;border:1px solid rgba(255,255,255,0.1);padding:45px;box-shadow:0 0 60px rgba(143,132,255,0.25);transition:0.35s ease;}
+body.light .glass{background:rgba(0,0,0,0.05);border:1px solid rgba(0,0,0,0.1);box-shadow:none;}
+.btn{background:linear-gradient(90deg,#8f84ff,#6a5cff);padding:16px 32px;border-radius:14px;border:none;font-weight:600;cursor:pointer;transition:0.25s ease;color:white;}
+.btn:hover{box-shadow:0 0 35px rgba(143,132,255,.6);transform:translateY(-3px);}
+
+.dashboard-section{padding-top:0;}
+.dashboard-wrap{margin:0 auto;max-width:1100px;overflow:hidden;}
+.dashboard-img{width:100%;display:block;border-radius:20px;}
+
+.center{text-align:center;}
+footer{padding:70px 10%;}
+.footer-inner{text-align:center;padding:45px;}
+.footer-email{color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.25);padding-bottom:2px;transition:0.2s ease;}
+.footer-email:hover{border-bottom-color:rgba(255,255,255,0.6);}
+body.light .footer-email{border-bottom-color:rgba(0,0,0,0.25);}
+body.light .footer-email:hover{border-bottom-color:rgba(0,0,0,0.6);}
+.fade{opacity:0;transform:translateY(40px);transition:all .8s ease;}
+.fade.show{opacity:1;transform:translateY(0);}
+
+/* Theme toggle */
+.theme-switch{
+  position:fixed;top:22px;right:22px;width:72px;height:36px;border-radius:999px;
+  border:none;cursor:pointer;z-index:100;padding:4px;display:flex;align-items:center;
+  background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(12px);transition:0.25s ease;
+}
+body.light .theme-switch{background:rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.10);}
+.track-icons{position:absolute;inset:0;display:flex;align-items:center;justify-content:space-between;padding:0 10px;pointer-events:none;}
+.track-icons svg{width:16px;height:16px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.track-icons .sun-track{stroke:rgba(255,255,255,.55);opacity:1;}
+.track-icons .moon-track{stroke:rgba(255,255,255,.55);opacity:0.25;}
+body.light .track-icons .moon-track{stroke:rgba(0,0,0,.5);opacity:1;}
+body.light .track-icons .sun-track{stroke:rgba(0,0,0,.5);opacity:0.25;}
+.theme-switch .thumb{
+  width:28px;height:28px;border-radius:50%;
+  position:relative;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#8f84ff,#6a5cff);
+  box-shadow:0 10px 20px rgba(120,107,255,.35);
+  transition:transform .28s ease;
+}
+body.light .theme-switch .thumb{transform:translateX(36px);}
+.theme-switch .thumb svg{position:absolute;top:50%;left:50%;width:18px;height:18px;transform:translate(-50%,-50%);stroke:white;fill:none;stroke-width:2;}
+.theme-switch .thumb .sun{opacity:0;}
+body.light .theme-switch .thumb .sun{opacity:1;}
+body.light .theme-switch .thumb .moon{opacity:0;}
+
+/* Modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:999;padding:22px;}
+.modal-overlay.open{display:flex;}
+.modal{width:min(580px, 100%);border-radius:22px;border:1px solid rgba(255,255,255,0.14);background:rgba(12,14,40,0.78);box-shadow:0 25px 80px rgba(0,0,0,0.45);padding:26px;}
+body.light .modal{background:rgba(255,255,255,0.92);border:1px solid rgba(0,0,0,0.12);box-shadow:0 25px 80px rgba(0,0,0,0.18);}
+.modal-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:14px;}
+.modal-title{font-size:20px;font-weight:700;line-height:1.2;}
+.modal-subtitle{margin-top:6px;opacity:0.85;font-size:14px;line-height:1.5;}
+.modal-close{border:none;background:transparent;color:inherit;font-size:22px;cursor:pointer;padding:6px 10px;line-height:1;border-radius:10px;opacity:0.85;transition:0.2s ease;}
+.modal-close:hover{background:rgba(255,255,255,0.08);opacity:1;}
+body.light .modal-close:hover{background:rgba(0,0,0,0.06);}
+
+.form-grid{display:grid;gap:12px;margin-top:12px;}
+.field label{display:block;font-size:13px;opacity:0.85;margin-bottom:6px;}
+.field input{width:100%;padding:14px 14px;border-radius:14px;border:1px solid rgba(255,255,255,0.16);background:rgba(255,255,255,0.06);color:inherit;outline:none;transition:0.2s ease;font-size:15px;}
+.field input:focus{border-color:rgba(143,132,255,0.9);box-shadow:0 0 0 4px rgba(143,132,255,0.18);}
+body.light .field input{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.12);}
+
+.field .error-label{display:none;margin-top:6px;font-size:12px;color:#ffb4b4;}
+body.light .field .error-label{color:#b00020;}
+.field.invalid input{border-color:rgba(255,120,120,0.95) !important;box-shadow:0 0 0 4px rgba(255,120,120,0.12) !important;}
+
+/* intl-tel-input styling + dropdown readability */
+.iti{width:100%;}
+.iti__tel-input{
+  width:100% !important;
+  padding:14px 14px 14px 54px !important;
+  border-radius:14px !important;
+  border:1px solid rgba(255,255,255,0.16) !important;
+  background:rgba(255,255,255,0.06) !important;
+  color:inherit !important;
+  outline:none !important;
+  transition:0.2s ease !important;
+  font-size:15px !important;
+}
+.iti__tel-input:focus{border-color:rgba(143,132,255,0.9) !important;box-shadow:0 0 0 4px rgba(143,132,255,0.18) !important;}
+body.light .iti__tel-input{background:rgba(0,0,0,0.04) !important;border:1px solid rgba(0,0,0,0.12) !important;}
+.iti__country-list{
+  background:#ffffff !important;color:#111 !important;border:1px solid rgba(0,0,0,0.12) !important;border-radius:14px !important;
+  box-shadow:0 18px 45px rgba(0,0,0,0.25) !important;overflow:hidden;max-height:280px;
+}
+.iti__country,.iti__country-name,.iti__dial-code{color:#111 !important;}
+.iti__country:hover,.iti__country.iti__highlight{background:rgba(0,0,0,0.06) !important;}
+.iti__search{padding:10px 10px 8px 10px !important;background:#ffffff !important;}
+.iti__search-input{
+  color:#111 !important;background:#ffffff !important;border:1px solid rgba(0,0,0,0.14) !important;border-radius:12px !important;
+  padding:12px 14px 12px 42px !important;font-size:14px !important;outline:none !important;
+}
+.iti__search-input::placeholder{color:rgba(0,0,0,0.55) !important;}
+.iti__search-icon{left:14px !important;right:auto !important;top:50% !important;transform:translateY(-50%) !important;opacity:0.65 !important;}
+
+.sms-consent{margin-top:12px;font-size:12px;line-height:1.45;opacity:0.85;}
+.checkbox-row{display:flex;gap:10px;align-items:flex-start;margin-top:10px;padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,0.14);background:rgba(255,255,255,0.04);}
+body.light .checkbox-row{border:1px solid rgba(0,0,0,0.12);background:rgba(0,0,0,0.03);}
+.checkbox-row input{margin-top:3px;}
+
+.form-actions{display:flex;gap:12px;align-items:center;justify-content:space-between;margin-top:16px;flex-wrap:wrap;}
+.btn-secondary{background:transparent;border:1px solid rgba(255,255,255,0.18);color:inherit;padding:14px 18px;border-radius:14px;cursor:pointer;transition:0.2s ease;font-weight:600;}
+.btn-secondary:hover{background:rgba(255,255,255,0.08);}
+body.light .btn-secondary{border:1px solid rgba(0,0,0,0.14);}
+body.light .btn-secondary:hover{background:rgba(0,0,0,0.05);}
+
+.form-hint{font-size:12px;opacity:0.75;line-height:1.4;}
+.form-error{margin-top:10px;font-size:13px;color:#ffd1d1;display:none;}
+body.light .form-error{color:#b00020;}
+.success-box{display:none;margin-top:14px;padding:14px;border-radius:14px;border:1px solid rgba(143,132,255,0.35);background:rgba(143,132,255,0.12);font-size:13px;line-height:1.5;}
+body.light .success-box{border:1px solid rgba(0,0,0,0.12);background:rgba(0,0,0,0.04);}
+
+body.modal-open{overflow:hidden;}
+.modal-view{display:none;}
+.modal-view.active{display:block;}
+.thankyou-wrap{padding:8px 2px 6px;}
+.thankyou-title{font-size:22px;font-weight:800;margin-top:4px;}
+.thankyou-text{margin-top:10px;opacity:0.9;font-size:15px;line-height:1.55;}
+.thankyou-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:18px;}
+
+@media(max-width:1000px){
+  section{padding:60px 6%;}
+  .hero{flex-direction:column;}
+  .hero-left,.hero-right{width:100%;}
+  h1{font-size:40px;}
+  h2{font-size:30px;}
+}
+</style>
 </head>
-<body class="tail-container text-white overflow-x-hidden">
-    <!-- NAV – Clean, premium layout matching betterhumanclub.com style -->
-    <nav class="fixed top-0 left-0 right-0 z-50">
-        <div class="max-w-screen-2xl mx-auto px-8 py-6 flex items-center justify-between">
-            <!-- Logo left -->
-            <div class="flex items-center gap-3">
-                <img src="Emblem - Asset 8@1x.png" alt="better human emblem" class="h-9 w-auto">
-                <img src="Logo 2.jpg" alt="better human" class="h-7 w-auto">
-            </div>
-            
-            <!-- Centered links -->
-            <div class="hidden md:flex items-center gap-10 text-sm font-medium tracking-wide">
-                <a href="#problem" class="nav-link text-white/80 hover:text-white">The Problem</a>
-                <a href="#solution" class="nav-link text-white/80 hover:text-white">The Solution</a>
-                <a href="#plan" class="nav-link text-white/80 hover:text-white">Your Action Plan</a>
-                <a href="#how" class="nav-link text-white/80 hover:text-white">How It Works</a>
-            </div>
-            
-            <!-- CTA right -->
-            <a href="#waitlist" 
-               class="cta-button px-8 py-3.5 bg-[#ADABFF] text-black font-semibold text-sm rounded-2xl flex items-center gap-2 hover:bg-white transition-all">
-                Join the Waitlist
-            </a>
-        </div>
-    </nav>
 
-    <!-- HERO – Large centered branding + device like the live site -->
-    <section id="hero" class="hero-bg min-h-screen flex items-center pt-20">
-        <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
-            <div class="flex flex-col justify-center lg:pt-12 text-center lg:text-left">
-                <div class="flex justify-center lg:justify-start mb-8">
-                    <img src="Emblem - Asset 8@1x.png" alt="better human emblem" class="h-24 w-auto opacity-90">
-                </div>
-                
-                <img src="Logo 1.jpg" alt="better human" class="mx-auto lg:mx-0 max-w-[380px] mb-10">
-                
-                <h1 class="text-6xl lg:text-7xl font-semibold tracking-tighter leading-none max-w-2xl mx-auto lg:mx-0">
-                    Know your body before it knows you have a problem.
-                </h1>
-                
-                <p class="mt-8 text-2xl text-white/80 max-w-md mx-auto lg:mx-0">
-                    Painless at-home blood testing done before symptoms appear.<br>
-                    Results in days with AI + clinician prevention plans.
-                </p>
-                
-                <div class="mt-12 lg:mt-16 flex justify-center lg:justify-start">
-                    <div class="relative max-w-xs lg:max-w-sm">
-                        <img src="https://picsum.photos/id/1015/600/420" 
-                             alt="Tasso+ Device — FDA-Approved Class II Medical Device"
-                             class="w-full rounded-3xl shadow-2xl shadow-[#ADABFF]/30">
-                        <div class="absolute -bottom-4 right-6 bg-black/80 text-white text-xs font-medium px-5 py-2 rounded-2xl flex items-center gap-2 backdrop-blur">
-                            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                            FDA-Cleared • At Home
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="mt-16">
-                    <a href="#waitlist" 
-                       class="cta-button inline-flex items-center gap-4 bg-[#ADABFF] hover:bg-white hover:text-black text-black font-semibold text-xl px-12 py-6 rounded-3xl transition-all">
-                        <span>Join the Waitlist</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7" />
-                        </svg>
-                    </a>
-                </div>
-                
-                <p class="mt-6 text-xs text-white/40 tracking-widest">Early access begins Q3 2026 • Limited spots</p>
-            </div>
-            
-            <div class="hidden lg:flex items-center justify-center">
-                <img src="Emblem - Asset 8@1x.png" alt="emblem large" class="w-[520px] opacity-10">
-            </div>
-        </div>
-    </section>
+<body>
 
-    <!-- THE PROBLEM -->
-    <section id="problem" class="py-28 border-t border-white/10">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-5xl font-semibold tracking-tighter">
-                    Disease doesn’t announce itself—until it’s too late.
-                </h2>
-                <p class="mt-8 text-xl text-white/70 leading-relaxed">
-                    Modern healthcare is actually “sick care.” Most people never test until symptoms appear. By then you’re driving to a lab, enduring a traditional needle blood draw, and waiting weeks for results — while irreversible damage may already be done.
-                </p>
-            </div>
-            
-            <div class="mt-16 max-w-4xl mx-auto">
-                <div class="relative h-px bg-gradient-to-r from-transparent via-[#ADABFF] to-transparent"></div>
-                <div class="flex justify-between text-sm text-white/60 mt-4">
-                    <div>Silent Progression<br><span class="font-medium text-white">(Years / Decades — No Testing)</span></div>
-                    <div class="text-right">Symptoms Appear → Drive to Lab → Needle Draw → Wait Weeks</div>
-                </div>
-            </div>
-        </div>
-    </section>
+<button class="theme-switch" id="themeSwitch" type="button" aria-label="Toggle theme">
+  <div class="track-icons">
+    <svg class="moon-track" viewBox="0 0 24 24"><path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path></svg>
+    <svg class="sun-track" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path><path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path><path d="M20 12h2"></path>
+      <path d="M4.93 19.07l1.41-1.41"></path><path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
+  </div>
+  <div class="thumb">
+    <svg class="moon" viewBox="0 0 24 24"><path d="M21 12.7A9 9 0 1 1 11.3 3a7 7 0 0 0 9.7 9.7Z"></path></svg>
+    <svg class="sun" viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="4"></circle>
+      <path d="M12 2v2"></path><path d="M12 20v2"></path>
+      <path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path>
+      <path d="M2 12h2"></path><path d="M20 12h2"></path>
+      <path d="M4.93 19.07l1.41-1.41"></path><path d="M17.66 6.34l1.41-1.41"></path>
+    </svg>
+  </div>
+</button>
 
-    <!-- THE SOLUTION -->
-    <section id="solution" class="py-28 border-t border-white/10">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <h2 class="text-5xl font-semibold tracking-tighter text-center mb-16">Healthcare without the hospital.</h2>
-            
-            <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
-                <!-- Old Way -->
-                <div class="old-way glass border border-white/10 rounded-3xl p-10">
-                    <div class="text-white/50 text-sm font-medium mb-6">THE OLD WAY</div>
-                    <h3 class="text-3xl font-semibold text-red-400">Wait for symptoms. Then it’s too late.</h3>
-                    <ul class="mt-10 space-y-6 text-sm">
-                        <li class="flex gap-4">⏳ Testing only after symptoms appear</li>
-                        <li class="flex gap-4">📍 Drive to a lab or clinic</li>
-                        <li class="flex gap-4">🩸 Traditional needle blood draw</li>
-                        <li class="flex gap-4">⏳ Weeks for results — damage already done</li>
-                    </ul>
-                </div>
-                
-                <!-- Better Human Way -->
-                <div class="glass border border-[#ADABFF]/30 bg-[#ADABFF]/5 rounded-3xl p-10">
-                    <div class="text-[#ADABFF] text-sm font-medium mb-6">THE BETTER HUMAN WAY</div>
-                    <h3 class="text-3xl font-semibold">Test before symptoms. Prevent disease before it starts.</h3>
-                    
-                    <div class="mt-12">
-                        <div class="text-3xl font-semibold mb-2">Meet the Tasso+</div>
-                        <div class="text-[#ADABFF] text-sm">FDA-Approved Class II Medical Device</div>
-                        
-                        <ul class="mt-8 space-y-6 text-sm">
-                            <li>• Painless capillary collection in just 5 minutes at home (no needles, no finger pricks)</li>
-                            <li>• Done before any symptoms appear</li>
-                            <li>• Clinical-grade results delivered in days</li>
-                            <li>• Your personal AI + clinician-curated prevention plan arrives with every result</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- TOP TWO BOXES -->
+<section class="hero fade">
+  <div class="hero-left glass">
+    <h1>Clinical Intelligence.<br>Physician-Led Oversight from Harvard & Stanford-Trained Doctors.</h1>
+    <p>Personalized biomarker testing, AI-optimized supplementation, and continuous performance monitoring — all for less than $2 per day.</p>
+    <button class="btn" id="ctaConsumer" type="button">Ask Us How We Help You Live Better, Longer</button>
+  </div>
 
-    <!-- YOUR PERSONALIZED ACTION PLAN -->
-    <section id="plan" class="py-28 border-t border-white/10">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="max-w-2xl mx-auto text-center mb-16">
-                <h2 class="text-5xl font-semibold tracking-tighter">After you test — your Personalized Action Plan.</h2>
-                <p class="mt-6 text-xl text-white/70">We don’t just hand you lab numbers. You receive clear, expert-backed prevention plans powered by AI and 24/7 clinicians — plus the option to order targeted supplements based on your exact biomarkers.</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-                <div class="glass border border-white/10 rounded-3xl p-10 text-center">
-                    <div class="text-[#ADABFF] text-6xl mb-6">🧠</div>
-                    <div class="text-2xl font-semibold">AI + 24/7 Clinician Support</div>
-                    <div class="mt-6 text-white/70">Plain-English reports with personalized lifestyle recommendations. Speak to a doctor anytime. True prevention, not just data.</div>
-                </div>
-                
-                <div class="glass border border-[#ADABFF]/30 bg-[#ADABFF]/5 rounded-3xl p-10 text-center">
-                    <div class="text-[#ADABFF] text-6xl mb-6">💊</div>
-                    <div class="text-2xl font-semibold">Biomarker-Based Supplements</div>
-                    <div class="mt-6 text-white/70">We identify deficiencies and give you the exact formulas your body needs. Order separately when ready — nothing ships automatically.</div>
-                </div>
-                
-                <div class="glass border border-white/10 rounded-3xl p-10 text-center">
-                    <div class="text-[#ADABFF] text-6xl mb-6">📱</div>
-                    <div class="text-2xl font-semibold">Smart Coaching Ecosystem</div>
-                    <div class="mt-6 text-white/70">SnapTrack meals. Sync wearables. Turn insights into daily habits that keep you healthy for decades.</div>
-                </div>
-            </div>
-            
-            <div class="text-center mt-12 text-xs text-white/40">CLIA-certified labs • CAP accredited • HIPAA compliant • 100% clinical-grade accuracy</div>
-        </div>
-    </section>
+  <div class="hero-right glass">
+    <h2>We Help You Save Millions in Healthcare Costs.</h2>
+    <p>Serving enterprises from 50 to 1,000,000+ employees.</p>
+    <ul>
+      <li>✓ Reduce insurance claims</li>
+      <li>✓ Reduce absenteeism</li>
+      <li>✓ Increase energy & productivity</li>
+      <li>✓ Real-time executive dashboards</li>
+    </ul>
+    <button class="btn" id="ctaEnterprise" type="button">Book Enterprise Strategy Call</button>
+  </div>
+</section>
 
-    <!-- HOW IT WORKS -->
-    <section id="how" class="py-28 border-t border-white/10">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="max-w-2xl mx-auto text-center mb-16">
-                <h2 class="text-5xl font-semibold tracking-tighter">Your simple journey: Test → Results → Action Plan.</h2>
-            </div>
-            
-            <div class="max-w-5xl mx-auto relative">
-                <div class="hidden md:block absolute top-12 left-0 right-0 h-px bg-white/10"></div>
-                
-                <div class="grid md:grid-cols-5 gap-8 relative">
-                    <div class="text-center">
-                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
-                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">01</div>
-                        <div class="font-semibold mt-2">Order</div>
-                        <div class="text-white/60 text-sm mt-3">Secure early access. Tasso+ ships to your door.</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
-                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">02</div>
-                        <div class="font-semibold mt-2">Test at Home</div>
-                        <div class="text-white/60 text-sm mt-3">Apply patch • Press button • 5 minutes, painless, before symptoms.</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
-                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">03</div>
-                        <div class="font-semibold mt-2">Lab Analysis</div>
-                        <div class="text-white/60 text-sm mt-3">Clinical-grade results delivered in days.</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
-                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">04</div>
-                        <div class="font-semibold mt-2">Your Action Plan</div>
-                        <div class="text-white/60 text-sm mt-3">AI + clinician prevention plan arrives instantly.</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
-                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">05</div>
-                        <div class="font-semibold mt-2">Take Action</div>
-                        <div class="text-white/60 text-sm mt-3">Follow coaching + order targeted supplements as needed.</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="dashboard-section fade">
+  <div class="glass dashboard-wrap">
+    <img class="dashboard-img" src="dashboard.png" alt="Executive Dashboard">
+  </div>
+</section>
 
-    <!-- FINAL CTA + FOOTER -->
-    <section id="waitlist" class="py-32 border-t border-white/10">
-        <div class="max-w-2xl mx-auto px-6 text-center">
-            <img src="Emblem - Asset 8@1x.png" alt="emblem" class="h-20 mx-auto mb-8 opacity-75">
-            
-            <h2 class="text-6xl font-semibold tracking-tighter">Start testing.<br>Stop guessing.</h2>
-            <p class="mt-6 text-2xl text-white/70">Your blood already knows the future. We help you change it — before symptoms ever appear.</p>
-            
-            <div id="form-container" class="mt-16 max-w-md mx-auto">
-                <form id="waitlist-form" class="space-y-6">
-                    <input type="text" id="name" placeholder="First name" 
-                           class="w-full bg-white/5 border border-white/20 focus:border-[#ADABFF] rounded-3xl px-8 py-6 text-lg outline-none transition-all placeholder:text-white/40" required>
-                    <input type="email" id="email" placeholder="you@email.com" 
-                           class="w-full bg-white/5 border border-white/20 focus:border-[#ADABFF] rounded-3xl px-8 py-6 text-lg outline-none transition-all placeholder:text-white/40" required>
-                    <button type="submit"
-                            class="cta-button w-full bg-[#ADABFF] hover:bg-white hover:text-black text-black font-semibold text-2xl py-8 rounded-3xl">
-                        I want early access
-                    </button>
-                </form>
-            </div>
-            
-            <div id="success-message" class="hidden mt-16 text-center">
-                <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-400/10 text-emerald-400 rounded-2xl text-4xl mb-6">🎉</div>
-                <div class="text-3xl font-semibold">You’re in.</div>
-                <div class="text-white/70 mt-3">We’ll email you the moment early access opens.</div>
-            </div>
-        </div>
-        
-        <footer class="mt-32 border-t border-white/10 pt-12">
-            <div class="max-w-screen-2xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8 text-sm text-white/40">
-                <div class="flex items-center gap-4">
-                    <img src="Emblem - Asset 8@1x.png" alt="emblem" class="h-7">
-                    <img src="Logo 2.jpg" alt="better human" class="h-6">
-                </div>
-                <div class="flex gap-8">
-                    <a href="#" class="hover:text-white">Privacy</a>
-                    <a href="#" class="hover:text-white">Terms</a>
-                </div>
-                <div class="text-xs">© 2026 better human, Inc.</div>
-            </div>
-        </footer>
-    </section>
+<footer>
+  <div class="glass footer-inner">
+    <h3>Better Human</h3>
+    <p>Prevention-first healthcare infrastructure.</p>
+    <p><a class="footer-email" href="mailto:info@betterhumanclub.com">info@betterhumanclub.com</a></p>
+  </div>
+</footer>
 
-    <script>
-        document.getElementById('waitlist-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            document.getElementById('form-container').classList.add('hidden');
-            document.getElementById('success-message').classList.remove('hidden');
-        });
-        
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    e.preventDefault();
-                    target.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-    </script>
+<!-- MODAL: CONSUMER -->
+<div class="modal-overlay" id="modalConsumer" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="consumerTitle">
+    <div class="modal-view active" id="viewConsumerForm">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="consumerTitle">Tell us where to reach you</div>
+          <div class="modal-subtitle">We’ll follow up shortly.</div>
+        </div>
+        <button class="modal-close" id="closeConsumer" type="button" aria-label="Close">×</button>
+      </div>
+
+      <form id="formConsumer" novalidate>
+        <div class="form-grid">
+          <div class="field" id="c_fieldName">
+            <label for="c_name">Name</label>
+            <input id="c_name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="field" id="c_fieldEmail">
+            <label for="c_email">Email</label>
+            <input id="c_email" name="email" type="email" autocomplete="email" required />
+            <div class="error-label" id="c_emailError">Please enter a valid email address.</div>
+          </div>
+
+          <div class="field" id="c_fieldPhone">
+            <label for="c_phone">Phone</label>
+            <input id="c_phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" required />
+            <div class="error-label" id="c_phoneError">Please enter a valid phone number.</div>
+          </div>
+        </div>
+
+        <div class="sms-consent">
+          By providing your phone number, you agree to receive text messages from Better Human related to your inquiry.
+          Message &amp; data rates may apply. Message frequency varies. Reply STOP to opt out, HELP for help.
+        </div>
+
+        <div class="checkbox-row">
+          <input id="c_smsConsent" name="sms_consent" type="checkbox" required />
+          <label for="c_smsConsent" style="font-size:12px; line-height:1.45; opacity:0.9;">
+            I consent to receive SMS/text messages as described above.
+          </label>
+        </div>
+
+        <div class="form-error" id="c_formError">Please fix the highlighted fields and try again.</div>
+        <div class="success-box" id="c_pending">Sending…</div>
+
+        <div class="form-actions">
+          <div class="form-hint">This form sends directly to <strong>info@betterhumanclub.com</strong>.</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn-secondary" id="c_cancel" type="button">Cancel</button>
+            <button class="btn" id="c_submit" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-view" id="viewConsumerThankYou" aria-live="polite">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Thank you for your inquiry</div>
+          <div class="modal-subtitle">We’ve received your information.</div>
+        </div>
+        <button class="modal-close" id="closeConsumerX" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="thankyou-wrap">
+        <div class="thankyou-title">We’ll be in touch shortly.</div>
+        <div class="thankyou-text">A member of our team will follow up soon. If you need immediate help, email <strong>info@betterhumanclub.com</strong>.</div>
+        <div class="thankyou-actions">
+          <button class="btn" id="closeConsumerBtn" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ENTERPRISE -->
+<div class="modal-overlay" id="modalEnterprise" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="enterpriseTitle">
+    <div class="modal-view active" id="viewEnterpriseForm">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="enterpriseTitle">Book an Enterprise Strategy Call</div>
+          <div class="modal-subtitle">Share your info and we’ll schedule time with your team.</div>
+        </div>
+        <button class="modal-close" id="closeEnterprise" type="button" aria-label="Close">×</button>
+      </div>
+
+      <form id="formEnterprise" novalidate>
+        <div class="form-grid">
+          <div class="field" id="e_fieldName">
+            <label for="e_name">Name</label>
+            <input id="e_name" name="name" type="text" autocomplete="name" required />
+          </div>
+
+          <div class="field" id="e_fieldEmail">
+            <label for="e_email">Email</label>
+            <input id="e_email" name="email" type="email" autocomplete="email" required />
+            <div class="error-label" id="e_emailError">Please enter a valid email address.</div>
+          </div>
+
+          <div class="field" id="e_fieldPhone">
+            <label for="e_phone">Phone</label>
+            <input id="e_phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" required />
+            <div class="error-label" id="e_phoneError">Please enter a valid phone number.</div>
+          </div>
+
+          <div class="field" id="e_fieldEmployees">
+            <label for="e_employees">Number of employees</label>
+            <input id="e_employees" name="employees" type="text" inputmode="numeric" autocomplete="off" required />
+            <div class="error-label" id="e_empError">Please enter the number of employees (digits only).</div>
+          </div>
+        </div>
+
+        <div class="sms-consent">
+          By providing your phone number, you agree to receive text messages from Better Human related to your inquiry.
+          Message &amp; data rates may apply. Message frequency varies. Reply STOP to opt out, HELP for help.
+        </div>
+
+        <div class="checkbox-row">
+          <input id="e_smsConsent" name="sms_consent" type="checkbox" required />
+          <label for="e_smsConsent" style="font-size:12px; line-height:1.45; opacity:0.9;">
+            I consent to receive SMS/text messages as described above.
+          </label>
+        </div>
+
+        <div class="form-error" id="e_formError">Please fix the highlighted fields and try again.</div>
+        <div class="success-box" id="e_pending">Sending…</div>
+
+        <div class="form-actions">
+          <div class="form-hint">This form sends directly to <strong>info@betterhumanclub.com</strong>.</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn-secondary" id="e_cancel" type="button">Cancel</button>
+            <button class="btn" id="e_submit" type="submit">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="modal-view" id="viewEnterpriseThankYou" aria-live="polite">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">Thank you for your inquiry</div>
+          <div class="modal-subtitle">We’ve received your information.</div>
+        </div>
+        <button class="modal-close" id="closeEnterpriseX" type="button" aria-label="Close">×</button>
+      </div>
+      <div class="thankyou-wrap">
+        <div class="thankyou-title">We’ll be in touch shortly.</div>
+        <div class="thankyou-text">A member of our team will follow up soon. If you need immediate help, email <strong>info@betterhumanclub.com</strong>.</div>
+        <div class="thankyou-actions">
+          <button class="btn" id="closeEnterpriseBtn" type="button">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/intlTelInput.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/libphonenumber-js@1.11.4/bundle/libphonenumber-js.min.js"></script>
+
+<script>
+/* Theme toggle */
+document.getElementById('themeSwitch').addEventListener('click', () => document.body.classList.toggle('light'));
+
+/* Fade-in */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add("show"); });
+},{threshold:0.1});
+document.querySelectorAll(".fade").forEach(el => io.observe(el));
+
+/* ===== Shared utilities ===== */
+function digitsOnly(s){ return String(s || "").replace(/\D/g, ""); }
+function clampE164Digits(d){ return d.slice(0, 15); } // E.164 hard max 15 digits total
+
+function isValidEmail(email){
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
+}
+
+async function submitToFormSubmit(payload){
+  const url = "https://formsubmit.co/ajax/info@betterhumanclub.com";
+  const res = await fetch(url, { method:"POST", headers:{ "Accept":"application/json" }, body:payload });
+  let data=null; try{ data = await res.json(); }catch(_){}
+  if(!res.ok){
+    const msg = (data && (data.message || data.error)) ? (data.message || data.error) : "Submission failed.";
+    throw new Error(msg);
+  }
+  return data;
+}
+
+/* ===== US always first in dropdown (per modal/iti instance) ===== */
+function startUSAlwaysFirstObserver(itiInstance){
+  const root = itiInstance?.telInput?.closest(".iti");
+  if(!root) return () => {};
+  const list = root.querySelector(".iti__country-list");
+  if(!list) return () => {};
+
+  const ensure = () => {
+    const us = list.querySelector('.iti__country[data-country-code="us"]');
+    if(!us) return;
+    if(list.firstElementChild !== us) list.insertBefore(us, list.firstElementChild);
+  };
+
+  const obs = new MutationObserver(ensure);
+  obs.observe(list, { childList:true, subtree:false });
+  ensure();
+
+  return () => obs.disconnect();
+}
+
+/* ===== Phone formatting + length proofing (per input + iti instance) ===== */
+function makePhoneFormatter(phoneInput, itiInstance, phoneFieldWrap, phoneErrorEl){
+  // digits-only typing enforcement
+  phoneInput.addEventListener("beforeinput", (e) => {
+    if(e.inputType && e.inputType.startsWith("delete")) return;
+    if(typeof e.data !== "string") return;
+    if(/[^\d]/.test(e.data)) e.preventDefault();
+  });
+  phoneInput.addEventListener("paste", (e) => {
+    const txt = (e.clipboardData || window.clipboardData).getData("text") || "";
+    if(/[^\d]/.test(txt)) {
+      e.preventDefault();
+      const justDigits = digitsOnly(txt);
+      document.execCommand("insertText", false, justDigits);
+    }
+  });
+
+  function getIso2(){ return String(itiInstance.getSelectedCountryData()?.iso2 || "us").toUpperCase(); }
+  function getDial(){ return String(itiInstance.getSelectedCountryData()?.dialCode || ""); }
+  function startsWithDial(d){ const dc=getDial(); return dc && d.startsWith(dc); }
+
+  function trimTooLong(digits){
+    digits = clampE164Digits(digits);
+    if(!window.intlTelInputUtils) return digits;
+
+    const isoLower = String(itiInstance.getSelectedCountryData()?.iso2 || "us");
+    const dial = getDial();
+    if(!dial) return digits;
+
+    const TOO_LONG = 3;
+    const asIntl = startsWithDial(digits);
+
+    let d = digits;
+    let guard = 40;
+    while(guard-- > 0){
+      const cand = asIntl ? ("+" + d) : ("+" + dial + d);
+      const err = window.intlTelInputUtils.getValidationError(cand, isoLower);
+      if(err !== TOO_LONG) break;
+      d = d.slice(0, -1);
+      if(!d) break;
+    }
+    return d;
+  }
+
+  function format(){
+    if(!window.libphonenumber) return;
+
+    const iso2 = getIso2();
+    const digitsRaw = clampE164Digits(digitsOnly(phoneInput.value));
+    const digits = trimTooLong(digitsRaw);
+    const dial = getDial();
+    const asIntl = dial && digits.startsWith(dial);
+
+    let out = "";
+    // US special: show +1 (XXX) XXX-XXXX while typing when they include 1
+    if(asIntl && iso2 === "US" && digits.startsWith("1")){
+      const nationalDigits = digits.slice(1);
+      const natFmt = new libphonenumber.AsYouType("US").input(nationalDigits); // (415) 555-2671 while typing
+      out = "+1 " + natFmt;
+    } else {
+      const fmt = new libphonenumber.AsYouType(iso2);
+      out = asIntl ? fmt.input("+" + digits) : fmt.input(digits);
+    }
+
+    if(out && out !== phoneInput.value) phoneInput.value = out;
+  }
+
+  function validate(showUI=true){
+    format();
+
+    let ok = digitsOnly(phoneInput.value).length >= 7;
+    if(window.intlTelInputUtils){
+      ok = itiInstance.isValidNumber();
+      const err = itiInstance.getValidationError();
+      if(err === 2 || err === 3) ok = false; // TOO_SHORT / TOO_LONG
+    }
+
+    if(showUI){
+      if(!ok && phoneInput.value.trim().length > 0){
+        phoneFieldWrap.classList.add("invalid");
+        phoneErrorEl.style.display = "block";
+      } else {
+        phoneFieldWrap.classList.remove("invalid");
+        phoneErrorEl.style.display = "none";
+      }
+    }
+    return ok;
+  }
+
+  phoneInput.addEventListener("input", () => validate(true));
+  phoneInput.addEventListener("blur", () => validate(true));
+  phoneInput.addEventListener("countrychange", () => validate(true));
+
+  return { format, validate };
+}
+
+/* ===== Employees field digits-only (enterprise only) ===== */
+function bindEmployeesDigitsOnly(inputEl, fieldWrap, errorEl){
+  const digitsOnlyKey = (e) => {
+    if(e.inputType && e.inputType.startsWith("delete")) return;
+    if(typeof e.data !== "string") return;
+    if(/[^\d]/.test(e.data)) e.preventDefault();
+  };
+  inputEl.addEventListener("beforeinput", digitsOnlyKey);
+  inputEl.addEventListener("paste", (e) => {
+    const txt = (e.clipboardData || window.clipboardData).getData("text") || "";
+    const just = digitsOnly(txt);
+    e.preventDefault();
+    document.execCommand("insertText", false, just);
+  });
+
+  const validate = (showUI=true) => {
+    const val = digitsOnly(inputEl.value);
+    const ok = val.length > 0;
+    if(showUI){
+      if(!ok){
+        fieldWrap.classList.add("invalid");
+        errorEl.style.display = "block";
+      } else {
+        fieldWrap.classList.remove("invalid");
+        errorEl.style.display = "none";
+      }
+    }
+    return ok;
+  };
+
+  inputEl.addEventListener("input", () => validate(true));
+  inputEl.addEventListener("blur", () => validate(true));
+  return { validate };
+}
+
+/* ===== Modal wiring helper (two separate forms/modals) ===== */
+function wireModal({
+  ctaId,
+  modalEl,
+  closeIds,
+  formEl,
+  thankYouViewId,
+  formViewId,
+  pendingEl,
+  formErrorEl,
+  nameEl,
+  emailEl,
+  emailFieldWrap,
+  emailErrorEl,
+  phoneEl,
+  phoneFieldWrap,
+  phoneErrorEl,
+  smsConsentEl,
+  subjectPrefix,
+  extraPayloadBuilder // optional for enterprise
+}){
+  let itiInstance = null;
+  let stopUSObserver = null;
+  let phoneHelper = null;
+
+  function setView(which){
+    document.getElementById(formViewId).classList.toggle("active", which === "form");
+    document.getElementById(thankYouViewId).classList.toggle("active", which === "thankyou");
+  }
+
+  function resetUI(){
+    formErrorEl.style.display = "none";
+    pendingEl.style.display = "none";
+
+    emailFieldWrap.classList.remove("invalid");
+    emailErrorEl.style.display = "none";
+
+    phoneFieldWrap.classList.remove("invalid");
+    phoneErrorEl.style.display = "none";
+  }
+
+  function open(){
+    setView("form");
+    resetUI();
+    formEl.reset();
+
+    modalEl.classList.add("open");
+    modalEl.setAttribute("aria-hidden","false");
+    document.body.classList.add("modal-open");
+
+    if(!itiInstance){
+      itiInstance = window.intlTelInput(phoneEl, {
+        initialCountry: "us",
+        preferredCountries: ["us"],
+        nationalMode: true,
+        separateDialCode: false,
+        formatOnDisplay: false,
+        autoPlaceholder: "aggressive",
+        loadUtils: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"),
+      });
+
+      // Always keep US first
+      stopUSObserver = startUSAlwaysFirstObserver(itiInstance);
+
+      // Phone formatting/validation
+      phoneHelper = makePhoneFormatter(phoneEl, itiInstance, phoneFieldWrap, phoneErrorEl);
+    } else {
+      // Re-start observer in case DOM rebuilt
+      if(stopUSObserver) stopUSObserver();
+      stopUSObserver = startUSAlwaysFirstObserver(itiInstance);
+      if(phoneHelper) phoneHelper.format();
+    }
+
+    setTimeout(() => nameEl.focus(), 0);
+  }
+
+  function close(){
+    modalEl.classList.remove("open");
+    modalEl.setAttribute("aria-hidden","true");
+    document.body.classList.remove("modal-open");
+  }
+
+  // Bind CTA and close controls
+  const cta = document.getElementById(ctaId);
+  if(cta) cta.addEventListener("click", open);
+
+  closeIds.forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.addEventListener("click", close);
+  });
+
+  // click outside closes
+  modalEl.addEventListener("click", (e) => { if(e.target === modalEl) close(); });
+  document.addEventListener("keydown", (e) => { if(e.key === "Escape" && modalEl.classList.contains("open")) close(); });
+
+  // Email validity UI
+  function validateEmail(showUI=true){
+    const ok = isValidEmail(emailEl.value);
+    if(showUI){
+      if(!ok && emailEl.value.trim().length > 0){
+        emailFieldWrap.classList.add("invalid");
+        emailErrorEl.style.display = "block";
+      } else {
+        emailFieldWrap.classList.remove("invalid");
+        emailErrorEl.style.display = "none";
+      }
+    }
+    return ok;
+  }
+  emailEl.addEventListener("input", () => validateEmail(true));
+  emailEl.addEventListener("blur", () => validateEmail(true));
+
+  // Submit
+  formEl.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Ensure latest formatting
+    if(phoneHelper) phoneHelper.format();
+
+    const name = String(nameEl.value || "").trim();
+    const email = String(emailEl.value || "").trim();
+
+    const emailOk = validateEmail(true);
+    const phoneOk = phoneHelper ? phoneHelper.validate(true) : true;
+    const smsOk = !!smsConsentEl.checked;
+
+    // Optional extra fields (enterprise)
+    let extrasOk = true;
+    let extras = {};
+    if(typeof extraPayloadBuilder === "function"){
+      const out = extraPayloadBuilder();
+      extrasOk = out.ok;
+      extras = out.payload;
+    }
+
+    const ok = name.length >= 2 && emailOk && phoneOk && smsOk && extrasOk;
+    if(!ok){
+      formErrorEl.style.display = "block";
+      pendingEl.style.display = "none";
+      return;
+    }
+
+    formErrorEl.style.display = "none";
+    pendingEl.textContent = "Sending…";
+    pendingEl.style.display = "block";
+
+    // Canonical E.164 if possible
+    let phoneE164 = phoneEl.value;
+    if(itiInstance && window.intlTelInputUtils){
+      const e164 = itiInstance.getNumber();
+      if(e164) phoneE164 = e164;
+    }
+
+    const fd = new FormData();
+    fd.append("name", name);
+    fd.append("email", email);
+    fd.append("phone", phoneEl.value);
+    fd.append("phone_e164", phoneE164);
+    fd.append("sms_consent", "true");
+
+    Object.entries(extras).forEach(([k,v]) => fd.append(k, v));
+
+    fd.append("_subject", `${subjectPrefix} (${ctaId})`);
+    fd.append("_template", "table");
+    fd.append("_captcha", "false");
+    fd.append("page", window.location.href);
+    fd.append("submitted_at", new Date().toISOString());
+
+    try{
+      await submitToFormSubmit(fd);
+      pendingEl.style.display = "none";
+      setView("thankyou");
+      // focus close button for accessibility (first closeId assumed to be X, we focus the bottom close button if present)
+      const focusBtn = modalEl.querySelector("button.btn");
+      if(focusBtn) setTimeout(() => focusBtn.focus(), 0);
+    } catch(err){
+      pendingEl.style.display = "none";
+      formErrorEl.textContent = "Sorry — we couldn’t submit your inquiry right now. Please try again, or email info@betterhumanclub.com.";
+      formErrorEl.style.display = "block";
+      console.error(err);
+    }
+  });
+}
+
+/* ===== Wire CONSUMER modal ===== */
+wireModal({
+  ctaId: "ctaConsumer",
+  modalEl: document.getElementById("modalConsumer"),
+  closeIds: ["closeConsumer","closeConsumerX","closeConsumerBtn","c_cancel"],
+  formEl: document.getElementById("formConsumer"),
+  thankYouViewId: "viewConsumerThankYou",
+  formViewId: "viewConsumerForm",
+  pendingEl: document.getElementById("c_pending"),
+  formErrorEl: document.getElementById("c_formError"),
+  nameEl: document.getElementById("c_name"),
+  emailEl: document.getElementById("c_email"),
+  emailFieldWrap: document.getElementById("c_fieldEmail"),
+  emailErrorEl: document.getElementById("c_emailError"),
+  phoneEl: document.getElementById("c_phone"),
+  phoneFieldWrap: document.getElementById("c_fieldPhone"),
+  phoneErrorEl: document.getElementById("c_phoneError"),
+  smsConsentEl: document.getElementById("c_smsConsent"),
+  subjectPrefix: "New Consumer Lead"
+});
+
+/* ===== Wire ENTERPRISE modal (adds employees field) ===== */
+const empInput = document.getElementById("e_employees");
+const empField = document.getElementById("e_fieldEmployees");
+const empError = document.getElementById("e_empError");
+const empHelper = bindEmployeesDigitsOnly(empInput, empField, empError);
+
+wireModal({
+  ctaId: "ctaEnterprise",
+  modalEl: document.getElementById("modalEnterprise"),
+  closeIds: ["closeEnterprise","closeEnterpriseX","closeEnterpriseBtn","e_cancel"],
+  formEl: document.getElementById("formEnterprise"),
+  thankYouViewId: "viewEnterpriseThankYou",
+  formViewId: "viewEnterpriseForm",
+  pendingEl: document.getElementById("e_pending"),
+  formErrorEl: document.getElementById("e_formError"),
+  nameEl: document.getElementById("e_name"),
+  emailEl: document.getElementById("e_email"),
+  emailFieldWrap: document.getElementById("e_fieldEmail"),
+  emailErrorEl: document.getElementById("e_emailError"),
+  phoneEl: document.getElementById("e_phone"),
+  phoneFieldWrap: document.getElementById("e_fieldPhone"),
+  phoneErrorEl: document.getElementById("e_phoneError"),
+  smsConsentEl: document.getElementById("e_smsConsent"),
+  subjectPrefix: "New Enterprise Lead",
+  extraPayloadBuilder: () => {
+    const ok = empHelper.validate(true);
+    return { ok, payload: { employees: digitsOnly(empInput.value) } };
+  }
+});
+</script>
+
 </body>
 </html>
