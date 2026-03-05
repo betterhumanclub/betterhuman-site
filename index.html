@@ -1,1291 +1,380 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Better Human | Preventive Health OS</title>
-
-  <!-- SEO -->
-  <meta name="description" content="Better Human turns continuous biomarker intelligence into clear, weekly actions—powered by at-home testing, predictive insights, and physician-led oversight." />
-  <meta name="robots" content="index,follow" />
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Better Human | Preventive Health OS" />
-  <meta property="og:description" content="Continuous biomarker intelligence → clear weekly actions. At-home testing + predictive insights + physician-led oversight." />
-  <meta property="og:type" content="website" />
-  <!-- Replace with your real URL + image later -->
-  <meta property="og:url" content="https://betterhumanclub.com" />
-  <meta property="og:image" content="https://betterhumanclub.com/og-image.png" />
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Better Human | Preventive Health OS" />
-  <meta name="twitter:description" content="Continuous biomarker intelligence → clear weekly actions." />
-  <meta name="twitter:image" content="https://betterhumanclub.com/og-image.png" />
-
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/css/intlTelInput.css">
-
-  <style>
-    :root{
-      --bg1:#090b1e;
-      --bg2:#2b237c;
-      --text:#ffffff;
-      --muted:rgba(255,255,255,0.78);
-      --muted2:rgba(255,255,255,0.62);
-      --stroke:rgba(255,255,255,0.10);
-      --glass:rgba(255,255,255,0.06);
-      --shadow:rgba(143,132,255,0.22);
-      --brand1:#8f84ff;
-      --brand2:#6a5cff;
-      --ok:rgba(97, 255, 210, 0.95);
-      --warn:rgba(255, 160, 160, 0.95);
-      --radius:28px;
-      --radiusSm:16px;
-      --max:1120px;
-    }
-
-    *{margin:0;padding:0;box-sizing:border-box;font-family:'Manrope', system-ui, -apple-system, Segoe UI, Roboto, Arial;}
-    html{scroll-behavior:smooth;}
-    body{
-      background:radial-gradient(circle at 30% 20%, var(--bg2), var(--bg1) 70%);
-      color:var(--text);
-      overflow-x:hidden;
-      transition:0.35s ease;
-    }
-    body.light{
-      background:#fff;
-      color:#111;
-    }
-    a{color:inherit;text-decoration:none;}
-    .container{max-width:var(--max);margin:0 auto;padding:0 24px;}
-    section{padding:92px 0;}
-    @media (max-width: 700px){ section{padding:70px 0;} }
-
-    /* Top bar */
-    .topbar{
-      position:sticky;top:0;z-index:20;
-      backdrop-filter: blur(18px);
-      background:linear-gradient(to bottom, rgba(10,12,30,0.72), rgba(10,12,30,0.30));
-      border-bottom:1px solid rgba(255,255,255,0.06);
-    }
-    body.light .topbar{
-      background:linear-gradient(to bottom, rgba(255,255,255,0.85), rgba(255,255,255,0.50));
-      border-bottom:1px solid rgba(0,0,0,0.08);
-    }
-    .topbar-inner{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:14px 0;
-      gap:16px;
-    }
-    .brand{
-      display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:0.2px;
-    }
-    .brand-badge{
-      width:34px;height:34px;border-radius:12px;
-      background:linear-gradient(135deg, var(--brand1), var(--brand2));
-      box-shadow: 0 10px 30px rgba(143,132,255,0.35);
-    }
-    .nav{
-      display:flex;align-items:center;gap:18px;
-      font-weight:600;font-size:14px;
-      opacity:0.92;
-    }
-    .nav a{opacity:0.78;}
-    .nav a:hover{opacity:1;}
-    .nav-cta{
-      display:flex;align-items:center;gap:10px;
-    }
-    .pill{
-      padding:10px 14px;border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.04);
-      cursor:pointer;
-      font-weight:700;
-      font-size:13px;
-      transition:0.25s ease;
-      user-select:none;
-    }
-    .pill:hover{transform:translateY(-1px);border-color:rgba(255,255,255,0.20);}
-    body.light .pill{
-      border-color:rgba(0,0,0,0.12);
-      background:rgba(0,0,0,0.03);
-    }
-    #themeSwitch{display:inline-flex;align-items:center;gap:8px;}
-    @media (max-width: 860px){
-      .nav{display:none;}
-    }
-
-    /* Glass / cards */
-    .glass{
-      background:var(--glass);
-      backdrop-filter:blur(22px);
-      border-radius:var(--radius);
-      border:1px solid var(--stroke);
-      box-shadow: 0 0 70px var(--shadow);
-      transition:0.35s ease;
-    }
-    body.light .glass{
-      background:rgba(0,0,0,0.04);
-      border:1px solid rgba(0,0,0,0.10);
-      box-shadow:none;
-    }
-
-    /* Typography */
-    h1{
-      font-size:56px;
-      line-height:1.06;
-      letter-spacing:-0.8px;
-      font-weight:800;
-    }
-    h2{font-size:38px;line-height:1.12;font-weight:800;letter-spacing:-0.4px;}
-    h3{font-size:20px;line-height:1.25;font-weight:800;}
-    p{margin-top:14px;color:var(--muted);line-height:1.7;font-size:17px;}
-    body.light p{color:rgba(0,0,0,0.70);}
-    .kicker{
-      display:inline-flex;align-items:center;gap:10px;
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.05);
-      font-weight:800;
-      font-size:12px;
-      letter-spacing:0.6px;
-      text-transform:uppercase;
-      color:rgba(255,255,255,0.86);
-    }
-    body.light .kicker{
-      color:rgba(0,0,0,0.70);
-      border-color:rgba(0,0,0,0.12);
-      background:rgba(0,0,0,0.03);
-    }
-    .muted{color:var(--muted2);}
-    body.light .muted{color:rgba(0,0,0,0.55);}
-
-    /* Buttons */
-    .btn{
-      background:linear-gradient(90deg, var(--brand1), var(--brand2));
-      padding:16px 22px;
-      border-radius:14px;
-      border:none;
-      font-weight:800;
-      cursor:pointer;
-      transition:0.25s ease;
-      color:white;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      white-space:nowrap;
-    }
-    .btn:hover{
-      box-shadow: 0 0 36px rgba(143,132,255,.55);
-      transform:translateY(-2px);
-    }
-    .btn:active{transform:translateY(0);}
-    .btn.secondary{
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.14);
-      box-shadow:none;
-    }
-    body.light .btn.secondary{
-      background:rgba(0,0,0,0.03);
-      border:1px solid rgba(0,0,0,0.12);
-      color:#111;
-    }
-    .btn .arrow{transition:0.25s ease;}
-    .btn:hover .arrow{transform:translateX(3px);}
-
-    /* Hero */
-    .hero{
-      display:grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap:26px;
-      align-items:stretch;
-    }
-    .hero-card{
-      padding:42px;
-      overflow:hidden;
-      position:relative;
-    }
-    .hero-card:before{
-      content:"";
-      position:absolute;inset:-120px -120px auto auto;
-      width:280px;height:280px;border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, rgba(143,132,255,0.65), rgba(143,132,255,0.00) 60%);
-      filter:blur(2px);
-      pointer-events:none;
-    }
-    .hero-actions{margin-top:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-    .microtrust{font-size:13px;margin-top:12px;color:rgba(255,255,255,0.70);}
-    body.light .microtrust{color:rgba(0,0,0,0.55);}
-
-    .persona{
-      margin-top:18px;
-      display:inline-flex;
-      padding:6px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.05);
-      gap:6px;
-    }
-    body.light .persona{
-      border-color:rgba(0,0,0,0.12);
-      background:rgba(0,0,0,0.03);
-    }
-    .persona button{
-      border:none;
-      background:transparent;
-      color:rgba(255,255,255,0.78);
-      font-weight:900;
-      padding:10px 12px;
-      border-radius:999px;
-      cursor:pointer;
-      transition:0.2s ease;
-      font-size:13px;
-    }
-    body.light .persona button{color:rgba(0,0,0,0.65);}
-    .persona button.active{
-      background:rgba(255,255,255,0.10);
-      color:#fff;
-    }
-    body.light .persona button.active{
-      background:rgba(0,0,0,0.06);
-      color:#111;
-    }
-
-    .hero-side{
-      padding:26px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-    }
-    .side-block{
-      padding:18px;
-      border-radius:20px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.04);
-    }
-    body.light .side-block{
-      border-color:rgba(0,0,0,0.12);
-      background:rgba(0,0,0,0.03);
-    }
-    .stat{
-      display:flex;align-items:baseline;justify-content:space-between;gap:12px;
-      font-weight:900;
-    }
-    .stat span:first-child{font-size:13px;color:rgba(255,255,255,0.70);font-weight:800;}
-    body.light .stat span:first-child{color:rgba(0,0,0,0.55);}
-    .stat span:last-child{font-size:16px;}
-    .bullets{margin-top:14px;display:grid;gap:10px;}
-    .bullet{
-      display:flex;gap:10px;align-items:flex-start;
-      color:rgba(255,255,255,0.80);
-      font-size:15px;
-      line-height:1.55;
-    }
-    body.light .bullet{color:rgba(0,0,0,0.70);}
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:linear-gradient(135deg, var(--brand1), var(--brand2));
-      margin-top:7px;flex:0 0 auto;
-    }
-
-    @media (max-width: 980px){
-      .hero{grid-template-columns: 1fr;}
-      h1{font-size:46px;}
-    }
-    @media (max-width: 520px){
-      .hero-card{padding:28px;}
-      h1{font-size:40px;}
-      h2{font-size:32px;}
-    }
-
-    /* Logos / trust */
-    .logos{
-      display:flex;flex-wrap:wrap;gap:12px;margin-top:18px;
-      opacity:0.9;
-    }
-    .logo-chip{
-      padding:10px 12px;border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.04);
-      font-weight:800;
-      font-size:13px;
-      color:rgba(255,255,255,0.78);
-    }
-    body.light .logo-chip{
-      border-color:rgba(0,0,0,0.12);
-      background:rgba(0,0,0,0.03);
-      color:rgba(0,0,0,0.60);
-    }
-
-    /* Sections */
-    .section-head{display:flex;flex-direction:column;gap:10px;margin-bottom:26px;}
-    .two-col{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:22px;
-      align-items:stretch;
-    }
-    @media (max-width: 900px){ .two-col{grid-template-columns:1fr;} }
-
-    .card{
-      padding:26px;
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.04);
-    }
-    body.light .card{
-      border-color:rgba(0,0,0,0.12);
-      background:rgba(0,0,0,0.03);
-    }
-    .grid3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:16px;
-    }
-    @media (max-width: 980px){ .grid3{grid-template-columns:1fr;} }
-
-    .step-num{
-      width:34px;height:34px;border-radius:12px;
-      display:inline-flex;align-items:center;justify-content:center;
-      font-weight:900;
-      background:rgba(255,255,255,0.08);
-      border:1px solid rgba(255,255,255,0.14);
-      margin-bottom:14px;
-    }
-    body.light .step-num{
-      background:rgba(0,0,0,0.04);
-      border-color:rgba(0,0,0,0.12);
-    }
-
-    /* FAQ */
-    .faq{display:grid;gap:12px;}
-    details{
-      border-radius:18px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(255,255,255,0.04);
-      padding:16px 16px;
-      transition:0.25s ease;
-    }
-    details[open]{background:rgba(255,255,255,0.06);}
-    body.light details{
-      border-color:rgba(0,0,0,0.12);
-      background:rgba(0,0,0,0.03);
-    }
-    summary{
-      cursor:pointer;
-      font-weight:900;
-      list-style:none;
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-    }
-    summary::-webkit-details-marker{display:none;}
-    .chev{opacity:0.8;transition:0.25s ease;}
-    details[open] .chev{transform:rotate(180deg);}
-
-    /* Final CTA */
-    .final{
-      padding:42px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      flex-wrap:wrap;
-    }
-
-    /* Footer */
-    footer{padding:46px 0;border-top:1px solid rgba(255,255,255,0.08);}
-    body.light footer{border-top:1px solid rgba(0,0,0,0.08);}
-    .footer-inner{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;}
-    .footer-links{display:flex;gap:14px;flex-wrap:wrap;font-weight:700;font-size:13px;opacity:0.85;}
-
-    /* Fade-in */
-    .fade{opacity:0;transform:translateY(18px);transition:0.75s ease;}
-    .fade.show{opacity:1;transform:translateY(0);}
-
-    /* ===== Modal styles (kept + lightly refined) ===== */
-    .modal{
-      position:fixed; inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-      background:rgba(0,0,0,0.55);
-      z-index:50;
-    }
-    .modal.open{display:flex;}
-    .modal-card{
-      width:min(760px, 100%);
-      border-radius:24px;
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(20,18,45,0.82);
-      backdrop-filter: blur(18px);
-      box-shadow: 0 30px 120px rgba(0,0,0,0.45);
-      overflow:hidden;
-    }
-    body.light .modal-card{
-      background:rgba(255,255,255,0.95);
-      border:1px solid rgba(0,0,0,0.14);
-      box-shadow: 0 30px 120px rgba(0,0,0,0.18);
-    }
-    .modal-head{
-      padding:18px 18px 14px 18px;
-      display:flex;align-items:flex-start;justify-content:space-between;gap:12px;
-      border-bottom:1px solid rgba(255,255,255,0.10);
-    }
-    body.light .modal-head{border-bottom:1px solid rgba(0,0,0,0.10);}
-    .modal-head h3{font-size:18px;}
-    .xbtn{
-      border:none;background:transparent;color:inherit;
-      cursor:pointer;font-size:18px;font-weight:900;
-      opacity:0.85;
-    }
-    .xbtn:hover{opacity:1;}
-    .modal-body{padding:18px;}
-    .form{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-    }
-    .form .full{grid-column:1 / -1;}
-    label{display:block;font-size:13px;font-weight:800;opacity:0.9;margin:0 0 6px 2px;}
-    input, select, textarea{
-      width:100%;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,0.14);
-      background:rgba(255,255,255,0.06);
-      color:inherit;
-      padding:14px 14px;
-      outline:none;
-      transition:0.2s ease;
-    }
-    body.light input, body.light select, body.light textarea{
-      border-color:rgba(0,0,0,0.14);
-      background:rgba(0,0,0,0.03);
-    }
-    input:focus, select:focus, textarea:focus{
-      border-color: rgba(143,132,255,0.65);
-      box-shadow: 0 0 0 4px rgba(143,132,255,0.18);
-    }
-    .hint{font-size:12px;margin-top:8px;opacity:0.78;line-height:1.5;}
-    .error{font-size:12px;color:var(--warn);margin-top:6px;font-weight:800;display:none;}
-    .success{
-      display:none;
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:14px;
-      border:1px solid rgba(97,255,210,0.35);
-      background: rgba(97,255,210,0.08);
-      color: var(--ok);
-      font-weight:900;
-      font-size:13px;
-      line-height:1.45;
-    }
-    .form-actions{
-      margin-top:14px;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      justify-content:flex-end;
-      flex-wrap:wrap;
-    }
-    .mini{
-      font-size:12px;opacity:0.8;font-weight:700;
-    }
-
-    /* Hide honeypot */
-    .hp{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="better human — Know your body before it knows you have a problem. Painless at-home blood testing done before symptoms appear. Results in days with AI + clinician prevention plans.">
+    <title>better hüman | Know Your Body</title>
+    <link rel="icon" href="Favicon 32x32.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap');
+        
+        :root {
+            --purple: #ADABFF;
+        }
+        
+        .tail-container {
+            font-family: 'Manrope', system-ui, sans-serif;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(24px);
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 50% 30%, rgba(173, 171, 255, 0.38) 0%, rgba(31, 22, 61, 0.97) 52%, #1F163D 100%);
+        }
+        
+        body {
+            background: #1F163D;
+            background-image: 
+                radial-gradient(circle at 20% 25%, rgba(173, 171, 255, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 80% 75%, rgba(173, 171, 255, 0.18) 0%, transparent 45%),
+                radial-gradient(circle at 35% 85%, rgba(173, 171, 255, 0.12) 0%, transparent 55%),
+                radial-gradient(circle at 65% 15%, rgba(173, 171, 255, 0.12) 0%, transparent 55%);
+            background-size: 220% 220%, 180% 180%, 160% 160%, 200% 200%;
+            background-position: 10% 10%, 90% 90%, 30% 70%, 75% 25%;
+            background-attachment: fixed;
+        }
+        
+        section {
+            background: transparent;
+        }
+        
+        nav {
+            background: rgba(31, 22, 61, 0.92);
+            backdrop-filter: blur(32px);
+            border-bottom: 1px solid rgba(173, 171, 255, 0.12);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #ADABFF;
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+        
+        .cta-button {
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 20px 25px -5px rgb(173 171 255 / 0.4),
+                        0 8px 10px -6px rgb(173 171 255 / 0.4);
+        }
+        
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background: #ADABFF;
+            box-shadow: 0 0 0 4px rgba(173, 171, 255, 0.4);
+        }
+        
+        .old-way {
+            position: relative;
+        }
+        
+        .old-way::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, #ff0000, transparent);
+            opacity: 0.03;
+            pointer-events: none;
+        }
+    </style>
 </head>
-
-<body>
-  <!-- Top bar -->
-  <div class="topbar">
-    <div class="container">
-      <div class="topbar-inner">
-        <div class="brand">
-          <div class="brand-badge" aria-hidden="true"></div>
-          <div>Better Human</div>
-        </div>
-
-        <div class="nav">
-          <a href="#how">How it works</a>
-          <a href="#features">What you get</a>
-          <a href="#pricing">Pricing</a>
-          <a href="#faq">FAQ</a>
-        </div>
-
-        <div class="nav-cta">
-          <button class="pill" id="themeSwitch" type="button" aria-label="Toggle theme">☾ <span class="muted">Theme</span></button>
-          <button class="btn" id="primaryTopCta" type="button">
-            Get started <span class="arrow">→</span>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <section id="top">
-    <div class="container">
-      <div class="hero">
-        <div class="hero-card glass fade">
-          <div class="kicker">Preventive Health OS</div>
-
-          <h1 id="heroHeadline" style="margin-top:16px;">
-            Continuous biomarker intelligence—turned into clear weekly actions.
-          </h1>
-
-          <p id="heroSubhead">
-            At-home blood testing + predictive biomarkers + physician-led oversight—so prevention becomes continuous, not reactive.
-          </p>
-
-          <div class="persona" role="tablist" aria-label="Choose audience">
-            <button id="tabIndividuals" class="active" type="button" role="tab" aria-selected="true">Individuals</button>
-            <button id="tabEmployers" type="button" role="tab" aria-selected="false">Employers</button>
-          </div>
-
-          <div class="bullets" id="heroBullets" aria-live="polite">
-            <div class="bullet"><div class="dot"></div><div>Know what matters: risk signals across metabolic, cardiovascular, longevity, and more.</div></div>
-            <div class="bullet"><div class="dot"></div><div>Get a weekly action plan: nutrition, movement, sleep, and targeted interventions.</div></div>
-            <div class="bullet"><div class="dot"></div><div>Built with clinician oversight, privacy-first data handling, and modern tooling.</div></div>
-          </div>
-
-          <div class="hero-actions">
-            <button class="btn" id="primaryHeroCta" type="button">
-              See what you’d get in 30 days <span class="arrow">→</span>
-            </button>
-            <button class="btn secondary" id="secondaryHeroCta" type="button">
-              Request a pilot
-            </button>
-          </div>
-
-          <div class="microtrust" id="microTrust">
-            No spam. Response within 24 hours.
-          </div>
-
-          <div class="logos" aria-label="Trust indicators">
-            <div class="logo-chip">Physician-led</div>
-            <div class="logo-chip">Biomarker intelligence</div>
-            <div class="logo-chip">Privacy-first</div>
-            <div class="logo-chip">Built for early pilots</div>
-          </div>
-        </div>
-
-        <div class="hero-side glass fade">
-          <div class="side-block">
-            <div class="stat"><span>Typical structure</span><span>Test → Interpret → Intervene</span></div>
-            <p class="muted" style="margin-top:10px;">
-              A single system to unify diagnostics, insights, and personalized action—so you can prevent issues earlier.
-            </p>
-          </div>
-
-          <div class="side-block">
-            <div class="stat"><span>What you’ll see</span><span>Clear risk signals</span></div>
-            <div class="bullets" style="margin-top:12px;">
-              <div class="bullet"><div class="dot"></div><div>Biomarker-based risk scoring</div></div>
-              <div class="bullet"><div class="dot"></div><div>Progress trends + next-best actions</div></div>
-              <div class="bullet"><div class="dot"></div><div>Optional executive dashboards for teams</div></div>
+<body class="tail-container text-white overflow-x-hidden">
+    <!-- NAV – SiPhox-inspired clean minimal design with our purple brand colors -->
+    <nav class="fixed top-0 left-0 right-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
+            <!-- Logo (exact brand assets) -->
+            <div class="flex items-center gap-3">
+                <img src="Emblem - Asset 8@1x.png" alt="better human emblem" class="h-8 w-auto">
+                <img src="Logo 2.jpg" alt="better human" class="h-7 w-auto">
             </div>
-          </div>
-
-          <div class="side-block">
-            <div class="stat"><span>Start simple</span><span>Pilot-ready</span></div>
-            <p class="muted" style="margin-top:10px;">
-              One-page lander today. Clear onboarding and a lightweight consult flow to learn fast and iterate.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROBLEM / POV -->
-  <section id="pov">
-    <div class="container">
-      <div class="section-head fade">
-        <div class="kicker">Why Better Human</div>
-        <h2>Healthcare is reactive. Prevention should be continuous.</h2>
-        <p class="muted">
-          Most people and organizations are stuck with fragmented data, late interventions, and no unified system to act early.
-        </p>
-      </div>
-
-      <div class="two-col">
-        <div class="card fade">
-          <h3>What’s broken</h3>
-          <p>
-            Data is scattered across labs, wearables, and visits. Insights arrive too late, and action plans are inconsistent.
-          </p>
-        </div>
-        <div class="card fade">
-          <h3>Our approach</h3>
-          <p>
-            A “Health OS” that turns biomarkers into risk visibility + clear next steps—supported by clinical oversight and modern workflows.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="how">
-    <div class="container">
-      <div class="section-head fade">
-        <div class="kicker">How it works</div>
-        <h2>Three steps. One system.</h2>
-        <p class="muted">
-          Keep it simple: collect high-signal data, interpret it with context, and turn it into a practical plan.
-        </p>
-      </div>
-
-      <div class="grid3">
-        <div class="card fade">
-          <div class="step-num">1</div>
-          <h3>Test</h3>
-          <p>
-            At-home blood testing built around predictive biomarkers—designed to surface early signals, not just snapshots.
-          </p>
-        </div>
-        <div class="card fade">
-          <div class="step-num">2</div>
-          <h3>Interpret</h3>
-          <p>
-            Biomarker intelligence becomes risk scoring, trend tracking, and clear “what matters now” insights.
-          </p>
-        </div>
-        <div class="card fade">
-          <div class="step-num">3</div>
-          <h3>Intervene</h3>
-          <p>
-            Weekly action plans + intervention pathways. For teams: aggregate dashboards and targeted prevention programs.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURES -->
-  <section id="features">
-    <div class="container">
-      <div class="section-head fade">
-        <div class="kicker">What you get</div>
-        <h2>Clarity, not complexity.</h2>
-        <p class="muted">
-          The product should feel like a calm operating system: fewer decisions, better actions, measurable progress.
-        </p>
-      </div>
-
-      <div class="two-col">
-        <div class="card fade">
-          <h3>Individuals</h3>
-          <div class="bullets">
-            <div class="bullet"><div class="dot"></div><div>Risk signals across key systems (metabolic, cardio, longevity, inflammation, more)</div></div>
-            <div class="bullet"><div class="dot"></div><div>Weekly action plans you can actually follow</div></div>
-            <div class="bullet"><div class="dot"></div><div>Progress trends + “what to do next” guidance</div></div>
-            <div class="bullet"><div class="dot"></div><div>Optional physician oversight pathway</div></div>
-          </div>
-        </div>
-
-        <div class="card fade">
-          <h3>Employers</h3>
-          <div class="bullets">
-            <div class="bullet"><div class="dot"></div><div>Aggregate biomarker-based risk dashboards</div></div>
-            <div class="bullet"><div class="dot"></div><div>Early identification + intervention pathways</div></div>
-            <div class="bullet"><div class="dot"></div><div>Population-level trends with privacy-safe reporting</div></div>
-            <div class="bullet"><div class="dot"></div><div>Pilot-ready implementation and iteration</div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICING -->
-  <section id="pricing">
-    <div class="container">
-      <div class="section-head fade">
-        <div class="kicker">Pricing</div>
-        <h2>Anchors that make sense.</h2>
-        <p class="muted">
-          Early-stage pricing should be clear and credible. You can refine as pilots teach you more.
-        </p>
-      </div>
-
-      <div class="two-col">
-        <div class="card fade">
-          <h3>Individuals</h3>
-          <p class="muted" style="margin-top:10px;">Starting at</p>
-          <div style="font-size:42px;font-weight:900;margin-top:6px;">$59.99<span style="font-size:16px;font-weight:800;opacity:0.75;">/mo</span></div>
-          <p>
-            Biomarker intelligence + weekly action plans. Add-ons available as you expand services.
-          </p>
-          <div class="hero-actions" style="margin-top:16px;">
-            <button class="btn" id="pricingConsumerCta" type="button">Get early access <span class="arrow">→</span></button>
-          </div>
-        </div>
-
-        <div class="card fade">
-          <h3>Employers</h3>
-          <p class="muted" style="margin-top:10px;">Starting at</p>
-          <div style="font-size:42px;font-weight:900;margin-top:6px;">$499<span style="font-size:16px;font-weight:800;opacity:0.75;">/employee/yr</span></div>
-          <p>
-            Pilot programs with dashboards + prevention pathways. Best for benefits leaders seeking proactive risk visibility.
-          </p>
-          <div class="hero-actions" style="margin-top:16px;">
-            <button class="btn" id="pricingEnterpriseCta" type="button">Request a pilot plan <span class="arrow">→</span></button>
-          </div>
-          <p class="microtrust" style="margin-top:10px;">Want scheduling? We’ll send a calendar link after you submit.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq">
-    <div class="container">
-      <div class="section-head fade">
-        <div class="kicker">FAQ</div>
-        <h2>Quick answers.</h2>
-        <p class="muted">
-          Keep this tight. The goal is to reduce objections, not explain every detail.
-        </p>
-      </div>
-
-      <div class="faq">
-        <details class="fade">
-          <summary>Is this medical care? <span class="chev">▾</span></summary>
-          <p>
-            Better Human provides biomarker-based insights and action planning. Clinical involvement depends on your program design and regulatory posture.
-            (As you finalize scope, refine this language with counsel.)
-          </p>
-        </details>
-
-        <details class="fade">
-          <summary>How do you handle privacy? <span class="chev">▾</span></summary>
-          <p>
-            Privacy-first by design: minimal collection, encrypted storage/transit, and role-based access. For employer programs, reporting should be aggregated
-            and designed to avoid exposing individual identities.
-          </p>
-        </details>
-
-        <details class="fade">
-          <summary>What’s required to pilot for employers? <span class="chev">▾</span></summary>
-          <p>
-            A short discovery call, pilot goals, cohort size, and reporting needs. We’ll propose a lightweight implementation plan and success metrics.
-          </p>
-        </details>
-
-        <details class="fade">
-          <summary>When can I start? <span class="chev">▾</span></summary>
-          <p>
-            We’re onboarding early users and pilot partners now. Submit your info and we’ll respond within 24 hours.
-          </p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- FINAL CTA -->
-  <section>
-    <div class="container">
-      <div class="glass final fade">
-        <div>
-          <div class="kicker">Start here</div>
-          <h2 style="margin-top:12px;">Want a clearer, earlier signal?</h2>
-          <p class="muted">Choose Individuals or Employers above—then take the next step.</p>
-        </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <button class="btn" id="finalPrimaryCta" type="button">Get started <span class="arrow">→</span></button>
-          <a class="btn secondary" href="#how">See how it works</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="footer-inner">
-        <div class="brand" style="gap:10px;">
-          <div class="brand-badge" aria-hidden="true" style="width:26px;height:26px;border-radius:10px;"></div>
-          <div style="font-weight:900;">Better Human</div>
-        </div>
-        <div class="footer-links">
-          <a href="#top">Top</a>
-          <a href="#faq">FAQ</a>
-          <!-- Replace with real pages when ready -->
-          <a href="javascript:void(0)">Privacy</a>
-          <a href="javascript:void(0)">Terms</a>
-          <a href="mailto:info@betterhumanclub.com">Contact</a>
-        </div>
-      </div>
-      <p class="muted" style="margin-top:14px;font-size:13px;">
-        © <span id="year"></span> Better Human. Early-stage product—details may evolve as pilots progress.
-      </p>
-    </div>
-  </footer>
-
-  <!-- ===== CONSUMER MODAL ===== -->
-  <div class="modal" id="modalConsumer" aria-hidden="true" role="dialog" aria-label="Individuals early access">
-    <div class="modal-card">
-      <div class="modal-head">
-        <div>
-          <h3>Individuals — Early Access</h3>
-          <p class="muted" style="margin-top:6px;font-size:13px;">
-            Tell us a bit about you. We’ll reply within 24 hours.
-          </p>
-        </div>
-        <button class="xbtn" data-close="modalConsumer" aria-label="Close">✕</button>
-      </div>
-      <div class="modal-body">
-        <form id="formConsumer">
-          <div class="form">
-            <div>
-              <label for="c_first">First name</label>
-              <input id="c_first" name="first_name" type="text" autocomplete="given-name" required />
-              <div class="error" id="c_first_err">Please enter your first name.</div>
+            
+            <!-- Centered links – clean, spacious like SiPhox -->
+            <div class="hidden md:flex items-center gap-10 text-sm font-medium tracking-wide">
+                <a href="#problem" class="nav-link text-white/80 hover:text-white">The Problem</a>
+                <a href="#solution" class="nav-link text-white/80 hover:text-white">The Solution</a>
+                <a href="#plan" class="nav-link text-white/80 hover:text-white">Your Action Plan</a>
+                <a href="#how" class="nav-link text-white/80 hover:text-white">How It Works</a>
             </div>
-
-            <div>
-              <label for="c_last">Last name</label>
-              <input id="c_last" name="last_name" type="text" autocomplete="family-name" required />
-              <div class="error" id="c_last_err">Please enter your last name.</div>
-            </div>
-
-            <div class="full">
-              <label for="c_email">Email</label>
-              <input id="c_email" name="email" type="email" autocomplete="email" required />
-              <div class="error" id="c_email_err">Please enter a valid email.</div>
-            </div>
-
-            <div class="full">
-              <label for="c_phone">Phone number</label>
-              <input id="c_phone" name="phone" type="tel" autocomplete="tel" required />
-              <div class="error" id="c_phone_err">Please enter a valid phone number.</div>
-              <div class="hint">
-                By submitting, you agree to receive texts about Better Human. Msg & data rates may apply. Reply STOP to opt out.
-              </div>
-            </div>
-
-            <div class="full">
-              <label for="c_goal">Primary goal (optional)</label>
-              <select id="c_goal" name="primary_goal">
-                <option value="">Select…</option>
-                <option>Energy & recovery</option>
-                <option>Weight / metabolic</option>
-                <option>Longevity & prevention</option>
-                <option>Performance</option>
-                <option>Other</option>
-              </select>
-            </div>
-
-            <!-- Honeypot -->
-            <div class="hp">
-              <label for="c_company">Company</label>
-              <input id="c_company" name="company" type="text" tabindex="-1" autocomplete="off" />
-            </div>
-
-            <div class="full">
-              <div class="success" id="c_success">
-                Thanks — you’re in. We’ll reach out within 24 hours.
-              </div>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <span class="mini muted" id="c_status"></span>
-            <button class="btn" id="c_submit" type="submit">Submit <span class="arrow">→</span></button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== ENTERPRISE MODAL ===== -->
-  <div class="modal" id="modalEnterprise" aria-hidden="true" role="dialog" aria-label="Employer pilot request">
-    <div class="modal-card">
-      <div class="modal-head">
-        <div>
-          <h3>Employers — Request a Pilot</h3>
-          <p class="muted" style="margin-top:6px;font-size:13px;">
-            Share a few details. We’ll send a calendar link after you submit.
-          </p>
+            
+            <!-- Prominent CTA button (purple brand color, matches SiPhox style) -->
+            <a href="#waitlist" 
+               class="cta-button px-8 py-3.5 bg-[#ADABFF] hover:bg-white text-black font-semibold text-sm rounded-2xl flex items-center gap-2 transition-all">
+                Join the Waitlist
+            </a>
         </div>
-        <button class="xbtn" data-close="modalEnterprise" aria-label="Close">✕</button>
-      </div>
-      <div class="modal-body">
-        <form id="formEnterprise">
-          <div class="form">
-            <div>
-              <label for="e_first">First name</label>
-              <input id="e_first" name="first_name" type="text" autocomplete="given-name" required />
-              <div class="error" id="e_first_err">Please enter your first name.</div>
-            </div>
+    </nav>
 
-            <div>
-              <label for="e_last">Last name</label>
-              <input id="e_last" name="last_name" type="text" autocomplete="family-name" required />
-              <div class="error" id="e_last_err">Please enter your last name.</div>
-            </div>
-
-            <div class="full">
-              <label for="e_email">Work email</label>
-              <input id="e_email" name="email" type="email" autocomplete="email" required />
-              <div class="error" id="e_email_err">Please enter a valid email.</div>
-            </div>
-
-            <div class="full">
-              <label for="e_phone">Phone number</label>
-              <input id="e_phone" name="phone" type="tel" autocomplete="tel" required />
-              <div class="error" id="e_phone_err">Please enter a valid phone number.</div>
-              <div class="hint">
-                By submitting, you agree to receive texts about Better Human. Msg & data rates may apply. Reply STOP to opt out.
-              </div>
-            </div>
-
-            <div class="full">
-              <label for="e_company">Company</label>
-              <input id="e_company" name="employer" type="text" autocomplete="organization" required />
-              <div class="error" id="e_company_err">Please enter your company name.</div>
-            </div>
-
-            <div class="full">
-              <label for="e_size">Covered lives (optional)</label>
-              <select id="e_size" name="covered_lives">
-                <option value="">Select…</option>
-                <option>Under 100</option>
-                <option>100–500</option>
-                <option>500–2,000</option>
-                <option>2,000+</option>
-              </select>
-            </div>
-
-            <!-- Honeypot -->
-            <div class="hp">
-              <label for="e_website">Website</label>
-              <input id="e_website" name="website" type="text" tabindex="-1" autocomplete="off" />
-            </div>
-
-            <div class="full">
-              <div class="success" id="e_success">
-                Submitted — thank you. Next: book time (link will appear here).
-                <div style="margin-top:10px;">
-                  <!-- Replace with your Calendly link or scheduler -->
-                  <a class="btn secondary" href="javascript:void(0)">Add scheduling link</a>
+    <!-- HERO -->
+    <section id="hero" class="hero-bg min-h-screen flex items-center pt-20">
+        <div class="max-w-screen-2xl mx-auto px-6 lg:px-12 grid lg:grid-cols-2 gap-16 items-center">
+            <div class="flex flex-col justify-center lg:pt-12 text-center lg:text-left">
+                <div class="flex justify-center lg:justify-start mb-8">
+                    <img src="Emblem - Asset 8@1x.png" alt="better human emblem" class="h-24 w-auto opacity-90">
                 </div>
-              </div>
+                
+                <img src="Logo 1.jpg" alt="better human" class="mx-auto lg:mx-0 max-w-[380px] mb-10">
+                
+                <h1 class="text-6xl lg:text-7xl font-semibold tracking-tighter leading-none max-w-2xl mx-auto lg:mx-0">
+                    Know your body before it knows you have a problem.
+                </h1>
+                
+                <p class="mt-8 text-2xl text-white/80 max-w-md mx-auto lg:mx-0">
+                    Painless at-home blood testing done before symptoms appear.<br>
+                    Results in days with AI + clinician prevention plans.
+                </p>
+                
+                <div class="mt-12 lg:mt-16 flex justify-center lg:justify-start">
+                    <div class="relative max-w-xs lg:max-w-sm">
+                        <img src="https://picsum.photos/id/1015/600/420" 
+                             alt="Tasso+ Device — FDA-Approved Class II Medical Device"
+                             class="w-full rounded-3xl shadow-2xl shadow-[#ADABFF]/30">
+                        <div class="absolute -bottom-4 right-6 bg-black/80 text-white text-xs font-medium px-5 py-2 rounded-2xl flex items-center gap-2 backdrop-blur">
+                            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                            FDA-Cleared • At Home
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-16">
+                    <a href="#waitlist" 
+                       class="cta-button inline-flex items-center gap-4 bg-[#ADABFF] hover:bg-white hover:text-black text-black font-semibold text-xl px-12 py-6 rounded-3xl transition-all">
+                        <span>Join the Waitlist</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7-7 7" />
+                        </svg>
+                    </a>
+                </div>
+                
+                <p class="mt-6 text-xs text-white/40 tracking-widest">Early access begins Q3 2026 • Limited spots</p>
             </div>
-          </div>
+            
+            <div class="hidden lg:flex items-center justify-center">
+                <img src="Emblem - Asset 8@1x.png" alt="emblem large" class="w-[520px] opacity-10">
+            </div>
+        </div>
+    </section>
 
-          <div class="form-actions">
-            <span class="mini muted" id="e_status"></span>
-            <button class="btn" id="e_submit" type="submit">Submit <span class="arrow">→</span></button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+    <!-- THE PROBLEM -->
+    <section id="problem" class="py-28 border-t border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-5xl font-semibold tracking-tighter">
+                    Disease doesn’t announce itself—until it’s too late.
+                </h2>
+                <p class="mt-8 text-xl text-white/70 leading-relaxed">
+                    Modern healthcare is actually “sick care.” Most people never test until symptoms appear. By then you’re driving to a lab, enduring a traditional needle blood draw, and waiting weeks for results — while irreversible damage may already be done.
+                </p>
+            </div>
+            
+            <div class="mt-16 max-w-4xl mx-auto">
+                <div class="relative h-px bg-gradient-to-r from-transparent via-[#ADABFF] to-transparent"></div>
+                <div class="flex justify-between text-sm text-white/60 mt-4">
+                    <div>Silent Progression<br><span class="font-medium text-white">(Years / Decades — No Testing)</span></div>
+                    <div class="text-right">Symptoms Appear → Drive to Lab → Needle Draw → Wait Weeks</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/intlTelInput.min.js"></script>
+    <!-- THE SOLUTION -->
+    <section id="solution" class="py-28 border-t border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <h2 class="text-5xl font-semibold tracking-tighter text-center mb-16">Healthcare without the hospital.</h2>
+            
+            <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <!-- Old Way -->
+                <div class="old-way glass border border-white/10 rounded-3xl p-10">
+                    <div class="text-white/50 text-sm font-medium mb-6">THE OLD WAY</div>
+                    <h3 class="text-3xl font-semibold text-red-400">Wait for symptoms. Then it’s too late.</h3>
+                    <ul class="mt-10 space-y-6 text-sm">
+                        <li class="flex gap-4">⏳ Testing only after symptoms appear</li>
+                        <li class="flex gap-4">📍 Drive to a lab or clinic</li>
+                        <li class="flex gap-4">🩸 Traditional needle blood draw</li>
+                        <li class="flex gap-4">⏳ Weeks for results — damage already done</li>
+                    </ul>
+                </div>
+                
+                <!-- Better Human Way -->
+                <div class="glass border border-[#ADABFF]/30 bg-[#ADABFF]/5 rounded-3xl p-10">
+                    <div class="text-[#ADABFF] text-sm font-medium mb-6">THE BETTER HUMAN WAY</div>
+                    <h3 class="text-3xl font-semibold">Test before symptoms. Prevent disease before it starts.</h3>
+                    
+                    <div class="mt-12">
+                        <div class="text-3xl font-semibold mb-2">Meet the Tasso+</div>
+                        <div class="text-[#ADABFF] text-sm">FDA-Approved Class II Medical Device</div>
+                        
+                        <ul class="mt-8 space-y-6 text-sm">
+                            <li>• Painless capillary collection in just 5 minutes at home (no needles, no finger pricks)</li>
+                            <li>• Done before any symptoms appear</li>
+                            <li>• Clinical-grade results delivered in days</li>
+                            <li>• Your personal AI + clinician-curated prevention plan arrives with every result</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-  <script>
-    /* ========= Theme toggle ========= */
-    document.getElementById('themeSwitch').addEventListener('click', () => {
-      document.body.classList.toggle('light');
-    });
+    <!-- YOUR PERSONALIZED ACTION PLAN -->
+    <section id="plan" class="py-28 border-t border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-2xl mx-auto text-center mb-16">
+                <h2 class="text-5xl font-semibold tracking-tighter">After you test — your Personalized Action Plan.</h2>
+                <p class="mt-6 text-xl text-white/70">We don’t just hand you lab numbers. You receive clear, expert-backed prevention plans powered by AI and 24/7 clinicians — plus the option to order targeted supplements based on your exact biomarkers.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="glass border border-white/10 rounded-3xl p-10 text-center">
+                    <div class="text-[#ADABFF] text-6xl mb-6">🧠</div>
+                    <div class="text-2xl font-semibold">AI + 24/7 Clinician Support</div>
+                    <div class="mt-6 text-white/70">Plain-English reports with personalized lifestyle recommendations. Speak to a doctor anytime. True prevention, not just data.</div>
+                </div>
+                
+                <div class="glass border border-[#ADABFF]/30 bg-[#ADABFF]/5 rounded-3xl p-10 text-center">
+                    <div class="text-[#ADABFF] text-6xl mb-6">💊</div>
+                    <div class="text-2xl font-semibold">Biomarker-Based Supplements</div>
+                    <div class="mt-6 text-white/70">We identify deficiencies and give you the exact formulas your body needs. Order separately when ready — nothing ships automatically.</div>
+                </div>
+                
+                <div class="glass border border-white/10 rounded-3xl p-10 text-center">
+                    <div class="text-[#ADABFF] text-6xl mb-6">📱</div>
+                    <div class="text-2xl font-semibold">Smart Coaching Ecosystem</div>
+                    <div class="mt-6 text-white/70">SnapTrack meals. Sync wearables. Turn insights into daily habits that keep you healthy for decades.</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12 text-xs text-white/40">CLIA-certified labs • CAP accredited • HIPAA compliant • 100% clinical-grade accuracy</div>
+        </div>
+    </section>
 
-    document.getElementById('year').textContent = new Date().getFullYear();
+    <!-- HOW IT WORKS -->
+    <section id="how" class="py-28 border-t border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8">
+            <div class="max-w-2xl mx-auto text-center mb-16">
+                <h2 class="text-5xl font-semibold tracking-tighter">Your simple journey: Test → Results → Action Plan.</h2>
+            </div>
+            
+            <div class="max-w-5xl mx-auto relative">
+                <div class="hidden md:block absolute top-12 left-0 right-0 h-px bg-white/10"></div>
+                
+                <div class="grid md:grid-cols-5 gap-8 relative">
+                    <div class="text-center">
+                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
+                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">01</div>
+                        <div class="font-semibold mt-2">Order</div>
+                        <div class="text-white/60 text-sm mt-3">Secure early access. Tasso+ ships to your door.</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
+                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">02</div>
+                        <div class="font-semibold mt-2">Test at Home</div>
+                        <div class="text-white/60 text-sm mt-3">Apply patch • Press button • 5 minutes, painless, before symptoms.</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
+                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">03</div>
+                        <div class="font-semibold mt-2">Lab Analysis</div>
+                        <div class="text-white/60 text-sm mt-3">Clinical-grade results delivered in days.</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
+                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">04</div>
+                        <div class="font-semibold mt-2">Your Action Plan</div>
+                        <div class="text-white/60 text-sm mt-3">AI + clinician prevention plan arrives instantly.</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="flex justify-center mb-6"><div class="timeline-dot rounded-full"></div></div>
+                        <div class="font-mono text-[#ADABFF] text-sm tracking-widest">05</div>
+                        <div class="font-semibold mt-2">Take Action</div>
+                        <div class="text-white/60 text-sm mt-3">Follow coaching + order targeted supplements as needed.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    /* ========= Fade-in ========= */
-    const io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if(entry.isIntersecting) entry.target.classList.add("show");
-      });
-    }, { threshold: 0.12 });
-    document.querySelectorAll(".fade").forEach(el => io.observe(el));
+    <!-- FINAL CTA + FOOTER -->
+    <section id="waitlist" class="py-32 border-t border-white/10">
+        <div class="max-w-2xl mx-auto px-6 text-center">
+            <img src="Emblem - Asset 8@1x.png" alt="emblem" class="h-20 mx-auto mb-8 opacity-75">
+            
+            <h2 class="text-6xl font-semibold tracking-tighter">Start testing.<br>Stop guessing.</h2>
+            <p class="mt-6 text-2xl text-white/70">Your blood already knows the future. We help you change it — before symptoms ever appear.</p>
+            
+            <div id="form-container" class="mt-16 max-w-md mx-auto">
+                <form id="waitlist-form" class="space-y-6">
+                    <input type="text" id="name" placeholder="First name" 
+                           class="w-full bg-white/5 border border-white/20 focus:border-[#ADABFF] rounded-3xl px-8 py-6 text-lg outline-none transition-all placeholder:text-white/40" required>
+                    <input type="email" id="email" placeholder="you@email.com" 
+                           class="w-full bg-white/5 border border-white/20 focus:border-[#ADABFF] rounded-3xl px-8 py-6 text-lg outline-none transition-all placeholder:text-white/40" required>
+                    <button type="submit"
+                            class="cta-button w-full bg-[#ADABFF] hover:bg-white hover:text-black text-black font-semibold text-2xl py-8 rounded-3xl">
+                        I want early access
+                    </button>
+                </form>
+            </div>
+            
+            <div id="success-message" class="hidden mt-16 text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-emerald-400/10 text-emerald-400 rounded-2xl text-4xl mb-6">🎉</div>
+                <div class="text-3xl font-semibold">You’re in.</div>
+                <div class="text-white/70 mt-3">We’ll email you the moment early access opens.</div>
+            </div>
+        </div>
+        
+        <footer class="mt-32 border-t border-white/10 pt-12">
+            <div class="max-w-screen-2xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8 text-sm text-white/40">
+                <div class="flex items-center gap-4">
+                    <img src="Emblem - Asset 8@1x.png" alt="emblem" class="h-7">
+                    <img src="Logo 2.jpg" alt="better human" class="h-6">
+                </div>
+                <div class="flex gap-8">
+                    <a href="#" class="hover:text-white">Privacy</a>
+                    <a href="#" class="hover:text-white">Terms</a>
+                </div>
+                <div class="text-xs">© 2026 better human, Inc.</div>
+            </div>
+        </footer>
+    </section>
 
-    /* ========= Persona toggle (single-page, lower friction) ========= */
-    const state = { persona: "individuals" };
-
-    const heroHeadline = document.getElementById("heroHeadline");
-    const heroSubhead = document.getElementById("heroSubhead");
-    const heroBullets = document.getElementById("heroBullets");
-    const primaryHeroCta = document.getElementById("primaryHeroCta");
-    const secondaryHeroCta = document.getElementById("secondaryHeroCta");
-    const microTrust = document.getElementById("microTrust");
-
-    const tabIndividuals = document.getElementById("tabIndividuals");
-    const tabEmployers = document.getElementById("tabEmployers");
-
-    function setPersona(p){
-      state.persona = p;
-
-      const isInd = p === "individuals";
-      tabIndividuals.classList.toggle("active", isInd);
-      tabEmployers.classList.toggle("active", !isInd);
-      tabIndividuals.setAttribute("aria-selected", String(isInd));
-      tabEmployers.setAttribute("aria-selected", String(!isInd));
-
-      if(isInd){
-        heroHeadline.textContent = "Continuous biomarker intelligence—turned into clear weekly actions.";
-        heroSubhead.textContent = "At-home blood testing + predictive biomarkers + physician-led oversight—so prevention becomes continuous, not reactive.";
-        heroBullets.innerHTML = `
-          <div class="bullet"><div class="dot"></div><div>Know what matters: risk signals across metabolic, cardiovascular, longevity, and more.</div></div>
-          <div class="bullet"><div class="dot"></div><div>Get a weekly action plan: nutrition, movement, sleep, and targeted interventions.</div></div>
-          <div class="bullet"><div class="dot"></div><div>Track progress with trends and next-best actions.</div></div>
-        `;
-        primaryHeroCta.innerHTML = `See what you’d get in 30 days <span class="arrow">→</span>`;
-        secondaryHeroCta.innerHTML = `For employers <span class="arrow">→</span>`;
-        microTrust.textContent = "No spam. Response within 24 hours.";
-      } else {
-        heroHeadline.textContent = "Prevent high-cost claims early—with biomarker-based risk visibility.";
-        heroSubhead.textContent = "Aggregate risk dashboards + early intervention pathways—powered by continuous biomarker intelligence and modern workflows.";
-        heroBullets.innerHTML = `
-          <div class="bullet"><div class="dot"></div><div>See population-level risk signals earlier than traditional claims data.</div></div>
-          <div class="bullet"><div class="dot"></div><div>Run targeted prevention programs with measurable outcomes.</div></div>
-          <div class="bullet"><div class="dot"></div><div>Pilot-ready reporting designed for privacy-safe aggregation.</div></div>
-        `;
-        primaryHeroCta.innerHTML = `Request a pilot plan <span class="arrow">→</span>`;
-        secondaryHeroCta.innerHTML = `For individuals <span class="arrow">→</span>`;
-        microTrust.textContent = "No spam. We’ll send a calendar link after you submit.";
-      }
-
-      // Align top CTA labels too
-      document.getElementById("primaryTopCta").innerHTML = isInd
-        ? `Get early access <span class="arrow">→</span>`
-        : `Request a pilot <span class="arrow">→</span>`;
-      document.getElementById("finalPrimaryCta").innerHTML = isInd
-        ? `Get early access <span class="arrow">→</span>`
-        : `Request a pilot <span class="arrow">→</span>`;
-    }
-
-    tabIndividuals.addEventListener("click", () => setPersona("individuals"));
-    tabEmployers.addEventListener("click", () => setPersona("employers"));
-
-    /* ========= Modal helpers ========= */
-    function openModal(id){
-      const m = document.getElementById(id);
-      if(!m) return;
-      m.classList.add("open");
-      m.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
-    function closeModal(id){
-      const m = document.getElementById(id);
-      if(!m) return;
-      m.classList.remove("open");
-      m.setAttribute("aria-hidden", "true");
-      document.body.style.overflow = "";
-    }
-    document.querySelectorAll("[data-close]").forEach(btn => {
-      btn.addEventListener("click", () => closeModal(btn.getAttribute("data-close")));
-    });
-    document.querySelectorAll(".modal").forEach(m => {
-      m.addEventListener("click", (e) => {
-        if(e.target === m) closeModal(m.id);
-      });
-    });
-    document.addEventListener("keydown", (e) => {
-      if(e.key === "Escape"){
-        document.querySelectorAll(".modal.open").forEach(m => closeModal(m.id));
-      }
-    });
-
-    /* ========= CTA wiring (single primary CTA based on persona) ========= */
-    function openPrimaryFlow(){
-      if(state.persona === "individuals") openModal("modalConsumer");
-      else openModal("modalEnterprise");
-    }
-    function openSecondaryFlow(){
-      if(state.persona === "individuals") {
-        setPersona("employers");
-        openModal("modalEnterprise");
-      } else {
-        setPersona("individuals");
-        openModal("modalConsumer");
-      }
-    }
-
-    document.getElementById("primaryHeroCta").addEventListener("click", openPrimaryFlow);
-    document.getElementById("secondaryHeroCta").addEventListener("click", openSecondaryFlow);
-    document.getElementById("primaryTopCta").addEventListener("click", openPrimaryFlow);
-    document.getElementById("finalPrimaryCta").addEventListener("click", openPrimaryFlow);
-
-    document.getElementById("pricingConsumerCta").addEventListener("click", () => {
-      setPersona("individuals");
-      openModal("modalConsumer");
-    });
-    document.getElementById("pricingEnterpriseCta").addEventListener("click", () => {
-      setPersona("employers");
-      openModal("modalEnterprise");
-    });
-
-    /* ========= Shared utilities ========= */
-    function digitsOnly(s){ return String(s || "").replace(/\D/g, ""); }
-    function clampE164Digits(d){ return d.slice(0, 15); } // E.164 hard max 15 digits total
-
-    function isValidEmail(email){
-      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(email).trim());
-    }
-
-    async function submitToFormSubmit(payload){
-      const url = "https://formsubmit.co/ajax/info@betterhumanclub.com";
-      const res = await fetch(url, {
-        method:"POST",
-        headers:{ "Accept":"application/json" },
-        body: payload
-      });
-      let data=null; try{ data = await res.json(); }catch(_){}
-      if(!res.ok){
-        const msg = (data && (data.message || data.error)) ? (data.message || data.error) : "Submission failed.";
-        throw new Error(msg);
-      }
-      return data;
-    }
-
-    /* ========= Phone inputs ========= */
-    const itiConsumer = window.intlTelInput(document.querySelector("#c_phone"), {
-      initialCountry: "us",
-      preferredCountries: ["us"],
-      separateDialCode: true,
-      nationalMode: true,
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"
-    });
-
-    const itiEnterprise = window.intlTelInput(document.querySelector("#e_phone"), {
-      initialCountry: "us",
-      preferredCountries: ["us"],
-      separateDialCode: true,
-      nationalMode: true,
-      utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@26.7.0/build/js/utils.js"
-    });
-
-    function getE164(iti){
-      try{
-        // intlTelInput returns +E164, but keep it safe
-        const number = iti.getNumber();
-        const digits = clampE164Digits(digitsOnly(number));
-        return digits ? ("+" + digits) : "";
-      } catch(e){
-        return "";
-      }
-    }
-
-    /* ========= Form logic (consumer) ========= */
-    const cForm = document.getElementById("formConsumer");
-    const cStatus = document.getElementById("c_status");
-    const cSuccess = document.getElementById("c_success");
-
-    function showErr(id, on){ const el = document.getElementById(id); if(el) el.style.display = on ? "block" : "none"; }
-
-    cForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      // Honeypot
-      const hp = document.getElementById("c_company").value.trim();
-      if(hp){
-        // silently succeed (spam)
-        cSuccess.style.display = "block";
-        return;
-      }
-
-      const first = document.getElementById("c_first").value.trim();
-      const last  = document.getElementById("c_last").value.trim();
-      const email = document.getElementById("c_email").value.trim();
-      const phone = getE164(itiConsumer);
-      const goal  = document.getElementById("c_goal").value;
-
-      let ok = true;
-      showErr("c_first_err", !first); ok = ok && !!first;
-      showErr("c_last_err",  !last);  ok = ok && !!last;
-      showErr("c_email_err", !isValidEmail(email)); ok = ok && isValidEmail(email);
-      showErr("c_phone_err", !phone); ok = ok && !!phone;
-
-      if(!ok) return;
-
-      cStatus.textContent = "Submitting…";
-      cSuccess.style.display = "none";
-
-      const payload = new FormData();
-      payload.append("Audience", "Individuals");
-      payload.append("First Name", first);
-      payload.append("Last Name", last);
-      payload.append("Email", email);
-      payload.append("Phone", phone);
-      if(goal) payload.append("Primary Goal", goal);
-      payload.append("_subject", "Better Human — Individuals Lead");
-      payload.append("_template", "table");
-
-      try{
-        await submitToFormSubmit(payload);
-        cStatus.textContent = "";
-        cSuccess.style.display = "block";
-        cForm.reset();
-        itiConsumer.setCountry("us");
-        setTimeout(() => closeModal("modalConsumer"), 1200);
-      } catch(err){
-        cStatus.textContent = "Error: " + (err?.message || "Please try again.");
-      }
-    });
-
-    /* ========= Form logic (enterprise) ========= */
-    const eForm = document.getElementById("formEnterprise");
-    const eStatus = document.getElementById("e_status");
-    const eSuccess = document.getElementById("e_success");
-
-    eForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      // Honeypot
-      const hp = document.getElementById("e_website").value.trim();
-      if(hp){
-        eSuccess.style.display = "block";
-        return;
-      }
-
-      const first = document.getElementById("e_first").value.trim();
-      const last  = document.getElementById("e_last").value.trim();
-      const email = document.getElementById("e_email").value.trim();
-      const phone = getE164(itiEnterprise);
-      const company = document.getElementById("e_company").value.trim();
-      const size = document.getElementById("e_size").value;
-
-      let ok = true;
-      showErr("e_first_err", !first); ok = ok && !!first;
-      showErr("e_last_err",  !last);  ok = ok && !!last;
-      showErr("e_email_err", !isValidEmail(email)); ok = ok && isValidEmail(email);
-      showErr("e_phone_err", !phone); ok = ok && !!phone;
-      showErr("e_company_err", !company); ok = ok && !!company;
-
-      if(!ok) return;
-
-      eStatus.textContent = "Submitting…";
-      eSuccess.style.display = "none";
-
-      const payload = new FormData();
-      payload.append("Audience", "Employers");
-      payload.append("First Name", first);
-      payload.append("Last Name", last);
-      payload.append("Work Email", email);
-      payload.append("Phone", phone);
-      payload.append("Company", company);
-      if(size) payload.append("Covered Lives", size);
-      payload.append("_subject", "Better Human — Employer Lead");
-      payload.append("_template", "table");
-
-      try{
-        await submitToFormSubmit(payload);
-        eStatus.textContent = "";
-        eSuccess.style.display = "block";
-        eForm.reset();
-        itiEnterprise.setCountry("us");
-        // keep modal open so they can click scheduler (once you add it)
-      } catch(err){
-        eStatus.textContent = "Error: " + (err?.message || "Please try again.");
-      }
-    });
-
-    /* Initialize */
-    setPersona("individuals");
-  </script>
+    <script>
+        document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('form-container').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+        });
+        
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
